@@ -83,20 +83,15 @@ printf "\nAdd New Features by AeolusUX\n" | tee -a "$LOG_FILE"
 	  exit 1
 	fi
 
-	if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
+
 	  cp -fv /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | tee -a "$LOG_FILE"
 	  sudo chown -v ark:ark /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | tee -a "$LOG_FILE"
-	fi
 	
-	if [ -f "/etc/emulationstation/es_systems.cfg" ]; then
 	  cp -fv /usr/local/bin/Read\ from\ SD1\ and\ SD2\ for\ Roms "/opt/system/Advanced/Read from SD1 and SD2 for Roms" | tee -a "$LOG_FILE"
       sudo chown -v ark:ark /opt/system/Advanced/Read\ from\ SD1\ and\ SD2\ for\ Roms | tee -a "$LOG_FILE"
-	fi
-	
-	if [ -f "/etc/emulationstation/es_systems.cfg" ]; then
-	  cp -fv /usr/local/bin/es_systems.cfg "/etc/emulationstation/es_systems.cfg" | sudo tee -a "$LOG_FILE"
-	  sudo chown -v ark:ark "/etc/emulationstation/es_systems.cfg" | sudo tee -a "$LOG_FILE"
-	fi
+	  
+	  cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+      sudo chown -v ark:ark /opt/system/Advanced/Read\ from\ SD1\ and\ SD2\ for\ Roms | tee -a "$LOG_FILE"
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
