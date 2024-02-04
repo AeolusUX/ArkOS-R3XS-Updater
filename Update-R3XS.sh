@@ -5316,7 +5316,7 @@ if [ ! -f "$UPDATE_DONE" ]; then
 printf "\nAdd New Features by AeolusUX\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02042024/arkosupdate02042024.zip -O /dev/shm/arkosupdate02042024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02042024.zip | tee -a "$LOG_FILE"
-	if [ -f "/dev/shm/arkosupdate01272024-1.zip" ]; then
+	if [ -f "/dev/shm/arkosupdate02042024.zip" ]; then
 	  sudo unzip -X -o /dev/shm/arkosupdate02042024.zip -d / | tee -a "$LOG_FILE"
 	  sudo rm -fv /dev/shm/arkosupdate* | tee -a "$LOG_FILE"
 	else
