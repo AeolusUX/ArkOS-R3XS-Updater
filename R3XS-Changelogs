@@ -530,4 +530,7 @@ v2.0 (01/27/2024-1)
 
 v2.0 (02/24/2024)
 - Added script that facilitates using both SD Cards for roms storage.
+	Go to Options -> Advanced -> Switch to SD2 for Roms, Run the script and wait for it to finish.
+	There should be a new item available at Options -> Advanced -> Read from SD1 and SD2 for Roms run it and it will restart Emulation Station and now show all roms from both cards.
+	(Thanks to: christianhaitian for pointing out how to do it and kc234567890 for making the initial config that makes this possible for all systems.)
 - Changed Update.sh to Update using ArkOS-R3XS-Updater instead of the main repo so users can just update using the script for future releases.
