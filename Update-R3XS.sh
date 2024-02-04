@@ -5283,7 +5283,7 @@ if [ ! -f "/home/ark/.config/.update01272024" ]; then
 
 fi
 
-if [ ! -f "$UPDATE_DONE" ]; then
+if [ ! -f "/home/ark/.config/.update01272024-1" ]; then
 
 	printf "\nFix Switch to SD2 script for RG351V and RG351MP units\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
