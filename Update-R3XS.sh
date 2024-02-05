@@ -82,10 +82,16 @@ printf "\nAdd New Features by AeolusUX\n" | tee -a "$LOG_FILE"
 	  echo $c_brightness > /sys/class/backlight/backlight/brightness
 	  exit 1
 	fi
+	
+	
 
+	if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
 	  cp -fv /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | tee -a "$LOG_FILE"
 	  sudo chown -v ark:ark /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | tee -a "$LOG_FILE"
-	
+	else
+	  cp -fv /usr/local/bin/Switch\ to\ main\ SD\ for\ Roms.sh /usr/local/bin/Switch\ to\ main\ SD\ for\ Roms.sh | tee -a "$LOG_FILE"
+	  sudo chown -v ark:ark /opt/system/Advanced/Switch\ to\ main\ SD\ for\ Roms.sh | tee -a "$LOG_FILE"
+	fi
 	  cp -fv /usr/local/bin/Read\ from\ SD1\ and\ SD2\ for\ Roms /opt/system/Advanced/Read\ from\ SD1\ and\ SD2\ for\ Roms | tee -a "$LOG_FILE"
       sudo chown -v ark:ark /opt/system/Advanced/Read\ from\ SD1\ and\ SD2\ for\ Roms | tee -a "$LOG_FILE"
 	  sudo chmod -v 0777 "/opt/system/Advanced/Read from SD1 and SD2 for Roms" | tee -a "$LOG_FILE"
