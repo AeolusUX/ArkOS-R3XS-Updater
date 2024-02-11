@@ -135,6 +135,7 @@ printf "\nFix for GlobalHotkeys and standalone-rice\n" | tee -a "$LOG_FILE"
 	  sudo chmod -v 0777 "/usr/local/bin/singekeydemon.py" | tee -a "$LOG_FILE"
 	  sudo chmod -v 0777 "/usr/local/bin/solarushotkeydemon.py" | tee -a "$LOG_FILE"
 	  sudo chmod -v 0777 "/usr/local/bin/ti99keydemon.py" | tee -a "$LOG_FILE"
+	  sudo chmod -v 0777 "/usr/local/bin/ogage" | tee -a "$LOG_FILE"
 
 	 
 
