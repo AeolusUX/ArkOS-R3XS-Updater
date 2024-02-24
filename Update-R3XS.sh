@@ -337,7 +337,6 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
 	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
 	fi
-	  cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 	if [ $(grep yabasanshiro es_systems.cfg | wc -l) -lt 2 ]; then
 	  printf "\nAdd yabasanshiro as an additional emulator for retroarch\n" | tee -a "$LOG_FILE"
 	  sed -i ':a;N;$!ba;s/<core>yabause<\/core>/<core>yabause<\/core>\n\t\t \t  <core>yabasanshiro<\/core>/2' /etc/emulationstation/es_systems.cfg
