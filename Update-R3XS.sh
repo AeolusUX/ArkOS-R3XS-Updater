@@ -144,7 +144,7 @@ printf "\nFix for GlobalHotkeys and standalone-rice\n" | tee -a "$LOG_FILE"
 
 	touch "$/home/ark/.config/.update02062024"	
 
-	if [ ! -f "$UPDATE_DONE" ]; then
+if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nFix PPSSPP exit hotkey demon from last update\nFixed left justification of ALG games\nUpdate PPSSPP to version 1.17.1\nUpdated XRoar emulator\nFix standalone-duckstation script\nUpdate retroarch and retroarch32 to 1.17\nUpdate retroarch and retroarch32 launch scripts\nUpdated USB DAC control script\nUpdate Emulationstation to fix crash with editing metadata for options\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
@@ -167,9 +167,23 @@ printf "\nFix for GlobalHotkeys and standalone-rice\n" | tee -a "$LOG_FILE"
 		echo $c_brightness > /sys/class/backlight/backlight/brightness
 		exit 1
 	fi
-	
-	  cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
-	  
+
+	if test -z "$(cat /etc/emulationstation/es_systems.cfg | grep 'videopac' | tr -d '\0')"
+	then
+	  printf "\nAdd videopac libretro emulator\n" | tee -a "$LOG_FILE"
+	  cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update02232024.bak | tee -a "$LOG_FILE"
+	  sed -i -e '/<theme>vic20<\/theme>/{r /home/ark/add_videopac.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	fi
+	if [ ! -d "/roms/videopac" ]; then
+	  mkdir -v /roms/videopac | tee -a "$LOG_FILE"
+	  if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	  then
+		if [ ! -d "/roms2/videopac" ]; then
+		  mkdir -v /roms2/videopac | tee -a "$LOG_FILE"
+		  sed -i '/<path>\/roms\/videopac/s//<path>\/roms2\/videopac/g' /etc/emulationstation/es_systems.cfg
+		fi
+	  fi
+	fi
 	if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
 	  if test -z "$(cat /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | grep videopac | tr -d '\0')"
 	  then
@@ -194,6 +208,23 @@ printf "\nFix for GlobalHotkeys and standalone-rice\n" | tee -a "$LOG_FILE"
       rm -fv /opt/ppsspp/PPSSPPSDL.rk3326 | tee -a "$LOG_FILE"
     else
       mv -fv /opt/ppsspp/PPSSPPSDL.rk3326 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
+	fi
+
+	printf "\nUpdate supported extensions for Commodore 8 bit systems\n" | tee -a "$LOG_FILE"
+	sed -i '/<extension>.d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .zip .ZIP .gz .GZ .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ/s//<extension>.7z .7Z .bin .BIN .cmd .CMD .crt .CRT .d2m .D2M .d4m .D4M .d64 .D64 .d6z .D6Z .d71 .D71 .d7z .D7Z .d80 .D80 .d81 .D81 .d82 .D82 .d8z .D8Z .g41 .G41 .g4z .G4Z .g64 .G64 .g6z .G6Z .gz .GZ .m3u .M3U .nbz .NBZ .nib .NIB .p00 .P00 .prg .PRG .t64 .T64 .tap .TAP .tcrt .TCRT .vfl .VFL .vsf .VSF .x64 .X64 .x6z .X6Z .zip .ZIP/' /etc/emulationstation/es_systems.cfg
+	sed -i '/<extension>.d64 .D64 .d71 .D71 .d81 .D81 .zip .ZIP .7z .7Z .t64 .T64 .crt .CRT .prg .PRG .nib .NIB .tap .TAP .vsf .VSF/s//<extension>.7z .7Z .bin .BIN .cmd .CMD .crt .CRT .d2m .D2M .d4m .D4M .d64 .D64 .d6z .D6Z .d71 .D71 .d71 .D71 .d7z .D7Z .d80 .D80 .d81 .D81 .d81 .D81 .d82 .D82 .d8z .D8Z .g41 .G41 .g4z .G4Z .g64 .G64 .g6z .G6Z .gz .GZ .m3u .M3U .nbz .NBZ .nib .NIB .p00 .P00 .prg .PRG .t64 .T64 .tap .TAP .tcrt .TCRT .vfl .VFL .vsf .VSF .vsf .VSF .x64 .X64 .x6z .X6Z .zip .ZIP/' /etc/emulationstation/es_systems.cfg
+	sed -i '/<extension>.d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .zip .ZIP .gz .GZ .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ/s//<extension>.7z .7Z .bin .BIN .cmd .CMD .crt .CRT .d2m .D2M .d4m .D4M .d64 .D64 .d6z .D6Z .d71 .D71 .d7z .D7Z .d80 .D80 .d81 .D81 .d82 .D82 .d8z .D8Z .g41 .G41 .g4z .G4Z .g64 .G64 .g6z .G6Z .gz .GZ .m3u .M3U .nbz .NBZ .nib .NIB .p00 .P00 .prg .PRG .t64 .T64 .tap .TAP .tcrt .TCRT .vfl .VFL .vsf .VSF .x64 .X64 .x6z .X6Z .zip .ZIP/' /etc/emulationstation/es_systems.cfg
+	sed -i '/<extension>.20 .40 .60 .a0 .A0 .b0 .B0 .d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .gz .GZ .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP/s//<extension>.20 .40 .60 .7z .7Z .a0 .A0 .b0 .B0 .bin .BIN .cmd .CMD .crt .CRT .d2m .D2M .d4m .D4M .d64 .D64 .d6z .D6Z .d71 .D71 .d7z .D7Z .d80 .D80 .d81 .D81 .d82 .D82 .d8z .D8Z .g41 .G41 .g4z .G4Z .g64 .G64 .g6z .G6Z .gz .GZ .m3u .M3U .nbz .NBZ .nib .NIB .p00 .P00 .prg .PRG .rom .ROM .t64 .T64 .tap .TAP .tcrt .TCRT .vfl .VFL .vsf .VSF .x64 .X64 .x6z .X6Z .zip .ZIP/' /etc/emulationstation/es_systems.cfg
+
+	printf "\nAdd ipf support extension for Amiga\n" | tee -a "$LOG_FILE"
+	sed -i '/<extension>.lha .LHA .hdf .HDF .adf .ADF .zip .ZIP/s//<extension>.adf .ADF .hdf .HDF .ipf .IPF .lha .LHA .zip .ZIP/' /etc/emulationstation/es_systems.cfg
+
+	printf "\nUpdate launching of scripts in Options section to output stderr\n" | tee -a "$LOG_FILE"
+	sed -i 's/sudo chmod 666 \/dev\/tty1; %ROM% > \/dev\/tty1; printf \"\\033c\" >> \/dev\/tty1/sudo chmod 666 \/dev\/tty1; %ROM% 2\>\&1 \> \/dev\/tty1; printf \"\\033c\" \>\> \/dev\/tty1/' /etc/emulationstation/es_systems.cfg
+
+	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
+	  printf "\nUpdate platform name for gamecube to fix scraping\n" | tee -a "$LOG_FILE"
+	  sed -i 's/<platform>gamecube<\/platform>/<platform>gc<\/platform>/' /etc/emulationstation/es_systems.cfg
 	fi
 
 	printf "\nCopy correct Retroarches depending on device\n" | tee -a "$LOG_FILE"
@@ -306,6 +337,11 @@ printf "\nFix for GlobalHotkeys and standalone-rice\n" | tee -a "$LOG_FILE"
 	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
 	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
 	fi
+	  cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+	if [ $(grep yabasanshiro es_systems.cfg | wc -l) -lt 2 ]; then
+	  printf "\nAdd yabasanshiro as an additional emulator for retroarch\n" | tee -a "$LOG_FILE"
+	  sed -i ':a;N;$!ba;s/<core>yabause<\/core>/<core>yabause<\/core>\n\t\t \t  <core>yabasanshiro<\/core>/2' /etc/emulationstation/es_systems.cfg
+	fi
 
 	printf "\nCopy correct libretro yabasanshiro core for retroarch depending on device\n" | tee -a "$LOG_FILE"
 	if [ ! -f "/boot/rk3566.dtb" ] && [ ! -f "/boot/rk3566-OC.dtb" ]; then
@@ -315,7 +351,7 @@ printf "\nFix for GlobalHotkeys and standalone-rice\n" | tee -a "$LOG_FILE"
 	fi
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
-	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
 
 	touch "$UPDATE_DONE"
 	rm -v -- "$0" | tee -a "$LOG_FILE"
