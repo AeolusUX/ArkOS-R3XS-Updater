@@ -324,6 +324,7 @@ fi
 	if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nAdd J2ME Support\nby Jamerson and Joanilson. youtube.com/@joanilson41\n" | tee -a "$LOG_FILE"
+	sleep 3
 	sudo rm -rf /dev/shm/*
 	tmp_mem_size=$(df -h /dev/shm | grep shm | awk '{print $2}' | cut -d 'M' -f1)
 	if [ ${tmp_mem_size} -lt 450 ]; then
@@ -345,11 +346,11 @@ fi
 	
 	  echo "Adding J2ME Cores"
 	  sleep 3
-	  mv "/usr/local/bin/freej2me_libretro.so" "/home/ark/.config/retroarch/cores/freej2me_libretro.so" | tee -a "$LOG_FILE"
-	  mv "/usr/local/bin/freej2me_libretro.info" "/home/ark/.config/retroarch/cores/freej2me_libretro.info" | tee -a "$LOG_FILE"
+	  sudo mv "/usr/local/bin/freej2me_libretro.so" "/home/ark/.config/retroarch/cores/freej2me_libretro.so" | tee -a "$LOG_FILE"
+	  sudo mv "/usr/local/bin/freej2me_libretro.info" "/home/ark/.config/retroarch/cores/freej2me_libretro.info" | tee -a "$LOG_FILE"
 	  echo "Adding BIOS File"
 	  sleep 3
-	  mv "/usr/local/bin/freej2me-lr.jar" "/roms/bios/freej2me-lr.jar" | tee -a "$LOG_FILE"
+	  sudo mv "/usr/local/bin/freej2me-lr.jar" "/roms/bios/freej2me-lr.jar" | tee -a "$LOG_FILE"
 	  echo "Installing JDK package" 
 	  sleep 3
 	  sudo mkdir -p "/roms/j2me/" | tee -a "$LOG_FILE"
@@ -357,7 +358,7 @@ fi
 	  sudo dpkg -i "/usr/local/bin/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" >> "$LOG_FILE" 2>&1
 	  echo "Copying asound.conf file"
 	  sleep 3
-	  mv "/usr/local/bin/asound.conf" "/roms/tools/PortMaster/libs/" | tee -a "$LOG_FILE"
+	  sudo mv "/usr/local/bin/asound.conf" "/roms/tools/PortMaster/libs/" | tee -a "$LOG_FILE"
 	  
 	  
 	  
