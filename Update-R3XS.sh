@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-UPDATE_DATE="02232024"
+UPDATE_DATE="02252024"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
 
@@ -106,9 +106,9 @@ printf "\nAdd New Features by AeolusUX\n" | tee -a "$LOG_FILE"
 	
 fi
 
-if [ ! -f "/home/ark/.config/.update02062024" ]; then
+	if [ ! -f "/home/ark/.config/.update02062024" ]; then
 
-printf "\nFix for GlobalHotkeys and standalone-rice\n" | tee -a "$LOG_FILE"
+	printf "\nFix for GlobalHotkeys and standalone-rice\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02062024/arkosupdate02062024.zip -O /dev/shm/arkosupdate02062024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02062024.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate02062024.zip" ]; then
@@ -145,7 +145,7 @@ printf "\nFix for GlobalHotkeys and standalone-rice\n" | tee -a "$LOG_FILE"
 	touch "$/home/ark/.config/.update02062024"	
 fi
 
-	if [ ! -f "$UPDATE_DONE" ]; then
+	if [ ! -f "/home/ark/.config/.update02232024" ]; then
 
 	printf "\nFix PPSSPP exit hotkey demon from last update\nFixed left justification of ALG games\nUpdate PPSSPP to version 1.17.1\nUpdated XRoar emulator\nFix standalone-duckstation script\nUpdate retroarch and retroarch32 to 1.17\nUpdate retroarch and retroarch32 launch scripts\nUpdated USB DAC control script\nUpdate Emulationstation to fix crash with editing metadata for options\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
@@ -318,7 +318,55 @@ fi
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
-	touch "$UPDATE_DONE"
+	touch "$/home/ark/.config/.update022362024"	
+fi
+
+	if [ ! -f "$UPDATE_DONE" ]; then
+
+printf "\nAdd support for J2ME Games\n" | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02252024/arkosupdate02062024.zip -O /dev/shm/arkosupdate02252024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02252024.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate02252024.zip" ]; then
+	  sudo unzip -X -o /dev/shm/arkosupdate02252024.zip -d / | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate* | tee -a "$LOG_FILE"
+	else
+	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate* | tee -a "$LOG_FILE"
+	  sleep 3
+	  echo $c_brightness > /sys/class/backlight/backlight/brightness
+	  exit 1
+	fi
+	
+	  echo "Adding J2ME Cores"
+	  sleep 3
+	  mv "/roms/tools/j2me/dep/freej2me_libretro.so" "/home/ark/.config/retroarch/cores/freej2me_libretro.so"
+	  mv "/roms/tools/j2me/dep/freej2me_libretro.info" "/home/ark/.config/retroarch/cores/freej2me_libretro.info"
+	  echo "Adding BIOS File"
+	  sleep 3
+	  mv "/roms/tools/j2me/dep/freej2me-lr.jar" "/roms/bios/freej2me-lr.jar"
+	  echo "Installing JDK package"
+	  sleep 3
+	  sudo dpkg -i "/roms/tools/j2me/dep/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" >> "$LOG_FILE" 2>&1
+	  
+	  echo "Copying asound.conf file"
+	  sleep 3
+	  mv "/roms/tools/j2me/dep/asound.conf" "/roms/tools/PortMaster/libs/"
+	  
+	  
+	  
+	  echo "Removing zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb and java-common.deb files"
+      sleep 3
+	  rm -f "/roms/tools/j2me/dep/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb"
+	  rm -f "/roms/tools/j2me/dep/java-common.deb"
+	  rm -rf "/roms/tools/j2me/dep"
+
+	  cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
+
+	touch "$UPDATE_DONE"	
+
 	rm -v -- "$0" | tee -a "$LOG_FILE"
 	printf "\033c" >> /dev/tty1
 	msgbox "Updates have been completed.  System will now restart after you hit the A button to continue.  If the system doesn't restart after pressing A, just restart the system manually."
