@@ -362,9 +362,9 @@ fi
 	  
 	  echo "Removing zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb and java-common.deb files"
       sleep 3
-	  rm -f "/roms/tools/j2me/dep/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" | tee -a "$LOG_FILE"
-	  rm -f "/roms/tools/j2me/dep/java-common.deb" | tee -a "$LOG_FILE"
-	  rm -rf "/roms/tools/j2me/dep" | tee -a "$LOG_FILE"
+	#  rm -f "/roms/tools/j2me/dep/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" | tee -a "$LOG_FILE"
+	#  rm -f "/roms/tools/j2me/dep/java-common.deb" | tee -a "$LOG_FILE"
+	#  rm -rf "/roms/tools/j2me/dep" | tee -a "$LOG_FILE"
 
 	  cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 
@@ -379,4 +379,3 @@ fi
 	echo $c_brightness > /sys/class/backlight/backlight/brightness
 	sudo reboot
 	exit 187
-fi
