@@ -325,9 +325,9 @@ if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nFix for GlobalHotkeys and standalone-rice\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
-	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02062024/arkosupdate02062024.zip -O /dev/shm/arkosupdate02062024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02062024.zip | tee -a "$LOG_FILE"
-	if [ -f "/dev/shm/arkosupdate02062024.zip" ]; then
-	  sudo unzip -X -o /dev/shm/arkosupdate02062024.zip -d / | tee -a "$LOG_FILE"
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02252024/arkosupdate02252024.zip -O /dev/shm/arkosupdate02252024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02252024.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate02252024.zip" ]; then
+	  sudo unzip -X -o /dev/shm/arkosupdate02252024.zip -d / | tee -a "$LOG_FILE"
 	  sudo rm -fv /dev/shm/arkosupdate* | tee -a "$LOG_FILE"
 	else
 	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
