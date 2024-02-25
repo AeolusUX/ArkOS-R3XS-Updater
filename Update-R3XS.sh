@@ -355,7 +355,6 @@ fi
 	  sudo mkdir -p "/roms/j2me/"
 	  sudo dpkg -i "/usr/local/bin/java-common.deb" >> "$LOG_FILE" 2>&1
 	  sudo dpkg -i "/usr/local/bin/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" >> "$LOG_FILE" 2>&1
-	  sudo apt install zulu21-jdk -y | tee -a "$LOG_FILE"
 	  echo "Copying asound.conf file"
 	  sleep 3
 	  mv "/usr/local/bin/asound.conf" "/roms/tools/PortMaster/libs/" | tee -a "$LOG_FILE"
