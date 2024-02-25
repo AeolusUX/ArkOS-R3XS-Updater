@@ -352,7 +352,7 @@ fi
 	  mv "/roms/tools/j2me/dep/freej2me-lr.jar" "/roms/bios/freej2me-lr.jar" | tee -a "$LOG_FILE"
 	  echo "Installing JDK package" 
 	  sleep 3
-	#  sudo dpkg -i "/roms/tools/j2me/dep/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" >> "$LOG_FILE" 2>&1
+	  sudo dpkg -i "/roms/tools/j2me/dep/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" >> "$LOG_FILE" 2>&1
 	  sudo apt install zulu21-jdk -y | tee -a "$LOG_FILE"
 	  echo "Copying asound.conf file"
 	  sleep 3
