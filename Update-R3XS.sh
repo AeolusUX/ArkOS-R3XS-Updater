@@ -67,7 +67,7 @@ if [ ! -f "/home/ark/.config/.update01272024-1" ]; then
 
 fi
 
-if [ ! -f "/home/ark/.config/.update02042024" ]; then
+	if [ ! -f "/home/ark/.config/.update02042024" ]; then
 
 printf "\nAdd New Features by AeolusUX\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
