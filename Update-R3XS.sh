@@ -335,7 +335,8 @@ fi
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02252024/arkosupdate02252024.z01 -O /dev/shm/arkosupdate02252024.z01 -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02252024.z01 | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate02252024.zip" ] && [ -f "/dev/shm/arkosupdate02252024.z01" ]; then
 	  zip -FF /dev/shm/arkosupdate02252024.zip --out /dev/shm/arkosupdate.zip -fz | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate02252024.z* | tee -a "$LOG_FILE"
+	  sudo unzip -X -o /dev/shm/arkosupdate.zip -d / | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate* | tee -a "$LOG_FILE"
 	else
 	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
 	  sudo rm -fv /dev/shm/arkosupdate* | tee -a "$LOG_FILE"
