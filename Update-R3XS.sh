@@ -345,26 +345,26 @@ fi
 	
 	  echo "Adding J2ME Cores"
 	  sleep 3
-	  mv "/roms/tools/j2me/dep/freej2me_libretro.so" "/home/ark/.config/retroarch/cores/freej2me_libretro.so"
-	  mv "/roms/tools/j2me/dep/freej2me_libretro.info" "/home/ark/.config/retroarch/cores/freej2me_libretro.info"
+	  mv "/roms/tools/j2me/dep/freej2me_libretro.so" "/home/ark/.config/retroarch/cores/freej2me_libretro.so" | tee -a "$LOG_FILE"
+	  mv "/roms/tools/j2me/dep/freej2me_libretro.info" "/home/ark/.config/retroarch/cores/freej2me_libretro.info" | tee -a "$LOG_FILE"
 	  echo "Adding BIOS File"
 	  sleep 3
-	  mv "/roms/tools/j2me/dep/freej2me-lr.jar" "/roms/bios/freej2me-lr.jar"
+	  mv "/roms/tools/j2me/dep/freej2me-lr.jar" "/roms/bios/freej2me-lr.jar" | tee -a "$LOG_FILE"
 	  echo "Installing JDK package"
 	  sleep 3
 	  sudo dpkg -i "/roms/tools/j2me/dep/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" >> "$LOG_FILE" 2>&1
 	  
 	  echo "Copying asound.conf file"
 	  sleep 3
-	  mv "/roms/tools/j2me/dep/asound.conf" "/roms/tools/PortMaster/libs/"
+	  mv "/roms/tools/j2me/dep/asound.conf" "/roms/tools/PortMaster/libs/" | tee -a "$LOG_FILE"
 	  
 	  
 	  
 	  echo "Removing zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb and java-common.deb files"
       sleep 3
-	  rm -f "/roms/tools/j2me/dep/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb"
-	  rm -f "/roms/tools/j2me/dep/java-common.deb"
-	  rm -rf "/roms/tools/j2me/dep"
+	  rm -f "/roms/tools/j2me/dep/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" | tee -a "$LOG_FILE"
+	  rm -f "/roms/tools/j2me/dep/java-common.deb" | tee -a "$LOG_FILE"
+	  rm -rf "/roms/tools/j2me/dep" | tee -a "$LOG_FILE"
 
 	  cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 
