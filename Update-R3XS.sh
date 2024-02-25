@@ -379,3 +379,4 @@ fi
 	echo $c_brightness > /sys/class/backlight/backlight/brightness
 	sudo reboot
 	exit 187
+fi
