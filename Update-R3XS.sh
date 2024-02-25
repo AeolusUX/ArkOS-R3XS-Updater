@@ -321,14 +321,20 @@ fi
 	touch "$/home/ark/.config/.update022362024"	
 fi
 
-if [ ! -f "$UPDATE_DONE" ]; then
+	if [ ! -f "$UPDATE_DONE" ]; then
 
-	printf "\nFix for GlobalHotkeys and standalone-rice\n" | tee -a "$LOG_FILE"
+	printf "\nAdd J2ME Support\nby Jamerson and Joanilson. youtube.com/@joanilson41\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
+	tmp_mem_size=$(df -h /dev/shm | grep shm | awk '{print $2}' | cut -d 'M' -f1)
+	if [ ${tmp_mem_size} -lt 450 ]; then
+	  printf "\nTemporarily raising temp memory storage for this large update\n" | tee -a "$LOG_FILE"
+	  sudo mount -o remount,size=450M /dev/shm
+	fi
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02252024/arkosupdate02252024.zip -O /dev/shm/arkosupdate02252024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02252024.zip | tee -a "$LOG_FILE"
-	if [ -f "/dev/shm/arkosupdate02252024.zip" ]; then
-	  sudo unzip -X -o /dev/shm/arkosupdate02252024.zip -d / | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate* | tee -a "$LOG_FILE"
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02252024/arkosupdate02252024.z01 -O /dev/shm/arkosupdate02252024.z01 -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02252024.z01 | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate02252024.zip" ] && [ -f "/dev/shm/arkosupdate02252024.z01" ]; then
+	  zip -FF /dev/shm/arkosupdate02252024.zip --out /dev/shm/arkosupdate.zip -fz | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate02252024.z* | tee -a "$LOG_FILE"
 	else
 	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
 	  sudo rm -fv /dev/shm/arkosupdate* | tee -a "$LOG_FILE"
@@ -339,24 +345,26 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	
 	  echo "Adding J2ME Cores"
 	  sleep 3
-	  mv "/roms/tools/j2me/dep/freej2me_libretro.so" "/home/ark/.config/retroarch/cores/freej2me_libretro.so" | tee -a "$LOG_FILE"
-	  mv "/roms/tools/j2me/dep/freej2me_libretro.info" "/home/ark/.config/retroarch/cores/freej2me_libretro.info" | tee -a "$LOG_FILE"
+	  mv "/usr/local/bin/freej2me_libretro.so" "/home/ark/.config/retroarch/cores/freej2me_libretro.so" | tee -a "$LOG_FILE"
+	  mv "/usr/local/bin/freej2me_libretro.info" "/home/ark/.config/retroarch/cores/freej2me_libretro.info" | tee -a "$LOG_FILE"
 	  echo "Adding BIOS File"
 	  sleep 3
-	  mv "/roms/tools/j2me/dep/freej2me-lr.jar" "/roms/bios/freej2me-lr.jar" | tee -a "$LOG_FILE"
+	  mv "/usr/local/bin/freej2me-lr.jar" "/roms/bios/freej2me-lr.jar" | tee -a "$LOG_FILE"
 	  echo "Installing JDK package" 
 	  sleep 3
+	  sudo dpkg -i "/usr/local/bin/java-common.deb" >> "$LOG_FILE" 2>&1
+	  sudo dpkg -i "/usr/local/bin/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" >> "$LOG_FILE" 2>&1
+	  sudo apt install zulu21-jdk -y | tee -a "$LOG_FILE"
 	  echo "Copying asound.conf file"
 	  sleep 3
-	  mv "/roms/tools/j2me/dep/asound.conf" "/roms/tools/PortMaster/libs/" | tee -a "$LOG_FILE"
+	  mv "/usr/local/bin/asound.conf" "/roms/tools/PortMaster/libs/" | tee -a "$LOG_FILE"
 	  
 	  
 	  
 	  echo "Removing zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb and java-common.deb files"
       sleep 3
-	  rm -f "/roms/tools/j2me/dep/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" | tee -a "$LOG_FILE"
-	  rm -f "/roms/tools/j2me/dep/java-common.deb" | tee -a "$LOG_FILE"
-	  rm -rf "/roms/tools/j2me/dep" | tee -a "$LOG_FILE"
+	  rm -f "/usr/local/bin/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb" | tee -a "$LOG_FILE"
+	  rm -f "/usr/local/bin/java-common.deb" | tee -a "$LOG_FILE"
 
 	  cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 
