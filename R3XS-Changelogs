@@ -582,4 +582,5 @@ v2.0 (03/30/2024)
 - Related to this commit which has now reverted: https://github.com/libretro/RetroArch/commit/338c9a4fe441899e98c95ab082e18ddb5f931e49
 - Fixed ppsspp 1.17.1 gui (Thanks to AmberElec for the patch)
 - Updated apple2.sh script to fix some minor issues (Thanks to Slayer366 for the fixes)
-- Reactivated imageshift function by christian. Copy all your logos into a BMPs (case sensitive) folder on your fat32 boot partition then it should change to a different logo on every boot.
+- Reactivated imageshift function by christian. 
+	Copy all your logos into a BMPs (case sensitive) folder on your fat32 boot partition then it should change to a different logo on every boot.
