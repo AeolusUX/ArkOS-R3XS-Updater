@@ -365,6 +365,8 @@ fi
 	  
 	  echo "Removing zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb and java-common.deb files"
       sleep 3
+	  sudo rm -fv /usr/local/bin/java-common.deb | tee -a "$LOG_FILE"
+	  sudo rm -fv /usr/local/bin/zulu21.32.17-ca-jdk21.0.2-linux_arm64.deb | tee -a "$LOG_FILE"
 
 	  cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 
