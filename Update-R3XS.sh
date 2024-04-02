@@ -581,7 +581,7 @@ if [ ! -f "/home/ark/.config/.update03302024" ]; then
 	printf "\nFix retroarch32 rotation\nFix missing saves from last retroarch update\nFix PPSSPP 1.17.1 gui size\nUpdated apple2.sh script\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/04022024/arkosupdate04022024.zip -O /dev/shm/arkosupdate04022024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate04022024.zip | tee -a "$LOG_FILE"
-	if [ -f "/dev/shm/arkosupdate03302024.zip" ]; then
+	if [ -f "/dev/shm/arkosupdate04022024.zip" ]; then
       sudo unzip -X -o /dev/shm/arkosupdate04022024.zip -d / | tee -a "$LOG_FILE"
 	  sudo rm -fv /dev/shm/arkosupdate04022024.zip | tee -a "$LOG_FILE"
 	else
