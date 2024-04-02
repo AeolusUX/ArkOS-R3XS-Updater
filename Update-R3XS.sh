@@ -102,7 +102,7 @@ printf "\nAdd New Features by AeolusUX\n" | tee -a "$LOG_FILE"
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
 
-	touch "$/home/ark/.config/.update02042024"
+	touch "/home/ark/.config/.update02042024"
 	
 fi
 
@@ -142,7 +142,7 @@ fi
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
 
-	touch "$/home/ark/.config/.update02062024"	
+	touch "/home/ark/.config/.update02062024"	
 fi
 
 	if [ ! -f "/home/ark/.config/.update02232024" ]; then
@@ -318,7 +318,7 @@ fi
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
-	touch "$/home/ark/.config/.update02232024"	
+	touch "/home/ark/.config/.update02232024"	
 fi
 
 	if [ ! -f "/home/ark/.config/.update02252024" ]; then
@@ -373,7 +373,7 @@ fi
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
-	touch "$/home/ark/.config/.update02252024"	
+	touch "/home/ark/.config/.update02252024"	
 fi
 
 if [ ! -f "/home/ark/.config/.update03292024" ]; then
