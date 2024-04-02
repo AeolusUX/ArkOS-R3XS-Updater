@@ -508,7 +508,7 @@ if [ ! -f "/home/ark/.config/.update03292024" ]; then
 	fi
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
-	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
 	printf "\nUpdate older PortMaster install to address a possible update bug\n" | tee -a "$LOG_FILE"
 	# Only update if our version is a possibly bugged version.
