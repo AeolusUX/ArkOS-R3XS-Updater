@@ -576,7 +576,8 @@ if [ ! -f "/home/ark/.config/.update03302024" ]; then
 	touch "/home/ark/.config/.update03302024"
 	
 fi
-	if [ ! -f "$UPDATE_DONE" ]; then
+
+if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nFix for es_systems.cfg for dual sd card setup\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
@@ -601,7 +602,6 @@ fi
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	
 	touch "$UPDATE_DONE"
-
 	rm -v -- "$0" | tee -a "$LOG_FILE"
 	printf "\033c" >> /dev/tty1
 	msgbox "Updates have been completed.  System will now restart after you hit the A button to continue.  If the system doesn't restart after pressing A, just restart the system manually."
