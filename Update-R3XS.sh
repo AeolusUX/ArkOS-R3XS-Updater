@@ -567,7 +567,7 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	fi
 	echo "@reboot /home/ark/.config/imageshift.sh &" | sudo tee -a /var/spool/cron/crontabs/root
 	sudo mkdir -v /boot/BMPs | tee -a "$LOG_FILE"
-	cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
+	cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 	cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
