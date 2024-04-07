@@ -584,3 +584,6 @@ v2.0 (03/30/2024)
 - Updated apple2.sh script to fix some minor issues (Thanks to Slayer366 for the fixes)
 - Reactivated imageshift function by christian. 
 	Copy all your logos into a BMPs (case sensitive) folder on your fat32 boot partition then it should change to a different logo on every boot.
+
+v2.0 (04/02/2024)
+-Hotfix for es_systems.cfg and dual sd card script.
