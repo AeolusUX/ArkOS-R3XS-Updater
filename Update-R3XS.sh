@@ -632,18 +632,20 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ PPSSPP\ Controls.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /usr/local/bin/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
+		
 	if [ -f "/opt/system/Change LED to Red.sh" ]; then
-		cp -fv /usr/local/bin/Change LED to Red.sh /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
-		cp -fv /usr/local/bin/Change LED to Blue.sh /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/Red.sh /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/Red.sh /usr/local/bin/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/Blue.sh /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
 	else
-		cp -fv /usr/local/bin/Change LED to Blue.sh /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/Blue.sh /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/Blue.sh /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/Red.sh /usr/local/bin/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
     fi
-		cp -fv | tee -a "$LOG_FILE"
 	    sudo chmod -v 0755 "/opt/system/Switch Launchimage to gif.sh" | tee -a "$LOG_FILE"
-	sudo depmod | tee -a "$LOG_FILE"
-	
+		
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	
