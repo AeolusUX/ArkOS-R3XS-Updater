@@ -637,10 +637,16 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		cp -fv /usr/local/bin/Change LED to Blue.sh /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
     fi
-	    sudo chmod -v 0755 "/opt/system/Switch Launchimage to gif.sh" | tee -a "$LOG_FILE"
+	    sudo chmod -v 0755 "/usr/local/bin/Switch Launchimage to gif.sh" | tee -a "$LOG_FILE"
+		sudo chmod -v 0755 "/usr/local/bin/Switch Launchimage to jpg.sh" | tee -a "$LOG_FILE"
+		sudo chmod -v 0755 "/usr/local/bin/Switch Launchimage to ascii.sh" | tee -a "$LOG_FILE"
 		sudo chmod -v 0755 "/usr/local/bin/Change LED to Red.sh" | tee -a "$LOG_FILE"
 		sudo chmod -v 0755 "/usr/local/bin/Change LED to Blue.sh" | tee -a "$LOG_FILE"
+		sudo chmod -v 0777 "/usr/local/bin/perfnorm.pgif" | tee -a "$LOG_FILE"
+		sudo chmod -v 0777 "/usr/local/bin/perfmax.pgif" | tee -a "$LOG_FILE"
+		sudo chmod -v 0755 "/opt/system/Switch Launchimage to gif.sh" | tee -a "$LOG_FILE"
 		sudo chmod -v 0755 "/opt/system/Change Time.sh" | tee -a "$LOG_FILE"
+		
 		sudo depmod
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
