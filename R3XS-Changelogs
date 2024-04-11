@@ -131,3 +131,5 @@ v2.0 (04/11/2024)
 -Further fixes to the es_systems.cfg and dual sd card script. (Re-adding of J2ME thanks for Joanilson for reminding me)
 -Changed "Change LED to Green" script to "Change LED to Blue".
 -Replaced kernel drivers for all wireless devices (Thanks to AmberELEC)
+-Fixed Restore PPSSPP, GZdoom, LZdoom scripts to accomodate the R3XS.
+
