@@ -618,17 +618,20 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  echo $c_brightness > /sys/class/backlight/backlight/brightness
 	  exit 1
 	fi
-
+		
 		sudo rm -fv /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
 		sudo rm -fv /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 		cp -fv /usr/local/bin/es_systems.cfg /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 		cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
 		cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
-		cp -fv /usr/local/bin/Switch Launchimage to gif.sh /opt/system/ | tee -a "$LOG_FILE"
+		sudo chown -v ark:ark /usr/local/bin/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
+		sudo chown -v ark:ark /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
 	if [ -f "/opt/system/Change LED to Red.sh" ]; then
 		cp -fv /usr/local/bin/Change LED to Red.sh /opt/system/ | tee -a "$LOG_FILE"
+		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
 	else
 		cp -fv /usr/local/bin/Change LED to Blue.sh /opt/system/ | tee -a "$LOG_FILE"
+		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
     fi
 	sudo depmod
 	
