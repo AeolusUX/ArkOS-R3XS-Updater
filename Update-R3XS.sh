@@ -647,6 +647,8 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		sudo chmod -v 0777 "/usr/local/bin/perfmax.pgif" | tee -a "$LOG_FILE"
 		sudo chmod -v 0755 "/opt/system/Switch Launchimage to gif.sh" | tee -a "$LOG_FILE"
 		sudo chmod -v 0755 "/opt/system/Change Time.sh" | tee -a "$LOG_FILE"
+		sudo chown -v ark:ark "/opt/system/Switch Launchimage to gif.sh" | tee -a "$LOG_FILE"
+		sudo chown -v ark:ark "/opt/system/Change Time.sh" | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark "/usr/local/bin/perfmax.pgif" | tee -a "$LOG_FILE"
 		sudo depmod
 		
