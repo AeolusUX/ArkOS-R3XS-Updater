@@ -606,13 +606,12 @@ fi
 if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nAdd Change Time Script \nRename Change LED to Blue instead of Green \nAdd Support for Animated Launch Images \nReplace Kernel Drivers for WiFi from AmberElec \nAdded J2ME Support on es_systems.cfg \nFix Restore Scripts" | tee -a "$LOG_FILE"
-	sudo chown -Rv ark:ark /usr/lib/modules/4.4.189/kernel/drivers/net/wireless | tee -a "$LOG_FILE"
+	sudo rm -rf /usr/lib/modules/4.4.189/kernel/drivers/net/wireless/*
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/04112024/arkosupdate04112024.zip -O /dev/shm/arkosupdate04112024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate04112024.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate04112024.zip" ]; then
       sudo unzip -X -o /dev/shm/arkosupdate04112024.zip -d / | tee -a "$LOG_FILE"
 	  sudo rm -fv /dev/shm/arkosupdate04112024.zip | tee -a "$LOG_FILE"
-	sudo chown -Rv root:root /usr/lib/modules/4.4.189/kernel/drivers/net/wireless | tee -a "$LOG_FILE"
 	else
 	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
 	  sudo rm -fv /dev/shm/arkosupdate04112024.z* | tee -a "$LOG_FILE"
@@ -627,6 +626,9 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
 		cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 		sudo rm /usr/local/bin/Change\ LED\ to\ Green.sh | tee -a "$LOG_FILE"
+		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ GZdoom\ Settings.sh | tee -a "$LOG_FILE"
+		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ LZdoom\ Settings.sh | tee -a "$LOG_FILE"
+		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ PPSSPP\ Controls.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /usr/local/bin/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
 	if [ -f "/opt/system/Change LED to Red.sh" ]; then
