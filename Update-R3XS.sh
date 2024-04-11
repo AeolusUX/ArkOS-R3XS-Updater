@@ -607,7 +607,8 @@ if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nAdd Change Time Script \nRename Change LED to Blue instead of Green \nAdd Support for Animated Launch Images \nReplace Kernel Drivers for WiFi from AmberElec \nAdded J2ME Support on es_systems.cfg \nFix Restore Scripts" | tee -a "$LOG_FILE"
 	sudo rm -rf /usr/lib/modules/4.4.189/kernel/drivers/net/wireless/*
-		sudo rm -rf /dev/shm/*
+	sudo chown -Rv ark:ark /usr/lib/modules/4.4.189/kernel/drivers/net/wireless/ | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
 	tmp_mem_size=$(df -h /dev/shm | grep shm | awk '{print $2}' | cut -d 'M' -f1)
 	if [ ${tmp_mem_size} -lt 450 ]; then
 	  printf "\nTemporarily raising temp memory storage for this large update\n" | tee -a "$LOG_FILE"
