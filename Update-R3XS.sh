@@ -606,14 +606,7 @@ fi
 if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nAdd Change Time Script \nRename Change LED to Blue instead of Green \nAdd Support for Animated Launch Images \nReplace Kernel Drivers for WiFi from AmberElec \nAdded J2ME Support on es_systems.cfg \nFix Restore Scripts" | tee -a "$LOG_FILE"
-	sudo rm -rf /usr/lib/modules/4.4.189/kernel/drivers/net/wireless/*
-	sudo chown -Rv ark:ark /usr/lib/modules/4.4.189/kernel/drivers/net/wireless/ | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
-	tmp_mem_size=$(df -h /dev/shm | grep shm | awk '{print $2}' | cut -d 'M' -f1)
-	if [ ${tmp_mem_size} -lt 450 ]; then
-	  printf "\nTemporarily raising temp memory storage for this large update\n" | tee -a "$LOG_FILE"
-	  sudo mount -o remount,size=450M /dev/shm
-	fi
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/04112024/arkosupdate04112024.zip -O /dev/shm/arkosupdate04112024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate04112024.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate04112024.zip" ]; then
       sudo unzip -X -o -v /dev/shm/arkosupdate04112024.zip -d / | tee -a "$LOG_FILE"
@@ -625,13 +618,18 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  echo $c_brightness > /sys/class/backlight/backlight/brightness
 	  exit 1
 	fi
-		
+		touch /usr/local/bin/perfnorm.pgif
+		touch /usr/local/bin/perfmax.pgif
+		touch "/usr/local/bin/Change LED to Blue.sh"
+		touch "/usr/local/bin/Switch Launchimage to gif.sh"
 		sudo rm -fv /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
 		sudo rm -fv /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 		cp -fv /usr/local/bin/es_systems.cfg /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 		cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
 		cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+		sudo rm /usr/local/bin/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
 		sudo rm /usr/local/bin/Change\ LED\ to\ Green.sh | tee -a "$LOG_FILE"
+		
 		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ GZdoom\ Settings.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ LZdoom\ Settings.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ PPSSPP\ Controls.sh | tee -a "$LOG_FILE"
@@ -639,12 +637,13 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		sudo chown -v ark:ark /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
 	if [ -f "/opt/system/Change LED to Red.sh" ]; then
 		cp -fv /usr/local/bin/Change LED to Red.sh /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
-		cp -fv /usr/local/bin/Change LED to Blue.sh /usr/local/bin/Change LED to Blue.sh | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/Change LED to Blue.sh /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
 	else
 		cp -fv /usr/local/bin/Change LED to Blue.sh /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
     fi
+		cp -fv | tee -a "$LOG_FILE"
 	    sudo chmod -v 0755 "/opt/system/Switch Launchimage to gif.sh" | tee -a "$LOG_FILE"
 	sudo depmod | tee -a "$LOG_FILE"
 	
