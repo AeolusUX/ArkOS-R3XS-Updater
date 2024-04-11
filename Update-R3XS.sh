@@ -623,7 +623,6 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		sudo rm -fv /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 		sudo rm -fv "/usr/local/bin/Change LED to Green.sh" | tee -a "$LOG_FILE"
 		sudo rm -fv "/opt/system/Change LED to Red.sh" | tee -a "$LOG_FILE"
-		wait
 		
 		cp -fv /usr/local/bin/es_systems.cfg /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 		
