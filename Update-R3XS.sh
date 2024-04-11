@@ -634,6 +634,7 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		cp -fv /usr/local/bin/Change LED to Blue.sh /opt/system/ | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
     fi
+	    sudo chmod -v 0777 "/opt/system/Switch Launchimage to gif.sh" | tee -a "$LOG_FILE"
 		cp -Rfv /usr/lib/modules/4.4.189/kernel/drivers/net/wireless /usr/lib/modules/4.4.189/kernel/drivers/net/wireless | tee -a "$LOG_FILE"
 	sudo depmod
 	
