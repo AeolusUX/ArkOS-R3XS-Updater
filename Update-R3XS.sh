@@ -622,6 +622,7 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		sudo rm -fv /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
 		sudo rm -fv /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 		sudo rm -fv /usr/local/bin/Change LED to Green.sh | tee -a "$LOG_FILE"
+		sudo rm -fv /opt/system/Change LED to Red.sh | tee -a "$LOG_FILE"
 		
 		cp -fv /usr/local/bin/es_systems.cfg /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 		
@@ -629,14 +630,14 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ LZdoom\ Settings.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ PPSSPP\ Controls.sh | tee -a "$LOG_FILE"
 		
-	if [ -f "/opt/system/Change LED to Red.sh" ]; then
-		sudo rm -fv /usr/local/bin/Change LED to Red.sh | tee -a "$LOG_FILE"
-		cp -fv /usr/local/bin/Change LED to Red.sh /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
-		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
-	else
+	if [ -f "/opt/system/Change LED to Blue.sh" ]; then
 		cp -fv /usr/local/bin/Change LED to Blue.sh /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
+	else
+		cp -fv /usr/local/bin/Change LED to Red.sh /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
+		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
     fi
+	
 	    sudo chmod -v 0755 "/usr/local/bin/Switch Launchimage to gif.sh" | tee -a "$LOG_FILE"
 		sudo chmod -v 0755 "/usr/local/bin/Switch Launchimage to jpg.sh" | tee -a "$LOG_FILE"
 		sudo chmod -v 0755 "/usr/local/bin/Switch Launchimage to ascii.sh" | tee -a "$LOG_FILE"
@@ -646,8 +647,9 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		sudo chmod -v 0777 "/usr/local/bin/perfmax.pgif" | tee -a "$LOG_FILE"
 		sudo chmod -v 0755 "/opt/system/Switch Launchimage to gif.sh" | tee -a "$LOG_FILE"
 		sudo chmod -v 0755 "/opt/system/Change Time.sh" | tee -a "$LOG_FILE"
-		
+		sudo chown -v ark:ark "/usr/local/bin/perfmax.pgif" | tee -a "$LOG_FILE"
 		sudo depmod
+		
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	
