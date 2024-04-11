@@ -607,6 +607,10 @@ if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nAdd Change Time Script \nRename Change LED to Blue instead of Green \nAdd Support for Animated Launch Images \nReplace Kernel Drivers for WiFi from AmberElec \nAdded J2ME Support on es_systems.cfg \nFix Restore Scripts" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
+	touch /usr/local/bin/perfnorm.pgif
+	touch /usr/local/bin/perfmax.pgif
+	touch "/usr/local/bin/Change LED to Blue.sh"
+	touch "/usr/local/bin/Switch Launchimage to gif.sh"
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/04112024/arkosupdate04112024.zip -O /dev/shm/arkosupdate04112024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate04112024.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate04112024.zip" ]; then
       sudo unzip -X -o /dev/shm/arkosupdate04112024.zip -d / | tee -a "$LOG_FILE"
@@ -618,10 +622,7 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  echo $c_brightness > /sys/class/backlight/backlight/brightness
 	  exit 1
 	fi
-		touch /usr/local/bin/perfnorm.pgif
-		touch /usr/local/bin/perfmax.pgif
-		touch "/usr/local/bin/Change LED to Blue.sh"
-		touch "/usr/local/bin/Switch Launchimage to gif.sh"
+
 		sudo rm -fv /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
 		sudo rm -fv /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 		cp -fv /usr/local/bin/es_systems.cfg /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
