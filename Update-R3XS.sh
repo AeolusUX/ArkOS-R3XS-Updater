@@ -621,27 +621,32 @@ if [ ! -f "$UPDATE_DONE" ]; then
 
 		sudo rm -fv /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
 		sudo rm -fv /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
-		cp -fv /usr/local/bin/es_systems.cfg /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
-		cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
-		cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+		
+		cp -fv /roms/launchimages/launchimages.gif /roms/launchimages/loading.gif | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/es_systems.cfg.d /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/es_systems.cfg.1 /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/es_systems.cfg.2 /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/jpglaunch.sh /usr/local/bin/Switch\ Launchimage\ to\ jpg.sh | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/giflaunch.sh /usr/local/bin/Switch\ Launchimage\ to\ ascii.sh | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/asciilaunch.sh /usr/local/bin/Switch\ Launchimage\ to\ gif.sh | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/perfnormpgif /usr/local/bin/perfnorm.pgif | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/perfmaxpgif /usr/local/bin/perfmax.pgif | tee -a "$LOG_FILE"
+		
 		sudo rm /usr/local/bin/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
 		sudo rm /usr/local/bin/Change\ LED\ to\ Green.sh | tee -a "$LOG_FILE"
 		
 		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ GZdoom\ Settings.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ LZdoom\ Settings.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Advanced/Restore\ Default\ PPSSPP\ Controls.sh | tee -a "$LOG_FILE"
-		sudo chown -v ark:ark /usr/local/bin/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
-		sudo chown -v ark:ark /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
+		
+		cp -fv /usr/local/bin/Red.sh /usr/local/bin/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/Blue.sh /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
 		
 	if [ -f "/opt/system/Change LED to Red.sh" ]; then
 		cp -fv /usr/local/bin/Red.sh /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
-		cp -fv /usr/local/bin/Red.sh /usr/local/bin/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
-		cp -fv /usr/local/bin/Blue.sh /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
 	else
 		cp -fv /usr/local/bin/Blue.sh /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
-		cp -fv /usr/local/bin/Blue.sh /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
-		cp -fv /usr/local/bin/Red.sh /usr/local/bin/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
     fi
 	    sudo chmod -v 0755 "/opt/system/Switch Launchimage to gif.sh" | tee -a "$LOG_FILE"
