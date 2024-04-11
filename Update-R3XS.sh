@@ -616,7 +616,7 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	fi
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/04112024/arkosupdate04112024.zip -O /dev/shm/arkosupdate04112024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate04112024.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate04112024.zip" ]; then
-      sudo unzip -X -o /dev/shm/arkosupdate04112024.zip -d / | tee -a "$LOG_FILE"
+      sudo unzip -X -o -v /dev/shm/arkosupdate04112024.zip -d / | tee -a "$LOG_FILE"
 	  sudo rm -fv /dev/shm/arkosupdate04112024.zip | tee -a "$LOG_FILE"
 	else
 	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
