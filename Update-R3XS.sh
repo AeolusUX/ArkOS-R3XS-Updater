@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-UPDATE_DATE="04022024"
+UPDATE_DATE="04112024"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
 
@@ -22,7 +22,7 @@ if [ "$ISITCHINA" = "\"country\":\"China\"" ]; then
   LOCATION="https://raw.githubusercontent.com/AeolusUX/ArkOS-R3XS-Updater/main"
 fi
 
-sudo msgbox "ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
+sudo msgbox "MAKE SURE YOU SWITCHED TO MAIN SD FOR ROMS BEFORE YOU RUN THIS UPDATE. ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
 my_var=`osk "Enter OK here to proceed." | tail -n 1`
 
 echo "$my_var" | tee -a "$LOG_FILE"
@@ -577,7 +577,7 @@ if [ ! -f "/home/ark/.config/.update03302024" ]; then
 	
 fi
 
-if [ ! -f "$UPDATE_DONE" ]; then
+if [ ! -f "/home/ark/.config/.update04022024" ]; then
 
 	printf "\nFix for es_systems.cfg for dual sd card setup\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
@@ -601,7 +601,42 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	
+	touch "/home/ark/.config/.update04022024"
+fi
+if [ ! -f "$UPDATE_DONE" ]; then
+
+	printf "\nAdd Change Time Script \nRename Change LED to Blue instead of Green \nAdd Support for Animated Launch Images \nReplace Kernel Drivers for WiFi from AmberElec \nAdded J2ME Support on es_systems.cfg \nFix Restore Scripts" | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/04112024/arkosupdate04022024.zip -O /dev/shm/arkosupdate04112024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate04112024.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate04112024.zip" ]; then
+      sudo unzip -X -o /dev/shm/arkosupdate04112024.zip -d / | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate04112024.zip | tee -a "$LOG_FILE"
+	else
+	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate04112024.z* | tee -a "$LOG_FILE"
+	  sleep 3
+	  echo $c_brightness > /sys/class/backlight/backlight/brightness
+	  exit 1
+	fi
+
+		sudo rm -fv /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
+		sudo rm -fv /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/es_systems.cfg /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg.single | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/Switch Launchimage to gif.sh /opt/system/ | tee -a "$LOG_FILE"
+	if [ -f "/opt/system/Change LED to Red.sh" ]; then
+		cp -fv /usr/local/bin/Change LED to Red.sh /opt/system/ | tee -a "$LOG_FILE"
+	else
+		cp -fv /usr/local/bin/Change LED to Blue.sh /opt/system/ | tee -a "$LOG_FILE"
+    fi
+	sudo depmod
+	
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
+	
 	touch "$UPDATE_DONE"
+	
 	rm -v -- "$0" | tee -a "$LOG_FILE"
 	printf "\033c" >> /dev/tty1
 	msgbox "Updates have been completed.  System will now restart after you hit the A button to continue.  If the system doesn't restart after pressing A, just restart the system manually."
