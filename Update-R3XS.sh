@@ -607,7 +607,12 @@ if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nAdd Change Time Script \nRename Change LED to Blue instead of Green \nAdd Support for Animated Launch Images \nReplace Kernel Drivers for WiFi from AmberElec \nAdded J2ME Support on es_systems.cfg \nFix Restore Scripts" | tee -a "$LOG_FILE"
 	sudo rm -rf /usr/lib/modules/4.4.189/kernel/drivers/net/wireless/*
-	sudo rm -rf /dev/shm/*
+		sudo rm -rf /dev/shm/*
+	tmp_mem_size=$(df -h /dev/shm | grep shm | awk '{print $2}' | cut -d 'M' -f1)
+	if [ ${tmp_mem_size} -lt 450 ]; then
+	  printf "\nTemporarily raising temp memory storage for this large update\n" | tee -a "$LOG_FILE"
+	  sudo mount -o remount,size=450M /dev/shm
+	fi
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/04112024/arkosupdate04112024.zip -O /dev/shm/arkosupdate04112024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate04112024.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate04112024.zip" ]; then
       sudo unzip -X -o /dev/shm/arkosupdate04112024.zip -d / | tee -a "$LOG_FILE"
