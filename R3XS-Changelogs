@@ -123,3 +123,11 @@ v2.0 (03/30/2024)
 
 v2.0 (04/02/2024)
 -Hotfix for es_systems.cfg and dual sd card script.
+
+v2.0 (04/11/2024)
+-Added support to using GIF for Launch Images
+-Added ability to Change Time (Thanks to Rolen47) 
+ -Your device MUST NOT be connected to the internet for the time and date changes to stay because the time is automatically corrected when connected to the internet.
+-Further fixes to the es_systems.cfg and dual sd card script. (Re-adding of J2ME thanks for Joanilson for reminding me)
+-Changed "Change LED to Green" script to "Change LED to Blue".
+-Replaced kernel drivers for all wireless devices (Thanks to AmberELEC)
