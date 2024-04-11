@@ -632,9 +632,11 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		
 	if [ -f "/opt/system/Change LED to Blue.sh" ]; then
 		cp -fv "/usr/local/bin/Change LED to Blue.sh" "/opt/system/Change LED to Blue.sh" | tee -a "$LOG_FILE"
+		sudo chmod -v 0777 "/opt/system/Change LED to Blue.sh" | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark "/opt/system/Change LED to Blue.sh" | tee -a "$LOG_FILE"
 	else
 		cp -fv "/usr/local/bin/Change LED to Red.sh" "/opt/system/Change LED to Red.sh" | tee -a "$LOG_FILE"
+		sudo chmod -v 0777 "/opt/system/Change LED to Red.sh" | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark "/opt/system/Change LED to Red.sh" | tee -a "$LOG_FILE"
 	fi
 
