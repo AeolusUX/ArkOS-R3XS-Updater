@@ -628,11 +628,13 @@ if [ ! -f "$UPDATE_DONE" ]; then
 		sudo chown -v ark:ark /usr/local/bin/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
 	if [ -f "/opt/system/Change LED to Red.sh" ]; then
 		cp -fv /usr/local/bin/Change LED to Red.sh /opt/system/ | tee -a "$LOG_FILE"
+		cp -fv /usr/local/bin/Change LED to Blue.sh /usr/local/bin/Change LED to Blue.sh | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Red.sh | tee -a "$LOG_FILE"
 	else
 		cp -fv /usr/local/bin/Change LED to Blue.sh /opt/system/ | tee -a "$LOG_FILE"
 		sudo chown -v ark:ark /opt/system/Change\ LED\ to\ Blue.sh | tee -a "$LOG_FILE"
     fi
+		cp -Rfv /usr/lib/modules/4.4.189/kernel/drivers/net/wireless /usr/lib/modules/4.4.189/kernel/drivers/net/wireless | tee -a "$LOG_FILE"
 	sudo depmod
 	
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
