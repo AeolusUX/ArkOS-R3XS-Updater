@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-UPDATE_DATE="04112024"
+UPDATE_DATE="04242024"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
 
