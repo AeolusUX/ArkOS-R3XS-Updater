@@ -721,6 +721,8 @@ if [ ! -f "/home/ark/.config/.update04112024" ]; then
 	  sudo mv -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
 	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
 	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
+	  sudo chmod -v 755 /opt/ppsspp-2021/PPSSPPSDL*
+	  sudo depmod
 	elif [ -f "/boot/rk3326-odroidgo2-linux.dtb" ] || [ -f "/boot/rk3326-odroidgo2-linux-v11.dtb" ] || [ -f "/boot/rk3326-odroidgo3-linux.dtb" ]; then
 	  test=$(stat -c %s "/usr/bin/emulationstation/emulationstation")
 	  if [ "$test" = "3416928" ]; then
@@ -742,7 +744,6 @@ if [ ! -f "/home/ark/.config/.update04112024" ]; then
 	  sudo mv -fv /home/ark/emulationstation.503 /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
 	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
 	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
-	  sudo depmod
 	fi
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
