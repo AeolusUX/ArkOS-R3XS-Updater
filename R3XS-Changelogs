@@ -148,3 +148,25 @@ v2.0 (04/24/2024)
 - Fixed ppsspp-2021 gui (Thanks to AmberElec for guidance)
 - Added es_systems.cfg.dual that has been deleted last update
 - Revert some wireless drivers that are working for ArkOS before
+
+v2.0 (05/24/2024)
+- Updated SDL to 2.0.30.3
+- Updated Mupen64plus Standalone
+- Updated Hypseus-singe to 2.11.2
+- Updated FileBrowser to version 2.30.0
+- Updated Emulationstation to correct some spelling issues (Thanks to lauren7ino for the find)
+- Updated gamecontrollerdb.txt for inttools
+- Updated Wifi.sh script to correct some issues
+- Fixed issue where the second SD card that is setup for use for JELOS and maybe ROCKNIX may have their contents deleted if used with ArkOS
+- Added ability to change game loading image to a scraped marquee, thumb or image if available for the game. (Thanks to leon for the idea)
+  - Just go to the Start>UI Settings>Game Loading Image and select default (for the default ArkOS loading image), marquee, image, or thumb option.
+  - Make sure Game Loading Image Mode is set to PIC
+- Added ability to use an alternate SDL2 version for Portmaster games
+  - Just use the Change Ports SDL tool located in the Options>Advanced section
+- Reverted Back to old wifi drivers from the last stable one.
+- ScummVM launch is being prevented from last update so setting it to executable to fix.
+- Re-installed freeglut for Yabasanshiro.
+- Revamped how gif images are used as launchimage according to latest arkos update and added ability to use mp4 as launch animation.
+	-Add the launch animations to /roms/launchimages/ folder as loading.gif and loading.mp4 respectively.
+- Fixed drastic.cfg error to fix FN+Select not working for exiting drastic.
+
