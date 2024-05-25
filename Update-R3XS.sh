@@ -792,10 +792,11 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  exit 1
 	fi
 	
-	printf "\nInstall Freeglut3 for Yabasanshiro\n \n chmod and depmod \n" | tee -a "$LOG_FILE"
+	printf "\nInstall Freeglut3 for Yabasanshiro\n \n Fix permissions and dependency modules\n" | tee -a "$LOG_FILE"
 	apt-get install freeglut3
 	sudo chown -R ark:ark /home/ark && sudo chmod -R 755 /home/ark
 	sudo chown -R ark:ark /opt && sudo chmod -R 755 /opt
+	sudo chmod -v 0755 "/usr/local/bin/n64.sh" | tee -a "$LOG_FILE"
 	sudo depmod
 	
 	if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
