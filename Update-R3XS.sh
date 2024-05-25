@@ -794,22 +794,8 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	
 	printf "\nInstall Freeglut3 for Yabasanshiro\n \n chmod and depmod \n" | tee -a "$LOG_FILE"
 	apt-get install freeglut3
-	sudo chown -v ark:ark "/opt/system/Advanced/Controller Tester.sh" | tee -a "$LOG_FILE"
-	sudo chown -v ark:ark "/opt/system/Advanced/Change Ports SDL.sh" | tee -a "$LOG_FILE"
-	sudo chown -v ark:ark "/opt/system/Set Launch Image to GIF.sh" | tee -a "$LOG_FILE"
-	sudo chown -v ark:ark "/opt/system/Set Launch Image to VID.sh" | tee -a "$LOG_FILE"
-	sudo chown -v ark:ark "/opt/system/Set Launch Image to PIC.sh" | tee -a "$LOG_FILE"
-	sudo chown -v ark:ark "/opt/system/Wifi.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0777 "/opt/system/Advanced/Controller Tester.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0777 "/opt/system/Advanced/Change Ports SDL.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0777 "/opt/system/Set Launch Image to GIF.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0777 "/opt/system/Set Launch Image to PIC.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0777 "/opt/system/Set Launch Image to VID.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0777 "/opt/system/Wifi.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0777 "/opt/system/Advanced/Restore Default GZdoom Settings.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0777 "/opt/system/Advanced/Restore Default LZdoom Settings.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0777 "/opt/system/Advanced/Restore Default PPSSPP Controls.sh" | tee -a "$LOG_FILE"
-	sudo chmod +x /opt/scummvm/scummvm
+	sudo chown -R ark:ark /home/ark && sudo chmod -R 755 /home/ark
+	sudo chown -R ark:ark /opt && sudo chmod -R 755 /opt
 	sudo depmod
 	
 	if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
