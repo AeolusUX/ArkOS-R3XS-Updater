@@ -168,4 +168,3 @@ v2.0 (05/24/2024)
 - Re-installed freeglut for Yabasanshiro.
 - Revamped how gif images are used as launchimage according to latest arkos update and added ability to use mp4 as launch animation.
 	-Add the launch animations to /roms/launchimages/ folder as loading.gif and loading.mp4 respectively.
-- Fixed drastic.cfg error to fix FN+Select not working for exiting drastic.

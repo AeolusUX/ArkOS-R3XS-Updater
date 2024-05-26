@@ -797,6 +797,19 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	sudo chown -R ark:ark /home/ark && sudo chmod -R 755 /home/ark
 	sudo chown -R ark:ark /opt && sudo chmod -R 755 /opt
 	sudo chmod -v 0755 "/usr/local/bin/n64.sh" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/usr/local/bin/perfmax.pic" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/usr/local/bin/perfmax.pgif" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/usr/local/bin/perfmax.pvid" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/usr/local/bin/perfnorm.pic" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/usr/local/bin/perfnorm.pgif" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/usr/local/bin/perfnorm.pvid" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/usr/local/bin/Set Launchimage to ascii or pic.sh" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/usr/local/bin/Set Launchimage to gif.sh" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/usr/local/bin/Set Launchimage to vid.sh" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/usr/local/bin/es_systems.cfg" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/usr/local/bin/es_systems.cfg.dual" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/opt/system/Set Launchimage to gif.sh" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/opt/system/Set Launchimage to vid.sh" | tee -a "$LOG_FILE"
 	sudo depmod
 	
 	if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
