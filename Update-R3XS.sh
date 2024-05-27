@@ -792,26 +792,6 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  exit 1
 	fi
 	
-	printf "\nInstall Freeglut3 for Yabasanshiro\n \n Fix permissions and dependency modules\n" | tee -a "$LOG_FILE"
-	apt-get install freeglut3
-	sudo chown -R ark:ark /home/ark && sudo chmod -R 755 /home/ark
-	sudo chown -R ark:ark /opt && sudo chmod -R 755 /opt
-	sudo chmod -v 0755 "/usr/local/bin/n64.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/usr/local/bin/perfmax.pic" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/usr/local/bin/perfmax.pgif" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/usr/local/bin/perfmax.pvid" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/usr/local/bin/perfnorm.pic" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/usr/local/bin/perfnorm.pgif" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/usr/local/bin/perfnorm.pvid" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/usr/local/bin/Set Launchimage to ascii or pic.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/usr/local/bin/Set Launchimage to gif.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/usr/local/bin/Set Launchimage to vid.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/usr/local/bin/es_systems.cfg" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/usr/local/bin/es_systems.cfg.dual" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/opt/system/Set Launchimage to gif.sh" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 "/opt/system/Set Launchimage to vid.sh" | tee -a "$LOG_FILE"
-	sudo depmod
-	
 	if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
 		sudo mv "/opt/system/Advanced/Read from SD1 and SD2 for Roms.sh" "/opt/system/Advanced/Read from SD1 and SD2 for Roms"
 	else
@@ -899,6 +879,15 @@ rm -fv /opt/system/Switch\ Launchimage\ to* | tee -a "$LOG_FILE"
 	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
 	fi
 
+	printf "\nInstall Freeglut3 for Yabasanshiro\n \n Fix permissions and dependency modules\n" | tee -a "$LOG_FILE"
+	apt-get install freeglut3
+	sudo chown -R ark:ark /home/ark && sudo chmod -R 755 /home/ark | tee -a "$LOG_FILE"
+	sudo chown -R ark:ark /opt && sudo chmod -R 755 /opt | tee -a "$LOG_FILE"
+	sudo chmod -R 755 /usr/local/bin/ | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/opt/system/Set Launchimage to gif.sh" | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 "/opt/system/Set Launchimage to vid.sh" | tee -a "$LOG_FILE"
+	sudo depmod
+	
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
