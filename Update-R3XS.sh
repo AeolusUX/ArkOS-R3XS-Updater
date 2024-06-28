@@ -892,6 +892,7 @@ rm -fv /opt/system/Switch\ Launchimage\ to* | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
 	touch "/home/ark/.config/.update05242024"
+	fi
 	
 	if [ ! -f "$UPDATE_DONE" ]; then
 
