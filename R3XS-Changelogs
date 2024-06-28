@@ -168,3 +168,23 @@ v2.0 (05/24/2024)
 - Re-installed freeglut for Yabasanshiro.
 - Revamped how gif images are used as launchimage according to latest arkos update and added ability to use mp4 as launch animation.
 	-Add the launch animations to /roms/launchimages/ folder as loading.gif and loading.mp4 respectively.
+
+v2.0 (06/27/2024)
+- Updated Retroarch and Retroarch32 to 1.19.1 (e51a316)
+- Updated Emulationstation to fix not being able to show content in a subfolder named Sports (Thanks to evanation for reporting the issue)
+- Updated ondemand cpu governor up_threshold and sampling_down_factor to 85 and 150 respectively to smooth out game play when using this governor (Thanks to chronoreverse for the tip)
+- Updated N64 to add support for 7z and zip files
+- Fixed being able to set a performance governor for Atari ST emulation
+- Fixed Retroarch and Retroarch32 missing reboot and shutdown options (Thanks to Swift Outlaw for reporting the issue)
+- Fixed ALG no longer launching since last update
+- Fixed Update Games Lists option returns to corrupt game list for fade transition (Thanks to Zomgugoff for reporting the issue and confirming the fix)
+- Added Ardens libretro core as an addittional core for Arduboy
+- Added Japanese translation for Emulationstation (Thanks to alhumbra for the translation)
+- Added the ability to hide extensions per system (Thanks to Batocera for the solution)
+  - While in a system, press the start button then go to UI Settings then go to Theme Configuration then File Extensions
+- Updated mupen64plus.ini file to latest.
+- Added balanced and performance mode for standalone-GlideN64 as cores for easy switching. (Thanks to up_whatever for this)
+- Added the ability to use the dpad as analog sticks for mupen64plus
+- Added 5 new layouts for Drastic (Thanks to kane159 for making this possible)
+	- Only two layouts is allowed for the screen switcher so you have to select two layouts from 
+	  /roms/nds/bgoptions/ folderand put two on your /roms/nds/bg/ folder.
