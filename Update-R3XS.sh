@@ -27,7 +27,7 @@ my_var=`osk "Enter OK here to proceed." | tail -n 1`
 
 echo "$my_var" | tee -a "$LOG_FILE"
 
-if [ "$my_var" != "test" ] && [ "$my_var" != "test" ]; then
+if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
   sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
   printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"
   exit 187
