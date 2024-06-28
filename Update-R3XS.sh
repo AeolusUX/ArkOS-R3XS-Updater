@@ -27,7 +27,7 @@ my_var=`osk "Enter OK here to proceed." | tail -n 1`
 
 echo "$my_var" | tee -a "$LOG_FILE"
 
-if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
+if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
   sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
   printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"
   exit 187
@@ -963,7 +963,12 @@ rm -fv /opt/system/Switch\ Launchimage\ to* | tee -a "$LOG_FILE"
 	  sudo mv -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
 	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
 	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
-
+	  
+	printf "\nFix Permissions\n" | tee -a "$LOG_FILE"
+	  sudo chmod -R 755 /usr/local/bin/ | tee -a "$LOG_FILE"
+	  sudo chmod -v 755 /opt/mupen64plus/InputAutoCfg.ini | tee -a "$LOG_FILE"
+	  sudo chmod -v 755 /opt/mupen64plus/mupen64plus.ini | tee -a "$LOG_FILE"
+	  
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 

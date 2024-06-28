@@ -183,7 +183,6 @@ v2.0 (06/27/2024)
 - Added the ability to hide extensions per system (Thanks to Batocera for the solution)
   - While in a system, press the start button then go to UI Settings then go to Theme Configuration then File Extensions
 - Updated mupen64plus.ini file to latest.
-- Added balanced and performance mode for standalone-GlideN64 as cores for easy switching. (Thanks to up_whatever for this)
 - Added the ability to use the dpad as analog sticks for mupen64plus
 - Added 5 new layouts for Drastic (Thanks to kane159 for making this possible)
 	- Only two layouts is allowed for the screen switcher so you have to select two layouts from 
