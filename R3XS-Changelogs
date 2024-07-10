@@ -186,4 +186,13 @@ v2.0 (06/27/2024)
 - Added the ability to use the dpad as analog sticks for mupen64plus
 - Added 5 new layouts for Drastic (Thanks to kane159 for making this possible)
 	- Only two layouts is allowed for the screen switcher so you have to select two layouts from 
-	  /roms/nds/bgoptions/ folderand put two on your /roms/nds/bg/ folder.
+	  /roms/nds/bg/optional/ folder and put two on your /roms/nds/bg/ folder.
+	  
+v2.0 (07/04/2024)
+- Fixed Emulationstation slow loading when many ports are installed
+- Fixed game count when extensions are filtered
+- Added FBNeo xtreme amped libretro core for various arcade systems where libretro fbneo core is available (Thanks to KMFDManic for the modification and recommendation)
+  - May improve performance on rk3566 devices 
+    with certain CAVE games like Deathsmile and 
+    Mushihime-sama.  For Deathsmile, set
+    Blitter Delay to 128 in Core Options>Dip Switches.
