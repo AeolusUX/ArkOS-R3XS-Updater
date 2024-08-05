@@ -975,7 +975,7 @@ rm -fv /opt/system/Switch\ Launchimage\ to* | tee -a "$LOG_FILE"
 	touch "$/home/ark/.config/.update06272024"
 fi
 
-if [ ! -f "$UPDATE_DONE" ]; then
+if [ ! -f "/home/ark/.config/.update07042024" ]; then
 
 	printf "\nFix slow loading of ES when many ports are loaded and game count when filtering extensions\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
@@ -1008,9 +1008,56 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
-	touch "$UPDATE_DONE"
+	touch "/home/ark/.config/.update07042024"
 
+	if [ ! -f "$UPDATE_DONE" ]; then
+
+	printf "\nUpdate French translation for Emulationstation\nUpdate Korean translation for Emulationstation\nUpdate Spanish translation for Emulationstation\nUpdate Portuguese translation for Emulationstation\nUpdate emulationstation to fix translation for gamelist option video\nAdd Sharp-Shimmerless-Shader for retroarch and retroarch32\n" | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/07312024/arkosupdate07312024.zip -O /dev/shm/arkosupdate07312024.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate07312024.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate07312024.zip" ]; then
+		if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
+		  sudo unzip -X -o /dev/shm/arkosupdate07312024.zip -d / | tee -a "$LOG_FILE"
+		else
+		  sudo unzip -X -o /dev/shm/arkosupdate07312024.zip -x opt/mupen64plus/mupen64plus-video-rice.so -d / | tee -a "$LOG_FILE"
+		fi
+	  sudo rm -fv /dev/shm/arkosupdate07312024.zip | tee -a "$LOG_FILE"
+	else
+	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate07312024.z* | tee -a "$LOG_FILE"
+	  sleep 3
+	  echo $c_brightness > /sys/class/backlight/backlight/brightness
+	  exit 1
+	fi
 	
+	if test -z "$(grep "chimerasnes" /etc/emulationstation/es_systems.cfg | tr -d '\0')"
+	then
+		cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update07312024.bak | tee -a "$LOG_FILE"
+		sed -i '/<core>snes9x2010<\/core>/c\\t\t\t  <core>snes9x2010<\/core>\n\t\t\t  <core>chimerasnes<\/core>' /etc/emulationstation/es_systems.cfg
+	fi
+
+	if [ ! -z "$(grep "RGB30" /home/ark/.config/.DEVICE | tr -d '\0')" ]; then
+		if test -z "$(grep "VerticalOffset" /home/ark/.config/mupen64plus/mupen64plus.cfg | tr -d '\0')"
+		then
+		  printf "\nAdd vertical offset setting for Mupen64plus standalone for RGB30\n" | tee -a "$LOG_FILE"
+		  sed -i "/\[Video-Rice\]/c\\[Video-Rice\]\n\n\# Hack to adjust vertical offset for screens like on the RGB30\nVerticalOffset \= \"125\"" /home/ark/.config/mupen64plus/mupen64plus.cfg
+		fi
+	fi
+
+	printf "\nCopy correct emulationstation depending on device\n" | tee -a "$LOG_FILE"
+	  sudo mv -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
+	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
+	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
+
+	if [ ! -z "$(cat /etc/emulationstation/es_input.cfg | grep "190000004b4800000010000001010000" | tr -d '\0')" ]; then
+		printf "\nUpdate option 9 description in BaRT to include V10\n" | tee -a "$LOG_FILE"
+		sudo sed -i "/RGB10 mode/s//RGB10\/V10 mode/" /usr/bin/emulationstation/emulationstation.sh*
+	fi
+
+	sudo chmod -R 755 /usr/local/bin/ | tee -a "$LOG_FILE"
+	
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	
 	rm -v -- "$0" | tee -a "$LOG_FILE"
 	printf "\033c" >> /dev/tty1
@@ -1019,3 +1066,7 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	sudo reboot
 	exit 187
 fi
+
+
+
+
