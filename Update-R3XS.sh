@@ -1061,6 +1061,7 @@ if [ ! -f "/home/ark/.config/.update07312024" ]; then
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
 	touch "/home/ark/.config/.update07312024"
+fi
 
 if [ ! -f "$UPDATE_DONE" ]; then
 
@@ -1255,23 +1256,12 @@ if [ ! -f "$UPDATE_DONE" ]; then
       rm -fv /opt/fake08/fake08.rk3566 | tee -a "$LOG_FILE"
 
 
-	if [ "$(cat ~/.config/.DEVICE)" = "RGB30" ]; then
-	  printf "\nUpdate sagabox theme\n" | tee -a "$LOG_FILE"
-	  cd /roms/themes/es-theme-sagabox
-	  git pull
-	  cd /home/ark
-	fi
-
 	if test -z "$(cat /usr/bin/emulationstation/emulationstation.sh | grep '/opt/system/Advanced/"Backup ArkOS Settings.sh' | tr -d '\0')"
 	then
 	  printf "\nFix Backup and Restore ArkOS settings function in BaRT\n" | tee -a "$LOG_FILE"
 	  sudo sed -i "/\"8)\") sudo reboot/s//\"6)\") sudo kill -9 \$(pidof boot_controls)\n                                \/opt\/system\/Advanced\/\"Backup ArkOS Settings.sh\" 2>\&1 > \/dev\/tty1\n                                sudo .\/boot_controls none \$param_device \&\n                                ;;\n                          \"7)\") sudo kill -9 \$(pidof boot_controls)\n                                \/opt\/system\/Advanced\/\"Restore ArkOS Settings.sh\" 2>\&1 > \/dev\/tty1\n                                sudo .\/boot_controls none \$param_device \&\n                                ;;\n                          \"8)\") sudo reboot/" /usr/bin/emulationstation/emulationstation.sh /usr/bin/emulationstation/emulationstation.sh.ra /usr/bin/emulationstation/emulationstation.sh.es
 	fi
-
-	printf "\nAdd support for .hdv and .HDV to Apple II\n" | tee -a "$LOG_FILE"
-	sed -i '/<extension>.dsk .DSK .sh .SH .do .DO .po .PO .apple2 .APPLE2 .zip .ZIP/s//<extension>.apple2 .APPLE2 .do .DO .dsk .DSK .hdv .HDV .po .PO .sh .SH .zip .ZIP/' /etc/emulationstation/es_systems.cfg
-
-
+	
 	printf "\nUpdate es_systems.cfg and es_systems.cfg.dual files for Read from Both Script\n" | tee -a "$LOG_FILE"
 	sudo chmod -R 755 /opt/system/Advanced/ | tee -a "$LOG_FILE"
 	sudo chmod -R 755 /usr/local/bin/ | tee -a "$LOG_FILE"
