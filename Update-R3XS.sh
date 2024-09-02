@@ -1265,8 +1265,8 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	printf "\nUpdate es_systems.cfg and es_systems.cfg.dual files for Read from Both Script\n" | tee -a "$LOG_FILE"
 	sudo chmod -R 755 /opt/system/Advanced/ | tee -a "$LOG_FILE"
 	sudo chmod -R 755 /usr/local/bin/ | tee -a "$LOG_FILE"
-	cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
-	cp -fv /usr/local/bin/es_systems.cfg /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
+	sudo cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+	sudo cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 
 
 
