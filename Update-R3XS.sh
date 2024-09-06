@@ -1063,7 +1063,7 @@ if [ ! -f "/home/ark/.config/.update07312024" ]; then
 	touch "/home/ark/.config/.update07312024"
 fi
 
-if [ ! -f "$UPDATE_DONE" ]; then
+if [ ! -f "/home/ark/.config/.update08232024" ]; then
 
 	printf "\nAdd vmac emulator\nAdd emuscv emulator\nAdd piemu emulator\nAdd minivmac emulator\nUpdate nes-box theme\nUpdate singe.sh file to support reading game.commands file\nUpdate Fake-08 emulator\nAdd smsplus-gx libretro core\nAdd hatarib libretro core\nUpdate nes-box theme\nUpdate wifi script\nFix Backup and Restore ArkOS settings funciton in BaRT\nUpdated apple2.sh script to support .hdv and .HDV\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
@@ -1273,8 +1273,38 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
+	touch "/home/ark/.config/.update08232024"
+fi
+
+if [ ! -f "$UPDATE_DONE" ]; then
+
+	printf "\nFix Read from SD1 and SD2 for ROMS script and Permissions update for Wifi.sh for people that updated early.\n" | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/01272024-1/arkosupdate08232024-1.zip -O /dev/shm/arkosupdate08232024-1.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate01272024-1.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate08232024-1.zip" ]; then
+	  sudo unzip -X -o /dev/shm/arkosupdate08232024-1.zip -d / | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate* | tee -a "$LOG_FILE"
+	else
+	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate* | tee -a "$LOG_FILE"
+	  sleep 3
+	  echo $c_brightness > /sys/class/backlight/backlight/brightness
+	  exit 1
+	fi
+
+	printf "\nUpdate es_systems.cfg and es_systems.cfg.dual files for Read from Both Script\n" | tee -a "$LOG_FILE"
+	sudo chmod -R 755 /opt/system/Wifi.sh | tee -a "$LOG_FILE"	
+	
+	printf "\nChange the default videoplayer to MPV\n" | tee -a "$LOG_FILE"
+	sudo apt-get install mpv socat --no-install-recommends | tee -a "$LOG_FILE"
+
+
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
+
 	touch "$UPDATE_DONE"
 
+fi
 
 	rm -v -- "$0" | tee -a "$LOG_FILE"
 	printf "\033c" >> /dev/tty1
