@@ -27,7 +27,7 @@ my_var=`osk "Enter OK here to proceed." | tail -n 1`
 
 echo "$my_var" | tee -a "$LOG_FILE"
 
-if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
+if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
   sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
   printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"
   exit 187
@@ -1296,6 +1296,8 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	sudo chmod -R 755 /opt/system/Wifi.sh | tee -a "$LOG_FILE"	
 	sudo chmod -R 755 /opt/system/Advanced/ | tee -a "$LOG_FILE"
 	sudo chmod -R 755 /usr/local/bin/ | tee -a "$LOG_FILE"
+	sudo rm -r /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+	sudo rm -r /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 	sudo cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 	sudo cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 	
