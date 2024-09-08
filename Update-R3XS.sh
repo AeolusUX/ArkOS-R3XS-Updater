@@ -1280,7 +1280,7 @@ if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nFix Read from SD1 and SD2 for ROMS script and Permissions update for Wifi.sh for people that updated early.\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
-	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/01272024-1/arkosupdate08232024-1.zip -O /dev/shm/arkosupdate08232024-1.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate01272024-1.zip | tee -a "$LOG_FILE"
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/08232024-1/arkosupdate08232024-1.zip -O /dev/shm/arkosupdate08232024-1.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate01272024-1.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate08232024-1.zip" ]; then
 	  sudo unzip -X -o /dev/shm/arkosupdate08232024-1.zip -d / | tee -a "$LOG_FILE"
 	  sudo rm -fv /dev/shm/arkosupdate* | tee -a "$LOG_FILE"
@@ -1306,7 +1306,7 @@ if [ ! -f "$UPDATE_DONE" ]; then
 
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
-	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
 	touch "$UPDATE_DONE"
 
