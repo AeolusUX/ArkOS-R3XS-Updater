@@ -1296,8 +1296,8 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	sudo chmod -R 755 /opt/system/Wifi.sh | tee -a "$LOG_FILE"	
 	sudo chmod -R 755 /opt/system/Advanced/ | tee -a "$LOG_FILE"
 	sudo chmod -R 755 /usr/local/bin/ | tee -a "$LOG_FILE"
-	sudo rm -r /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
-	sudo rm -r /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
+	sudo rm -f /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+	sudo rm -f /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 	sudo cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 	sudo cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 	
