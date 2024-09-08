@@ -230,4 +230,3 @@ v2.0 (08/23/2024)
 v2.0 (08/23/2024-1)
 - Fixed Wifi.sh Script Permissions impacted by changes in the last update.
 - Fixed Read from Both SD1 and SD2 for ROMS Script impacted by changes in the last update.
-- Replace ffplay as default video player of device to mpv (Thanks for ROCKNIX and CSFFlame for implementing it on ArkOS)
