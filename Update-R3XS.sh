@@ -28,8 +28,11 @@ my_var=`osk "Enter OK here to proceed." | tail -n 1`
 echo "$my_var" | tee -a "$LOG_FILE"
 
 if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
-  sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
-  printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"
+
+#  sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
+#  printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"	
+  sudo msgbox "Updater is under maintenance please try again later."
+  printf "Updater is under maintenance please try again later." | tee -a "$LOG_FILE"
   exit 187
 fi
 
@@ -1301,8 +1304,8 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	sudo cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
 	sudo cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 	
-	printf "\nChange the default videoplayer to MPV\n" | tee -a "$LOG_FILE"
-	sudo apt-get install mpv socat --no-install-recommends | tee -a "$LOG_FILE"
+#	printf "\nChange the default videoplayer to MPV\n" | tee -a "$LOG_FILE"
+#	sudo apt-get install mpv socat --no-install-recommends -y | tee -a "$LOG_FILE"
 
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
