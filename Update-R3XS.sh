@@ -27,12 +27,12 @@ my_var=`osk "Enter OK here to proceed." | tail -n 1`
 
 echo "$my_var" | tee -a "$LOG_FILE"
 
-if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
+if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
 
-#  sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
-#  printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"	
-  sudo msgbox "Updater is under maintenance please try again later."
-  printf "Updater is under maintenance please try again later." | tee -a "$LOG_FILE"
+  sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
+  printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"	
+#  sudo msgbox "Updater is under maintenance please try again later."
+#  printf "Updater is under maintenance please try again later." | tee -a "$LOG_FILE"
   exit 187
 fi
 
