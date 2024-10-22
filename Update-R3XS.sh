@@ -27,7 +27,7 @@ my_var=`osk "Enter OK here to proceed." | tail -n 1`
 
 echo "$my_var" | tee -a "$LOG_FILE"
 
-if [ "$my_var" != "TEST" ] && [ "$my_var" != "test" ]; then
+if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
 
   sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
   printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"	
@@ -1464,7 +1464,7 @@ if [ ! -f "/home/ark/.config/.update09272024" ]; then
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
-
+	
 	touch "/home/ark/.config/.update09272024"
 
 fi
@@ -1495,7 +1495,10 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  sudo ln -sfv /usr/lib/aarch64-linux-gnu/libSDL2-2.0.so.0.3000.7 /usr/lib/aarch64-linux-gnu/libSDL2.so | tee -a "$LOG_FILE"
 	  sudo ln -sfv /usr/lib/arm-linux-gnueabihf/libSDL2.so /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0 | tee -a "$LOG_FILE"
 	  sudo ln -sfv /usr/lib/arm-linux-gnueabihf/libSDL2-2.0.so.0.3000.7 /usr/lib/arm-linux-gnueabihf/libSDL2.so | tee -a "$LOG_FILE"
-
+	  sudo chmod -R 755 /opt/system/Advanced/ | tee -a "$LOG_FILE"
+	  sudo chmod -R 755 /opt/system/DeviceType/ | tee -a "$LOG_FILE"
+	  sudo chown -Rv  ark:ark /opt/system/DeviceType/ | tee -a "$LOG_FILE"
+		
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	touch "$UPDATE_DONE"
