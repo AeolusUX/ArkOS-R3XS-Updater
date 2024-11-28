@@ -1558,8 +1558,8 @@ if [ ! -f "/home/ark/.config/.update10252024" ]; then
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
-
 	touch "/home/ark/.config/.update10252024"
+fi
 
 	if [ ! -f "$UPDATE_DONE" ]; then
 
