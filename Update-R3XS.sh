@@ -1754,7 +1754,7 @@ fi
 	  sudo rm -rfv /home/ark/ra | tee -a "$LOG_FILE"
 	  sudo rm -rfv /home/ark/ra32 | tee -a "$LOG_FILE"
 	  sudo rm -fv /opt/system/DeviceType/R33S.sh | tee -a "$LOG_FILE"
-
+	  chmod -R +x /opt/system/*
 
 	printf "\nCopy correct scummvm for device\n" | tee -a "$LOG_FILE"
 
@@ -1796,7 +1796,7 @@ fi
 	fi
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
-	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
 	touch "$UPDATE_DONE"
 	
