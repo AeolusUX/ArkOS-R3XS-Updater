@@ -295,4 +295,5 @@ v2.0 (12/24/2024)
 - Added Gamma Adjustment Tool for adjusting gamma of your screen panel. (Thanks for the community for this)
 - Added NDS Overlay Toggle
 - Added support for video boot. (You can remove boot logo and disable plymouth if you only want the video boot.) (Thanks for the community for this)
+  - Add video boot logo in the boot partition and name it logo.mp4
 - Updated Device Type Selection to include R36H and added functionality to replace retroarch hotkeys depending on your device.
