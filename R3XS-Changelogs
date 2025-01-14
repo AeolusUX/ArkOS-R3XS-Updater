@@ -281,3 +281,18 @@ v2.0 (11/27/2024)
 - Disabled blinking cursor when entering and exiting Emulationstation (RK3326 Units Only!) (Thanks to Jason Grieves for the request)
 - Added ability to flip the volume buttons function (Thanks to charly74 for the suggestion)
 - The experimental local (offline) update would be added in the future still ironing out details
+
+v2.0 (12/24/2024)
+- Reverted exfat kernel module from last update
+- Fixed fail booting when second sd card is not found or not in the expected format
+- Updated ScummVM Standalone to 2.9.0
+- Updated SDL to 2.0.30.10
+- Updated Change Ports SDL tool to support SDL 2.0.30.10 and 2.0.28.2
+- Updated FileBrowser to version 2.31.2
+- Updated coco.sh script to accomodate providing an alternate default control scheme for CoCo3 emulation using XRoar
+- Added j2me emulator using libretro freej2me and freej2me-plus cores
+- Added j2me system to NES-Box theme(Thanks to Jetup13)
+- Added Gamma Adjustment Tool for adjusting gamma of your screen panel. (Thanks for the community for this)
+- Added NDS Overlay Toggle
+- Added support for video boot. (You can remove boot logo and disable plymouth if you only want the video boot.)
+- Updated Device Type Selection to include R36H and added functionality to replace retroarch hotkeys depending on your device.
