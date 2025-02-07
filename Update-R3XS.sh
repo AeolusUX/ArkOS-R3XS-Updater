@@ -12,6 +12,7 @@ fi
 
 if [ -f "$LOG_FILE" ]; then
 	sudo rm "$LOG_FILE"
+	sudo rm "$LOG_FILE"
 fi
 
 LOCATION="https://raw.githubusercontent.com/AeolusUX/ArkOS-R3XS-Updater/main"
@@ -22,17 +23,19 @@ if [ "$ISITCHINA" = "\"country\":\"China\"" ]; then
   LOCATION="https://raw.githubusercontent.com/AeolusUX/ArkOS-R3XS-Updater/main"
 fi
 
-sudo msgbox "MAKE SURE YOU SWITCHED TO MAIN SD FOR ROMS BEFORE YOU RUN THIS UPDATE. ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
-my_var=`osk "Enter OK here to proceed." | tail -n 1`
+#sudo msgbox "MAKE SURE YOU SWITCHED TO MAIN SD FOR ROMS BEFORE YOU RUN THIS UPDATE. ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
+#my_var=`osk "Enter OK here to proceed." | tail -n 1`
+
+sudo msgbox "UPDATER IS CURRENTLY UNAVAILABLE."
+my_var=`osk "IT WILL BE BACK AGAIN SOON." | tail -n 1`
 
 echo "$my_var" | tee -a "$LOG_FILE"
 
-if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
+if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
+#if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
 
   sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
   printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"	
-#  sudo msgbox "Updater is under maintenance please try again later."
-#  printf "Updater is under maintenance please try again later." | tee -a "$LOG_FILE"
   exit 187
 fi
 
@@ -1891,6 +1894,7 @@ fi
 	touch "/home/ark/.config/.update01312025"
 
 fi
+
 if [ ! -f "/home/ark/.config/.update02012025-2" ]; then
 
 	printf "\nFix potential battery reading issue from 01312025 update for rk3566 devices\n" | tee -a "$LOG_FILE"
@@ -1916,6 +1920,7 @@ fi
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
 	touch "/home/ark/.config/.update02012025-2"
+fi
 
 if [ ! -f "/home/ark/.config/.update02012025-3" ]; then
 
