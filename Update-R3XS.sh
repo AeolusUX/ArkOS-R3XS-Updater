@@ -1889,11 +1889,6 @@ if [ ! -f "$UPDATE_DONE" ]; then
 
 	touch "$UPDATE_DONE"
 
-fi
-
-
-
-
 	rm -v -- "$0" | tee -a "$LOG_FILE"
 	printf "\033c" >> /dev/tty1
 	msgbox "Updates have been completed.  System will now restart after you hit the A button to continue.  If the system doesn't restart after pressing A, just restart the system manually."
