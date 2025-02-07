@@ -2055,7 +2055,7 @@ if [ ! -f "$UPDATE_DONE" ]; then
 fi
 	
 	printf "\nFix R36H and R33S on Device Types.\n" | tee -a "$LOG_FILE"
-	sudo rm -fv /opt/system/DeviceType/R33S or R36H.sh | tee -a "$LOG_FILE"
+	sudo rm -fv "/opt/system/DeviceType/R33S or R36H.sh" | tee -a "$LOG_FILE"
 	sudo chmod -R +x /opt/system/*
 	
 	printf "\nCopy correct Retroarches depending on device\n" | tee -a "$LOG_FILE"
