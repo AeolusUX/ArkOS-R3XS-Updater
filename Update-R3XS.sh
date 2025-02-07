@@ -1869,20 +1869,10 @@ fi
 	fi
 
 	printf "\nCopy correct Retroarches depending on device\n" | tee -a "$LOG_FILE"
-	if [ -f "/boot/rk3326-r33s-linux.dtb" ] || [ -f "/boot/rk3326-r35s-linux.dtb" ] || [ -f "/boot/rk3326-r36s-linux.dtb" ] || [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ -f "/boot/rk3326-rg351mp-linux.dtb" ] || [ -f "/boot/rk3326-gameforce-linux.dtb" ]; then
 	  cp -fv /opt/retroarch/bin/retroarch32.rk3326.unrot /opt/retroarch/bin/retroarch32 | tee -a "$LOG_FILE"
 	  cp -fv /opt/retroarch/bin/retroarch.rk3326.unrot /opt/retroarch/bin/retroarch | tee -a "$LOG_FILE"
 	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
 	  rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
-	elif [ -f "/boot/rk3326-odroidgo2-linux.dtb" ] || [ -f "/boot/rk3326-odroidgo2-linux-v11.dtb" ] || [ -f "/boot/rk3326-odroidgo3-linux.dtb" ]; then
-	  cp -fv /opt/retroarch/bin/retroarch32.rk3326.rot /opt/retroarch/bin/retroarch32 | tee -a "$LOG_FILE"
-	  cp -fv /opt/retroarch/bin/retroarch.rk3326.rot /opt/retroarch/bin/retroarch | tee -a "$LOG_FILE"
-	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
-	  rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
-	else
-	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
-	  rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
-	fi
 	chmod 777 /opt/retroarch/bin/*
 
 
@@ -1891,11 +1881,9 @@ fi
 	fi
 
 	printf "\nCopy correct emulationstation depending on device\n" | tee -a "$LOG_FILE"
-	if [ -f "/boot/rk3326-r33s-linux.dtb" ] || [ -f "/boot/rk3326-r35s-linux.dtb" ] || [ -f "/boot/rk3326-r36s-linux.dtb" ] || [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ -f "/boot/rk3326-rg351mp-linux.dtb" ] || [ -f "/boot/rk3326-gameforce-linux.dtb" ]; then
 	  sudo mv -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
 	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
 	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
-	fi
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
@@ -1929,7 +1917,7 @@ fi
 
 	touch "/home/ark/.config/.update02012025-2"
 
-if [ ! -f "$UPDATE_DONE" ]; then
+if [ ! -f "/home/ark/.config/.update02012025-3" ]; then
 
 	printf "\nFix PortMaster\nAdd KEY_SERVICE to RIGHTSTICK button for Hypseus-Singe\n" | tee -a "$LOG_FILE"
 
@@ -1938,8 +1926,125 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 (02012025)-3" /usr/share/plymouth/themes/text.plymouth
 
-	touch "$UPDATE_DONE"
+	touch "/home/ark/.config/.update02012025-3"
 fi
+
+if [ ! -f "$UPDATE_DONE" ]; then
+
+	printf "\nFix save issue for Retroarch and Retroarch\nAdd .VERSION file for PortMaster\n" | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02022025/arkosupdate02022025.zip -O /dev/shm/arkosupdate02022025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02022025.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate02022025.zip" ]; then
+	  sudo unzip -X -o /dev/shm/arkosupdate02022025.zip -d / | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate02022025.zip | tee -a "$LOG_FILE"
+	else
+	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate02022025.z* | tee -a "$LOG_FILE"
+	  sleep 3
+	  echo $c_brightness > /sys/class/backlight/backlight/brightness
+	  exit 1
+	fi
+	
+	printf "\nFix R36H and R33S on Device Types.\n" | tee -a "$LOG_FILE"
+	sudo rm -fv /opt/system/DeviceType/R33S or R36H.sh | tee -a "$LOG_FILE"
+	sudo chmod -R +x /opt/system/*
+	
+	printf "\nCopy correct Retroarches depending on device\n" | tee -a "$LOG_FILE"
+	if [ -f "/boot/rk3326-r33s-linux.dtb" ] || [ -f "/boot/rk3326-r35s-linux.dtb" ] || [ -f "/boot/rk3326-r36s-linux.dtb" ] || [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ -f "/boot/rk3326-rg351mp-linux.dtb" ] || [ -f "/boot/rk3326-gameforce-linux.dtb" ]; then
+	  cp -fv /opt/retroarch/bin/retroarch32.rk3326.unrot /opt/retroarch/bin/retroarch32 | tee -a "$LOG_FILE"
+	  cp -fv /opt/retroarch/bin/retroarch.rk3326.unrot /opt/retroarch/bin/retroarch | tee -a "$LOG_FILE"
+	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
+	  rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
+	fi
+	chmod 777 /opt/retroarch/bin/*
+
+	printf "\nMaking changes to retroarch.cfg and retroarch32.cfg files to maintain default save and savestate folder locations due to libretro changes\n" | tee -a "$LOG_FILE"
+	if test ! -z "$(grep "savefile_directory = \"~/.config/retroarch/saves\"" /home/ark/.config/retroarch/retroarch.cfg | tr -d '\0')"
+	then
+	  if test ! -z "$(grep "savefiles_in_content_dir = \"true\"" /home/ark/.config/retroarch/retroarch.cfg | tr -d '\0')"
+	  then
+	    sed -i "/sort_savefiles_enable = \"/c\\sort_savefiles_enable = \"false\"" /home/ark/.config/retroarch/retroarch.cfg
+	  else
+	    printf "\n  No change made for sort_savefiles_enable for retroarch as a custom setting is set." | tee -a "$LOG_FILE"
+	  fi
+	fi
+	if test ! -z "$(grep "savestate_directory = \"~/.config/retroarch/states\"" /home/ark/.config/retroarch/retroarch.cfg | tr -d '\0')"
+	then
+	  if test ! -z "$(grep "savestates_in_content_dir = \"true\"" /home/ark/.config/retroarch/retroarch.cfg | tr -d '\0')"
+	  then
+	    sed -i "/sort_savestates_enable = \"/c\\sort_savestates_enable = \"false\"" /home/ark/.config/retroarch/retroarch.cfg
+	  else
+	    printf "\n  No change made for sort_savestates_enable for retroarch as a custom setting is set." | tee -a "$LOG_FILE"
+	  fi
+	fi
+	if test ! -z "$(grep "savefile_directory = \"~/.config/retroarch/saves\"" /home/ark/.config/retroarch32/retroarch.cfg | tr -d '\0')"
+	then
+	  if test ! -z "$(grep "savefiles_in_content_dir = \"true\"" /home/ark/.config/retroarch32/retroarch.cfg | tr -d '\0')"
+	  then
+	    sed -i "/sort_savefiles_enable = \"/c\\sort_savefiles_enable = \"false\"" /home/ark/.config/retroarch32/retroarch.cfg
+	  else
+	    printf "\n  No change made for sort_savefiles_enable for retroarch32 as a custom setting is set." | tee -a "$LOG_FILE"
+	  fi
+	fi
+	if test ! -z "$(grep "savestate_directory = \"~/.config/retroarch/states\"" /home/ark/.config/retroarch32/retroarch.cfg | tr -d '\0')"
+	then
+	  if test ! -z "$(grep "savestates_in_content_dir = \"true\"" /home/ark/.config/retroarch32/retroarch.cfg | tr -d '\0')"
+	  then
+	    sed -i "/sort_savestates_enable = \"/c\\sort_savestates_enable = \"false\"" /home/ark/.config/retroarch32/retroarch.cfg
+	  else
+	    printf "\n  No change made for sort_savestates_enable for retroarch32 as a custom setting is set." | tee -a "$LOG_FILE"
+	  fi
+	fi
+	sed -i "/sort_savefiles_enable = \"/c\\sort_savefiles_enable = \"false\"" /home/ark/.config/retroarch/retroarch.cfg.bak
+	sed -i "/sort_savestates_enable = \"/c\\sort_savestates_enable = \"false\"" /home/ark/.config/retroarch/retroarch.cfg.bak
+	sed -i "/sort_savefiles_enable = \"/c\\sort_savefiles_enable = \"false\"" /home/ark/.config/retroarch32/retroarch.cfg.bak
+	sed -i "/sort_savestates_enable = \"/c\\sort_savestates_enable = \"false\"" /home/ark/.config/retroarch32/retroarch.cfg.bak
+	
+	printf "\nInstalling MPV and Socat...\n" | tee -a "$LOG_FILE"
+	sudo apt-get install -y mpv socat --no-install-recommends | tee -a "$LOG_FILE"
+
+	printf "\nMoving files to their respective locations...\n" | tee -a "$LOG_FILE"
+	sudo mv /home/ark/mpv_sense /usr/bin/mpv_sense | tee -a "$LOG_FILE"
+	sudo mv /home/ark/mpv.service /lib/systemd/system/mpv.service | tee -a "$LOG_FILE"
+	sudo mv /home/ark/mediaplayer.sh /usr/local/bin/mediaplayer.sh | tee -a "$LOG_FILE"
+
+	printf "\nSetting permissions...\n" | tee -a "$LOG_FILE"
+	sudo chmod 755 /usr/bin/mpv_sense | tee -a "$LOG_FILE"
+	sudo chmod 755 /lib/systemd/system/mpv.service | tee -a "$LOG_FILE"
+	sudo chmod 755 /usr/local/bin/mediaplayer.sh | tee -a "$LOG_FILE"
+	
+	printf "\nReloading systemd daemon...\n" | tee -a "$LOG_FILE"
+	sudo systemctl daemon-reload | tee -a "$LOG_FILE"
+
+	if ! sudo systemctl is-active --quiet mpv.service; then
+		printf "\nmpv.service is not running. Enabling and starting it...\n" | tee -a "$LOG_FILE"
+		sudo systemctl enable mpv.service | tee -a "$LOG_FILE"
+		sudo systemctl start mpv.service | tee -a "$LOG_FILE"
+	else
+    printf "\nmpv.service is already running.\n" | tee -a "$LOG_FILE"
+	fi
+
+	printf "\nService status:\n" | tee -a "$LOG_FILE"
+	sudo systemctl status mpv.service | tee -a "$LOG_FILE"
+	printf "\nMPV Setup Completed Successfully!\n" | tee -a "$LOG_FILE"	
+	
+	printf "\nUpdate es_systems.cfg and es_systems.cfg.dual files for Read from Both Script\n" | tee -a "$LOG_FILE"
+	sudo chmod -R 755 /usr/local/bin/ | tee -a "$LOG_FILE"
+	sudo chmod 755 /opt/scummvm/scummvm | tee -a "$LOG_FILE"
+	sudo chown ark:ark /opt/scummvm/scummvm | tee -a "$LOG_FILE"
+
+	sudo rm -f /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+	sudo rm -f /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
+	sudo cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+	sudo cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
+	
+
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
+	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
+
+	touch "$UPDATE_DONE"
+	
 
 
 	rm -v -- "$0" | tee -a "$LOG_FILE"
