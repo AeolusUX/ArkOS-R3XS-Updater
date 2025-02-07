@@ -1901,6 +1901,31 @@ fi
 	touch "/home/ark/.config/.update01312025"
 
 fi
+if [ ! -f "/home/ark/.config/.update02012025-2" ]; then
+
+	printf "\nFix potential battery reading issue from 01312025 update for rk3566 devices\n" | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02012025-2/arkosupdate02012025-2.zip -O /dev/shm/arkosupdate02012025-2.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02012025-2.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate02012025-2.zip" ]; then
+	  sudo unzip -X -o /dev/shm/arkosupdate02012025-2.zip -d / | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate02012025-2.zip | tee -a "$LOG_FILE"
+	else
+	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate02012025-2.z* | tee -a "$LOG_FILE"
+	  sleep 3
+	  echo $c_brightness > /sys/class/backlight/backlight/brightness
+	  exit 1
+	fi
+
+	printf "\nAdd Onscripter_Onsyuri libretro core to Onscripter system\n" | tee -a "$LOG_FILE"
+	sed -i -e '/<command>sudo perfmax %GOVERNOR% %ROM%; nice -n -19 \/usr\/local\/bin\/retroarch -L \/home\/ark\/.config\/retroarch\/cores\/onscripter_libretro.so %ROM%; sudo perfnorm<\/command>/{r /home/ark/add_onsyuri_onscripter.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	sudo rm -fv /home/ark/add_onsyuri_onscripter.txt | tee -a "$LOG_FILE"
+
+
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
+
+	touch "/home/ark/.config/.update02012025-2"
 
 if [ ! -f "/home/ark/.config/.update02012025-3" ]; then
 
