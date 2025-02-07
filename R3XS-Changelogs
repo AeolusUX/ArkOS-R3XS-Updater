@@ -297,3 +297,33 @@ v2.0 (12/24/2024)
 - Added support for video boot. (You can remove boot logo and disable plymouth if you only want the video boot.) (Thanks for the community for this)
   - Add video boot logo in the boot partition and name it logo.mp4
 - Updated Device Type Selection to include R36H and added functionality to replace retroarch hotkeys depending on your device.
+
+v2.0 (01/31/2025)
+- Updated Retroarch and Retroarch32 to 1.20.0 (ed1810d)
+- Updated Hypseus-singe to 2.11.4
+- Updated pico8.sh script to fix Splore deleting downloaded carts when played offline (Thanks to elmimmo for reporting the issue)
+- Updated Emulationstation to add support for fontawesome font and add ability for additional translatable text (Thanks to wakeboxer)
+- Updated Emulationstation to add support for setting a custom verbal battery warning threshold (Thanks to mardem1976 for the suggestion)
+- Updated Emulationstation Korean translation (Thanks to wakeboxer for the PR)
+- Updated batt_life_verbal_warning.py to accomodate custom verbal battery warning threshold
+- Updated freej2me.sh to address audio issue for rk3326 devices
+- Fixed bad freej2me-lr.jar and freej2me-plus-lr.jar files from 12/24/2024 update
+- Added Cave Story as a system using doukutsu-rs libretro core (Thanks to Tonhum for the suggestion and testing)
+- Added Cave Story system to NES-Box theme (Thanks to Jetup13)
+
+v2.0 (02/01/2025-2)
+- Add onscripter-onsyuri core for Onscripter system (Thanks to lcdyk0517 for the suggestion and testing.  Thanks to iyzsong for the libretro core and guidance.)
+
+v2.0 (02/01/2025)-3
+- Fixed Portmaster segfaulting
+- Added BUTTON_RIGHTSTICK as KEY_SERVICE for Hypsesus-Singe
+
+v2.0 (02/02/2025)
+- Updated Retroarch and Retroarch32 to respect custom in-game save and savestate locations settings (05f75b8)
+- Added .VERSION file to /home/ark/.config folder location for PortMaster use
+- Replaced ffplay to MPV as default video player (Thanks to Rocknix for MPV and FIRE FIRE FIRE for porting this over ArkOS)
+- Added a script to reset EmulationStation Controls.
+- Seperated R36H and R33S Device Type Selection Script.
+- Fixed permission issues for filebrowser and scummvm.
+
+
