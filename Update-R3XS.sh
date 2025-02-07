@@ -1799,6 +1799,8 @@ fi
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
 	touch "/home/ark/.config/.update12242024"
+fi
+	
 	
 	if [ ! -f "/home/ark/.config/.update01312025" ]; then
 
