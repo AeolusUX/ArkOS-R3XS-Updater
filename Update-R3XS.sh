@@ -975,7 +975,7 @@ rm -fv /opt/system/Switch\ Launchimage\ to* | tee -a "$LOG_FILE"
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
-	touch "$/home/ark/.config/.update06272024"
+	touch "/home/ark/.config/.update06272024"
 fi
 
 if [ ! -f "/home/ark/.config/.update07042024" ]; then
