@@ -23,16 +23,16 @@ if [ "$ISITCHINA" = "\"country\":\"China\"" ]; then
   LOCATION="https://raw.githubusercontent.com/AeolusUX/ArkOS-R3XS-Updater/main"
 fi
 
-#sudo msgbox "MAKE SURE YOU SWITCHED TO MAIN SD FOR ROMS BEFORE YOU RUN THIS UPDATE. ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
-#my_var=`osk "Enter OK here to proceed." | tail -n 1`
+sudo msgbox "MAKE SURE YOU SWITCHED TO MAIN SD FOR ROMS BEFORE YOU RUN THIS UPDATE. ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
+my_var=`osk "Enter OK here to proceed." | tail -n 1`
 
-sudo msgbox "UPDATER IS CURRENTLY UNAVAILABLE."
-my_var=`osk "IT WILL BE BACK AGAIN SOON." | tail -n 1`
+#sudo msgbox "UPDATER IS CURRENTLY UNAVAILABLE."
+#my_var=`osk "IT WILL BE BACK AGAIN SOON." | tail -n 1`
 
 echo "$my_var" | tee -a "$LOG_FILE"
 
-if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
-#if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
+#if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
+if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
 
   sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
   printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"	
@@ -1804,7 +1804,6 @@ fi
 	touch "/home/ark/.config/.update12242024"
 fi
 	
-	
 
 if [ ! -f "/home/ark/.config/.update01312025" ]; then
 
@@ -1994,7 +1993,7 @@ if [ ! -f "/home/ark/.config/.update01312025" ]; then
 	fi
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
-	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
 	touch "/home/ark/.config/.update01312025"
 fi
@@ -2033,7 +2032,7 @@ if [ ! -f "/home/ark/.config/.update02012025-3" ]; then
 	sed -i '/KEY_SERVICE    \= SDLK_9          0         0                  0                 0/c\KEY_SERVICE    \= SDLK_9          0         BUTTON_RIGHTSTICK  0                 0' /opt/hypseus-singe/hypinput.ini
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
-	sudo sed -i "/title\=/c\title\=ArkOS 2.0 (02012025)-3" /usr/share/plymouth/themes/text.plymouth
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 (02012025)-3(AeUX)" /usr/share/plymouth/themes/text.plymouth
 
 	touch "/home/ark/.config/.update02012025-3"
 fi
