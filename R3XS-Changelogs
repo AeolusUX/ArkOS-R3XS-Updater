@@ -344,6 +344,8 @@ v2.0 (02/09/2025)
 - Updated BBC Micro emulation to no longer need a swapfile (Thanks to zoltanvb for updating the libretro core to resolve this)
 - Updated retroarch config and ogage for R36H
 - Added Slovenian and Croatian translation for Emulationstation
-- Added Russian and Ukranian translation for Emulationstation (Thanks to @VolodymyrDA)
+- Added Russian and Ukranian translation for Emulationstation (Thanks to VolodymyrDA)
+- Added a Fix for the issue with EmulationStation not reading both SD after using the Read from Both SD Script (Thanks to LobAnovich and RyanRoe77 for report the issue)
+
 
 
