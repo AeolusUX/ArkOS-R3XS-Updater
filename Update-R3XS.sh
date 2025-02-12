@@ -23,16 +23,16 @@ if [ "$ISITCHINA" = "\"country\":\"China\"" ]; then
   LOCATION="https://raw.githubusercontent.com/AeolusUX/ArkOS-R3XS-Updater/main"
 fi
 
-sudo msgbox "MAKE SURE YOU SWITCHED TO MAIN SD FOR ROMS BEFORE YOU RUN THIS UPDATE. ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
-my_var=`osk "Enter OK here to proceed." | tail -n 1`
+#sudo msgbox "MAKE SURE YOU SWITCHED TO MAIN SD FOR ROMS BEFORE YOU RUN THIS UPDATE. ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
+#my_var=`osk "Enter OK here to proceed." | tail -n 1`
 
-#sudo msgbox "UPDATER IS CURRENTLY UNAVAILABLE."
-#my_var=`osk "IT WILL BE BACK AGAIN SOON." | tail -n 1`
+sudo msgbox "UPDATER IS CURRENTLY UNAVAILABLE. IT WILL BE BACK AGAIN, SOON."
+my_var=`osk "TRY AGAIN LATER" | tail -n 1`
 
 echo "$my_var" | tee -a "$LOG_FILE"
 
-#if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
-if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
+if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
+#if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
 
   sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
   printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"	
@@ -1752,8 +1752,8 @@ fi
 	  
   	  sudo mv -f -v /home/ark/ra/retroarch.r36h /home/ark/.config/retroarch/retroarch.r36h | tee -a "$LOG_FILE"
 	  sudo mv -f -v /home/ark/ra/retroarch.r36s /home/ark/.config/retroarch/retroarch.r36s | tee -a "$LOG_FILE"
-	  sudo mv -f -v /home/ark/ra/retroarch32.r36h /home/ark/.config/retroarch32/retroarch.r36h | tee -a "$LOG_FILE"
-	  sudo mv -f -v /home/ark/ra/retroarch32.r36s /home/ark/.config/retroarch32/retroarch.r36s | tee -a "$LOG_FILE"
+	  sudo mv -f -v /home/ark/ra32/retroarch32.r36h /home/ark/.config/retroarch32/retroarch.r36h | tee -a "$LOG_FILE"
+	  sudo mv -f -v /home/ark/ra32/retroarch32.r36s /home/ark/.config/retroarch32/retroarch.r36s | tee -a "$LOG_FILE"
 	  sudo rm -rfv /home/ark/ra | tee -a "$LOG_FILE"
 	  sudo rm -rfv /home/ark/ra32 | tee -a "$LOG_FILE"
 	  sudo rm -fv /opt/system/DeviceType/R33S.sh | tee -a "$LOG_FILE"
@@ -2037,7 +2037,7 @@ if [ ! -f "/home/ark/.config/.update02012025-3" ]; then
 	touch "/home/ark/.config/.update02012025-3"
 fi
 
-if [ ! -f "$UPDATE_DONE" ]; then
+if [ ! -f "/home/ark/.config/.update02022025" ]; then
 
 	printf "\nFix save issue for Retroarch and Retroarch\nAdd .VERSION file for PortMaster\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
@@ -2151,7 +2151,129 @@ fi
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
 
-	touch "$UPDATE_DONE"
+	touch "/home/ark/.config/.update02022025"
+fi
+
+if [ ! -f "/home/ark/.config/.update02082025" ]; then
+
+	printf "\nUpdate retroarch to stable 1.20.0 to fix override issue from later commit\nUpdate emulationstation to fix font issues for languages like Korean\nAdd BBC Micro emulator\nUpdate msgbox\nUpdate USB Drive Mount script\nUpdate themes\n" | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02082025/arkosupdate02082025.zip -O /dev/shm/arkosupdate02082025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02082025.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate02082025.zip" ]; then
+	  if [ ! -z "$([ -f /home/ark/.config/.DEVICE ] && grep RGB30 /home/ark/.config/.DEVICE | tr -d '\0')" ]; then
+		sudo unzip -X -o /dev/shm/arkosupdate02082025.zip -x roms/themes/es-theme-nes-box/* -d / | tee -a "$LOG_FILE"
+	  else
+		sudo unzip -X -o /dev/shm/arkosupdate02082025.zip -x roms/themes/es-theme-sagabox/* -d / | tee -a "$LOG_FILE"
+	  fi
+	  printf "\nAdd BBC Micro emulator\n" | tee -a "$LOG_FILE"
+	  if test -z "$(cat /etc/emulationstation/es_systems.cfg | grep 'bbcmicro' | tr -d '\0')"
+	  then
+	    cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update02082025.bak | tee -a "$LOG_FILE"
+	    sed -i -e '/<theme>apple2<\/theme>/{r /home/ark/add_bbcmicro.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	  fi
+	  if [ ! -d "/roms/bbcmicro" ]; then
+	    mkdir -v /roms/bbcmicro | tee -a "$LOG_FILE"
+	    if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	    then
+		  if [ ! -d "/roms2/bbcmicro" ]; then
+		    mkdir -v /roms2/bbcmicro | tee -a "$LOG_FILE"
+		    sed -i '/<path>\/roms\/bbcmicro/s//<path>\/roms2\/bbcmicro/g' /etc/emulationstation/es_systems.cfg
+		  fi
+	    fi
+	  fi
+	  if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
+	    if test -z "$(cat /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | grep bbcmicro | tr -d '\0')"
+	    then
+		  sudo chown -v ark:ark /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | tee -a "$LOG_FILE"
+		  sed -i '/sudo pkill filebrowser/s//if [ \! -d "\/roms2\/bbcmicro\/" ]\; then\n      sudo mkdir \/roms2\/bbcmicro\n  fi\n  sudo pkill filebrowser/' /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh
+	    else
+		  printf "\nbbcmicro is already being accounted for in the switch to sd2 script\n" | tee -a "$LOG_FILE"
+	    fi
+	  fi
+	  if [ -f "/usr/local/bin/Switch to SD2 for Roms.sh" ]; then
+	    if test -z "$(cat /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh | grep bbcmicro | tr -d '\0')"
+	    then
+	      sudo sed -i '/sudo pkill filebrowser/s//if [ \! -d "\/roms2\/bbcmicro\/" ]\; then\n      sudo mkdir \/roms2\/bbcmicro\n  fi\n  sudo pkill filebrowser/' /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh
+	    else
+	      printf "\nbbcmicro is already being accounted for in the switch to sd2 script\n" | tee -a "$LOG_FILE"
+	    fi
+	  fi
+	  sudo rm -fv /dev/shm/arkosupdate02082025.zip | tee -a "$LOG_FILE"
+	  sudo rm -fv /home/ark/add_bbcmicro.txt | tee -a "$LOG_FILE"
+	else
+	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate02082025.z* | tee -a "$LOG_FILE"
+	  sleep 3
+	  echo $c_brightness > /sys/class/backlight/backlight/brightness
+	  exit 1
+	fi
+
+	printf "\nCopy correct Retroarches depending on device\n" | tee -a "$LOG_FILE"
+	  cp -fv /opt/retroarch/bin/retroarch32.rk3326.unrot /opt/retroarch/bin/retroarch32 | tee -a "$LOG_FILE"
+	  cp -fv /opt/retroarch/bin/retroarch.rk3326.unrot /opt/retroarch/bin/retroarch | tee -a "$LOG_FILE"
+	  cp -Rfv /home/ark/filters/filters.64.rk3326/* /home/ark/.config/retroarch/filters/. | tee -a "$LOG_FILE"
+	  cp -Rfv /home/ark/filters/filters.32.rk3326/* /home/ark/.config/retroarch32/filters/. | tee -a "$LOG_FILE"
+	  rm -rfv /home/ark/filters/ | tee -a "$LOG_FILE"
+	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
+	  rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
+
+	chmod 777 /opt/retroarch/bin/*
+
+	printf "\nCopy correct emulationstation depending on device\n" | tee -a "$LOG_FILE"
+	  sudo mv -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
+	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
+	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
+
+
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
+	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
+
+	touch "/home/ark/.config/.update02082025"
+
+fi
+
+if [ ! -f "$UPDATE_DONE" ]; then
+
+	printf "\nUpdate retroarch to the correct stable 1.20.0 to fix override issue from later commit\nUpdate emulationstation to fix missing popup keyboard fonts\nUpdate emulationstation to add various featurs thanks to bulzipke\nUpdate retroarch and retroarch32 common overlays\n" | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/02092025/arkosupdate02092025.zip -O /dev/shm/arkosupdate02092025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate02092025.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate02092025.zip" ]; then
+	  sudo unzip -X -o /dev/shm/arkosupdate02092025.zip -d / | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate02092025.zip | tee -a "$LOG_FILE"
+	else
+	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate02092025.z* | tee -a "$LOG_FILE"
+	  sleep 3
+	  echo $c_brightness > /sys/class/backlight/backlight/brightness
+	  exit 1
+	fi
+
+	printf "\nCopy correct Retroarches depending on device\n" | tee -a "$LOG_FILE"
+	  cp -fv /opt/retroarch/bin/retroarch32.rk3326.unrot /opt/retroarch/bin/retroarch32 | tee -a "$LOG_FILE"
+	  cp -fv /opt/retroarch/bin/retroarch.rk3326.unrot /opt/retroarch/bin/retroarch | tee -a "$LOG_FILE"
+	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
+	  rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
+
+	chmod 777 /opt/retroarch/bin/*
+
+	printf "\nCopy correct emulationstation depending on device\n" | tee -a "$LOG_FILE"
+	  sudo mv -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
+	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
+	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
+	  
+	printf "\nCopy correct ogage and retroarch config for the R36H\n" | tee -a "$LOG_FILE" 
+	  sudo mv -f -v /home/ark/ra/retroarch.r36h /home/ark/.config/retroarch/retroarch.r36h | tee -a "$LOG_FILE"
+	  sudo mv -f -v /home/ark/ra32/retroarch32.r36h /home/ark/.config/retroarch32/retroarch.r36h | tee -a "$LOG_FILE"
+	  sudo mv -f -v /home/ark/ogage.351mp /usr/local/bin/ogage.351mp | tee -a "$LOG_FILE"
+	  sudo rm -rfv /home/ark/ra32 | tee -a "$LOG_FILE"
+	  sudo chmod -R +x /opt/system/*
+
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
+	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
+
+	touch "$UPDATE_DONE"	
 	
 
 	rm -v -- "$0" | tee -a "$LOG_FILE"
