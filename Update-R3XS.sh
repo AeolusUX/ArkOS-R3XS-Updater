@@ -2268,6 +2268,16 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  sudo mv -f -v /home/ark/ogage.351mp /usr/local/bin/ogage.351mp | tee -a "$LOG_FILE"
 	  sudo rm -rfv /home/ark/ra32 | tee -a "$LOG_FILE"
 	  sudo chmod -R +x /opt/system/*
+	  
+	printf "\nUpdate es_systems.cfg and es_systems.cfg.dual files for Read from Both Script\n" | tee -a "$LOG_FILE"
+	sudo chmod -R 755 /usr/local/bin/ | tee -a "$LOG_FILE"
+	sudo chmod 755 /opt/scummvm/scummvm | tee -a "$LOG_FILE"
+	sudo chown ark:ark /opt/scummvm/scummvm | tee -a "$LOG_FILE"
+
+	sudo rm -f /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+	sudo rm -f /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
+	sudo cp -fv /usr/local/bin/es_systems.cfg.dual /etc/emulationstation/es_systems.cfg.dual | tee -a "$LOG_FILE"
+	sudo cp -fv /usr/local/bin/es_systems.cfg.single /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
