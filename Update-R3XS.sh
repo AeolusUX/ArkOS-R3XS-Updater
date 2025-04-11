@@ -2428,7 +2428,7 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 	  sudo rm -fv /opt/gzdoom/gzdoom.* | tee -a "$LOG_FILE"
 	fi
 	printf "\nUpdate the Update.sh\n" | tee -a "$LOG_FILE"
-	chmod 755 /opt/system/Update.sh | tee -a "$LOG_FILE"
+	sudo chmod -v 0755 /opt/system/Update.sh | tee -a "$LOG_FILE"
 
 	printf "\nLet's update NetworkManager to 1.52.0\n" | tee -a "$LOG_FILE"
 	cd /home/ark/netman
