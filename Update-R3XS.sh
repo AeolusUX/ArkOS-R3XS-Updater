@@ -2285,6 +2285,8 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 
 	touch "/home/ark/.config/.update02092025"	
 	
+	fi
+	
 	if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nFix Favorites and Last Played not keeping updates between power on and power off of devices\nUpdate Kodi.sh\nUpdate Russian and add UK translations for ES\nAdd Swedish translations for ES\nUpdate Korean translations\nUpdate NetworkManager to 1.52.0\nFix missing RG503 native rumble support\nAdd retrorun and retrorun32 emulators\nAdd new update script\nAdd Dragon32 and Dragon64 emulation\nAdd Flycast standalone emulator\nUpdate gzdoom\n" | tee -a "$LOG_FILE"
