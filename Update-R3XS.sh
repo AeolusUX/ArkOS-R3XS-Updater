@@ -2374,59 +2374,28 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 	fi
 
 	printf "\nMake sure the correct version of retrorun and retrorun32 are copied on the device\n" | tee -a "$LOG_FILE"
-	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
-	  sudo rm -fv /usr/local/bin/retrorun-rk3326 | tee -a "$LOG_FILE"
-	  sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
-	else
+
 	  sudo cp -fv /usr/local/bin/retrorun-rk3326 /usr/local/bin/retrorun | tee -a "$LOG_FILE"
 	  sudo cp -fv /usr/local/bin/retrorun32-rk3326 /usr/local/bin/retrorun32 | tee -a "$LOG_FILE"
 	  sudo chmod 777 /usr/local/bin/retrorun*
 	  sudo rm -fv /usr/local/bin/retrorun-rk3326 | tee -a "$LOG_FILE"
 	  sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
-	fi
 
-	printf "\nUpdate retrorun.cfg to default swapped triggers to true for rk3326 devices and false for rk3566 devices\n" | tee -a "$LOG_FILE"
-	if [ ! -f "/boot/rk3566.dtb" ] && [ ! -f "/boot/rk3566-OC.dtb" ]; then
-	  sed -i "/retrorun_swap_l1r1_with_l2r2 \=/c\retrorun_swap_l1r1_with_l2r2 \= true" /home/ark/.config/retrorun.cfg
-	else
-	  sed -i "/retrorun_swap_l1r1_with_l2r2 \=/c\retrorun_swap_l1r1_with_l2r2 \= false" /home/ark/.config/retrorun.cfg
-	fi
+
+	# printf "\nUpdate retrorun.cfg to default swapped triggers to true for rk3326 devices and false for rk3566 devices\n" | tee -a "$LOG_FILE"
+	  # sed -i "/retrorun_swap_l1r1_with_l2r2 \=/c\retrorun_swap_l1r1_with_l2r2 \= false" /home/ark/.config/retrorun.cfg
+
 
 	printf "\nCopy correct Flycast standalone emulator for device\n" | tee -a "$LOG_FILE"
-	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
-      rm -fv /opt/flycastsa/flycast-rk3326 | tee -a "$LOG_FILE"
-    else
-      mv -fv /opt/flycastsa/flycast-rk3326 /opt/flycastsa/flycast | tee -a "$LOG_FILE"
-	fi
-
-	if [ -f "/boot/rk3566.dtb" ]; then
-	    printf "\nCopy updated kernel based on device\n" | tee -a "$LOG_FILE"
-	    if test ! -z "$(grep "RG503" /home/ark/.config/.DEVICE | tr -d '\0')"
-	    then
-	      sudo mv -fv /home/ark/rk3566-kernel/Image.rg503 /boot/Image | tee -a "$LOG_FILE"
-	      sudo mv -fv /home/ark/rk3566-kernel/rk3566-rg503.dtb /boot/rk3566-OC.dtb | tee -a "$LOG_FILE"
-		  CURRENT_DTB="$(grep FDT /boot/extlinux/extlinux.conf | cut -c 8-)"
-	      BASE_DTB_NAME="rk3566-OC.dtb"
-		  sudo sed -i "/  FDT \/$CURRENT_DTB/c\  FDT \/${BASE_DTB_NAME}" /boot/extlinux/extlinux.conf
-		fi
-		sudo rm -rfv /home/ark/rk3566-kernel/ | tee -a "$LOG_FILE"
-	else
+		mv -fv /opt/flycastsa/flycast-rk3326 /opt/flycastsa/flycast | tee -a "$LOG_FILE"
+		
+	printf "\nDelete RK3566 Kernel because this is not RK3566\n" | tee -a "$LOG_FILE"
 	    sudo rm -rfv /home/ark/rk3566-kernel/ | tee -a "$LOG_FILE"
-	fi
 
 	printf "\nCopy correct gzdoom depending on device\n" | tee -a "$LOG_FILE"
-	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
-	  sudo rm -fv /opt/gzdoom/gzdoom.* | tee -a "$LOG_FILE"
-	elif [ -f "/boot/rk3326-gameforce-linux.dtb" ]; then
-	  cp -fv /opt/gzdoom/gzdoom.chi /opt/gzdoom/gzdoom | tee -a "$LOG_FILE"
-	  sudo rm -fv /opt/gzdoom/gzdoom.* | tee -a "$LOG_FILE"
-	elif [ -f "/boot/rk3326-rg351v-linux.dtb" ]; then
-	  cp -fv /opt/gzdoom/gzdoom.351v /opt/gzdoom/gzdoom | tee -a "$LOG_FILE"
-	  sudo rm -fv /opt/gzdoom/gzdoom.* | tee -a "$LOG_FILE"
-	else
 	  cp -fv /opt/gzdoom/gzdoom.rk3326 /opt/gzdoom/gzdoom | tee -a "$LOG_FILE"
 	  sudo rm -fv /opt/gzdoom/gzdoom.* | tee -a "$LOG_FILE"
-	fi
+	  
 	printf "\nUpdate the Update.sh\n" | tee -a "$LOG_FILE"
 	sudo chmod -v 0755 /opt/system/Update.sh | tee -a "$LOG_FILE"
 	
