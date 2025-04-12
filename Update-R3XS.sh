@@ -2302,63 +2302,63 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 	  else
 	    sudo unzip -X -o /dev/shm/arkosupdate03292025.zip -x usr/local/bin/Kodi.sh -d / | tee -a "$LOG_FILE"
 	  fi
-	  # cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update03292025.bak | tee -a "$LOG_FILE"
-	  # printf "\nAdd dragon32 libretro emulator\n" | tee -a "$LOG_FILE"
-	  # if test -z "$(cat /etc/emulationstation/es_systems.cfg | grep 'dragon32' | tr -d '\0')"
-	  # then
-	    # sed -i -e '/<theme>thomson<\/theme>/{r /home/ark/add_dragon.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
-	  # fi
-	  # if [ ! -d "/roms/dragon32" ]; then
-	    # mkdir -pv /roms/dragon32/controls | tee -a "$LOG_FILE"
-	    # if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
-	    # then
-		  # if [ ! -d "/roms2/dragon32" ]; then
-		    # mkdir -pv /roms2/dragon32/controls | tee -a "$LOG_FILE"
-		    # sed -i '/<path>\/roms\/dragon32/s//<path>\/roms2\/dragon32/g' /etc/emulationstation/es_systems.cfg
-		  # fi
-	    # fi
-	  # fi
-	  # if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
-	    # if test -z "$(cat /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | grep dragon32 | tr -d '\0')"
-	    # then
-		  # sudo chown -v ark:ark /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | tee -a "$LOG_FILE"
-		  # sed -i '/sudo pkill filebrowser/s//if [ \! -d "\/roms2\/dragon32\/" ]\; then\n      sudo mkdir \/roms2\/dragon32\n  fi\n  sudo pkill filebrowser/' /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh
-	    # else
-		  # printf "\ndragon32 is already being accounted for in the switch to sd2 script\n" | tee -a "$LOG_FILE"
-	    # fi
-	  # fi
-	  # if [ -f "/usr/local/bin/Switch to SD2 for Roms.sh" ]; then
-	    # if test -z "$(cat /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh | grep dragon32 | tr -d '\0')"
-	    # then
-		  # sudo sed -i '/sudo pkill filebrowser/s//if [ \! -d "\/roms2\/dragon32\/" ]\; then\n      sudo mkdir \/roms2\/dragon32\n  fi\n  sudo pkill filebrowser/' /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh
-	    # else
-		  # printf "\ndragon32 is already being accounted for in the switch to sd2 script\n" | tee -a "$LOG_FILE"
-	    # fi
-	  # fi
-	  # sed -i '/<name>dreamcast<\/name>/,/<platform>dreamcast<\/platform>/{//!d}' /etc/emulationstation/es_systems.cfg
-	  # sed -i -e '/<name>dreamcast<\/name>/{r /home/ark/update_dreamcast_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
-	  # if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
-	  # then
-		# sed -i '/<path>\/roms\/dreamcast/s//<path>\/roms2\/dreamcast/g' /etc/emulationstation/es_systems.cfg
-	  # fi
-	  # sed -i '/<name>Sega Atomiswave<\/name>/,/<theme>atomiswave<\/theme>/{//!d}' /etc/emulationstation/es_systems.cfg
-	  # sed -i -e '/<name>Sega Atomiswave<\/name>/{r /home/ark/update_atomiswave_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
-	  # if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
-	  # then
-		# sed -i '/<path>\/roms\/atomiswave/s//<path>\/roms2\/atomiswave/g' /etc/emulationstation/es_systems.cfg
-	  # fi
-	  # sed -i '/<name>Sega Naomi<\/name>/,/<theme>naomi<\/theme>/{//!d}' /etc/emulationstation/es_systems.cfg
-	  # sed -i -e '/<name>Sega Naomi<\/name>/{r /home/ark/update_naomi_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
-	  # if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
-	  # then
-		# sed -i '/<path>\/roms\/naomi/s//<path>\/roms2\/naomi/g' /etc/emulationstation/es_systems.cfg
-	  # fi
-	  # sed -i '/<name>Sega Saturn<\/name>/,/<platform>saturn<\/platform>/{//!d}' /etc/emulationstation/es_systems.cfg
-	  # sed -i -e '/<name>Sega Saturn<\/name>/{r /home/ark/update_saturn_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
-	  # if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
-	  # then
-		# sed -i '/<path>\/roms\/saturn/s//<path>\/roms2\/saturn/g' /etc/emulationstation/es_systems.cfg
-	  # fi
+	  cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update03292025.bak | tee -a "$LOG_FILE"
+	  printf "\nAdd dragon32 libretro emulator\n" | tee -a "$LOG_FILE"
+	  if test -z "$(cat /etc/emulationstation/es_systems.cfg | grep 'dragon32' | tr -d '\0')"
+	  then
+	    sed -i -e '/<theme>thomson<\/theme>/{r /home/ark/add_dragon.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	  fi
+	  if [ ! -d "/roms/dragon32" ]; then
+	    mkdir -pv /roms/dragon32/controls | tee -a "$LOG_FILE"
+	    if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	    then
+		  if [ ! -d "/roms2/dragon32" ]; then
+		    mkdir -pv /roms2/dragon32/controls | tee -a "$LOG_FILE"
+		    sed -i '/<path>\/roms\/dragon32/s//<path>\/roms2\/dragon32/g' /etc/emulationstation/es_systems.cfg
+		  fi
+	    fi
+	  fi
+	  if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
+	    if test -z "$(cat /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | grep dragon32 | tr -d '\0')"
+	    then
+		  sudo chown -v ark:ark /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | tee -a "$LOG_FILE"
+		  sed -i '/sudo pkill filebrowser/s//if [ \! -d "\/roms2\/dragon32\/" ]\; then\n      sudo mkdir \/roms2\/dragon32\n  fi\n  sudo pkill filebrowser/' /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh
+	    else
+		  printf "\ndragon32 is already being accounted for in the switch to sd2 script\n" | tee -a "$LOG_FILE"
+	    fi
+	  fi
+	  if [ -f "/usr/local/bin/Switch to SD2 for Roms.sh" ]; then
+	    if test -z "$(cat /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh | grep dragon32 | tr -d '\0')"
+	    then
+		  sudo sed -i '/sudo pkill filebrowser/s//if [ \! -d "\/roms2\/dragon32\/" ]\; then\n      sudo mkdir \/roms2\/dragon32\n  fi\n  sudo pkill filebrowser/' /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh
+	    else
+		  printf "\ndragon32 is already being accounted for in the switch to sd2 script\n" | tee -a "$LOG_FILE"
+	    fi
+	  fi
+	  sed -i '/<name>dreamcast<\/name>/,/<platform>dreamcast<\/platform>/{//!d}' /etc/emulationstation/es_systems.cfg
+	  sed -i -e '/<name>dreamcast<\/name>/{r /home/ark/update_dreamcast_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	  if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	  then
+		sed -i '/<path>\/roms\/dreamcast/s//<path>\/roms2\/dreamcast/g' /etc/emulationstation/es_systems.cfg
+	  fi
+	  sed -i '/<name>Sega Atomiswave<\/name>/,/<theme>atomiswave<\/theme>/{//!d}' /etc/emulationstation/es_systems.cfg
+	  sed -i -e '/<name>Sega Atomiswave<\/name>/{r /home/ark/update_atomiswave_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	  if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	  then
+		sed -i '/<path>\/roms\/atomiswave/s//<path>\/roms2\/atomiswave/g' /etc/emulationstation/es_systems.cfg
+	  fi
+	  sed -i '/<name>Sega Naomi<\/name>/,/<theme>naomi<\/theme>/{//!d}' /etc/emulationstation/es_systems.cfg
+	  sed -i -e '/<name>Sega Naomi<\/name>/{r /home/ark/update_naomi_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	  if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	  then
+		sed -i '/<path>\/roms\/naomi/s//<path>\/roms2\/naomi/g' /etc/emulationstation/es_systems.cfg
+	  fi
+	  sed -i '/<name>Sega Saturn<\/name>/,/<platform>saturn<\/platform>/{//!d}' /etc/emulationstation/es_systems.cfg
+	  sed -i -e '/<name>Sega Saturn<\/name>/{r /home/ark/update_saturn_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	  if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	  then
+		sed -i '/<path>\/roms\/saturn/s//<path>\/roms2\/saturn/g' /etc/emulationstation/es_systems.cfg
+	  fi
 	  sudo rm -fv /dev/shm/arkosupdate03292025.zip | tee -a "$LOG_FILE"
 	  sudo rm -fv /home/ark/add_dragon.txt | tee -a "$LOG_FILE"
 	  sudo rm -fv /home/ark/update_atomiswave_retrorun.txt | tee -a "$LOG_FILE"
@@ -2382,8 +2382,8 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 	  sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
 
 
-	# printf "\nUpdate retrorun.cfg to default swapped triggers to true for rk3326 devices and false for rk3566 devices\n" | tee -a "$LOG_FILE"
-	  # sed -i "/retrorun_swap_l1r1_with_l2r2 \=/c\retrorun_swap_l1r1_with_l2r2 \= false" /home/ark/.config/retrorun.cfg
+	printf "\nUpdate retrorun.cfg to default swapped triggers to true for rk3326 devices and false for rk3566 devices\n" | tee -a "$LOG_FILE"
+	  sed -i "/retrorun_swap_l1r1_with_l2r2 \=/c\retrorun_swap_l1r1_with_l2r2 \= false" /home/ark/.config/retrorun.cfg
 
 
 	printf "\nCopy correct Flycast standalone emulator for device\n" | tee -a "$LOG_FILE"
@@ -2400,7 +2400,7 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 	sudo chmod -v 0755 /opt/system/Update.sh | tee -a "$LOG_FILE"
 	
 	printf "\nCopy correct Retroarches depending on device\n" | tee -a "$LOG_FILE"
-	if [ -f "/boot/rk3326-r33s-linux.dtb" ] || [ -f "/boot/rk3326-r35s-linux.dtb" ] || [ -f "/boot/rk3326-r36s-linux.dtb" ] || [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ -f "/boot/rk3326-rg351mp-linux.dtb" ] || [ -f "/boot/rk3326-gameforce-linux.dtb" ]; then
+
 	  cp -fv /opt/retroarch/bin/retroarch32.rk3326.unrot /opt/retroarch/bin/retroarch32 | tee -a "$LOG_FILE"
 	  cp -fv /opt/retroarch/bin/retroarch.rk3326.unrot /opt/retroarch/bin/retroarch | tee -a "$LOG_FILE"
 	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
@@ -2408,30 +2408,16 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 	  cp -Rfv /home/ark/retroarch_filters/filters.rk3326/ /home/ark/.config/retroarch/
 	  cp -Rfv /home/ark/retroarch_filters/filters32.rk3326/ /home/ark/.config/retroarch32/
 	  rm -rfv /home/ark/retroarch_filters/ | tee -a "$LOG_FILE"
-	elif [ -f "/boot/rk3326-odroidgo2-linux.dtb" ] || [ -f "/boot/rk3326-odroidgo2-linux-v11.dtb" ] || [ -f "/boot/rk3326-odroidgo3-linux.dtb" ]; then
-	  cp -fv /opt/retroarch/bin/retroarch32.rk3326.rot /opt/retroarch/bin/retroarch32 | tee -a "$LOG_FILE"
-	  cp -fv /opt/retroarch/bin/retroarch.rk3326.rot /opt/retroarch/bin/retroarch | tee -a "$LOG_FILE"
-	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
-	  rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
-	  cp -Rfv /home/ark/retroarch_filters/filters.rk3326/ /home/ark/.config/retroarch/
-	  cp -Rfv /home/ark/retroarch_filters/filters32.rk3326/ /home/ark/.config/retroarch32/
-	  rm -rfv /home/ark/retroarch_filters/ | tee -a "$LOG_FILE"
-	else
-	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
-	  rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
-	  cp -Rfv /home/ark/retroarch_filters/filters/ /home/ark/.config/retroarch/
-	  cp -Rfv /home/ark/retroarch_filters/filters32/ /home/ark/.config/retroarch32/
-	  rm -rfv /home/ark/retroarch_filters/ | tee -a "$LOG_FILE"
-	fi
 
 
-	printf "\nLet's update NetworkManager to 1.52.0\n" | tee -a "$LOG_FILE"
-	cd /home/ark/netman
-	sudo dpkg -i --force-all *.deb | tee -a "$LOG_FILE"
-	cd /home/ark
-	sudo rm -rfv /home/ark/netman | tee -a "$LOG_FILE"
-	sudo sed -i "/Depends: libaudit1 (>\= 1:2.2.1), libbluetooth3 (>\= 4.91), libc6 (>\= 2.28), libcurl3-gnutls (>\= 7.16.3), libglib2.0-0 (>\= 2.57.2), libgnutls30 (>\= 3.6.5), libjansson4 (>\= 2.0.1), libmm-glib0 (>\= 1.10.0), libndp0 (>\= 1.2), libnewt0.52 (>\= 0.52.20), libnm0 (= 1.52.0-1ubuntu1), libpsl5 (>\= 0.13.0), libreadline7 (>\= 6.0), libselinux1 (>\= 2.0.65), libsystemd0 (>\= 209), libteamdctl0 (>\= 1.9), libudev1 (>\= 183), netplan.io (>\= 1.0~), default-dbus-system-bus | dbus-system-bus, adduser/c\Depends: libaudit1 (>\= 1:2.2.1), libbluetooth3 (>\= 4.91), libc6 (>\= 2.28), libcurl3-gnutls (>\= 7.16.3), libglib2.0-0 (>\= 2.57.2), libgnutls30 (>\= 3.6.5), libjansson4 (>\= 2.0.1), libmm-glib0 (>\= 1.10.0), libndp0 (>\= 1.2), libnewt0.52 (>\= 0.52.20), libnm0 (= 1.52.0-1ubuntu1), libpsl5 (>\= 0.13.0), libselinux1 (>\= 2.0.65), libsystemd0 (>\= 209), libteamdctl0 (>\= 1.9), libudev1 (>\= 183), default-dbus-system-bus | dbus-system-bus, adduser" /var/lib/dpkg/status
-	sudo sed -i "/Recommends: ppp, dnsmasq-base, modemmanager, network-manager-pptp, wireless-regdb, wpasupplicant, libpam-systemd, polkitd, udev/c\Recommends: ppp, dnsmasq-base, modemmanager, network-manager-pptp, wireless-regdb, wpasupplicant, libpam-systemd, udev"  /var/lib/dpkg/status
+
+	# printf "\nLet's update NetworkManager to 1.52.0\n" | tee -a "$LOG_FILE"
+	# cd /home/ark/netman
+	# sudo dpkg -i --force-all *.deb | tee -a "$LOG_FILE"
+	# cd /home/ark
+	# sudo rm -rfv /home/ark/netman | tee -a "$LOG_FILE"
+	# sudo sed -i "/Depends: libaudit1 (>\= 1:2.2.1), libbluetooth3 (>\= 4.91), libc6 (>\= 2.28), libcurl3-gnutls (>\= 7.16.3), libglib2.0-0 (>\= 2.57.2), libgnutls30 (>\= 3.6.5), libjansson4 (>\= 2.0.1), libmm-glib0 (>\= 1.10.0), libndp0 (>\= 1.2), libnewt0.52 (>\= 0.52.20), libnm0 (= 1.52.0-1ubuntu1), libpsl5 (>\= 0.13.0), libreadline7 (>\= 6.0), libselinux1 (>\= 2.0.65), libsystemd0 (>\= 209), libteamdctl0 (>\= 1.9), libudev1 (>\= 183), netplan.io (>\= 1.0~), default-dbus-system-bus | dbus-system-bus, adduser/c\Depends: libaudit1 (>\= 1:2.2.1), libbluetooth3 (>\= 4.91), libc6 (>\= 2.28), libcurl3-gnutls (>\= 7.16.3), libglib2.0-0 (>\= 2.57.2), libgnutls30 (>\= 3.6.5), libjansson4 (>\= 2.0.1), libmm-glib0 (>\= 1.10.0), libndp0 (>\= 1.2), libnewt0.52 (>\= 0.52.20), libnm0 (= 1.52.0-1ubuntu1), libpsl5 (>\= 0.13.0), libselinux1 (>\= 2.0.65), libsystemd0 (>\= 209), libteamdctl0 (>\= 1.9), libudev1 (>\= 183), default-dbus-system-bus | dbus-system-bus, adduser" /var/lib/dpkg/status
+	# sudo sed -i "/Recommends: ppp, dnsmasq-base, modemmanager, network-manager-pptp, wireless-regdb, wpasupplicant, libpam-systemd, polkitd, udev/c\Recommends: ppp, dnsmasq-base, modemmanager, network-manager-pptp, wireless-regdb, wpasupplicant, libpam-systemd, udev"  /var/lib/dpkg/status
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
