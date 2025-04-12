@@ -23,16 +23,16 @@ if [ "$ISITCHINA" = "\"country\":\"China\"" ]; then
   LOCATION="https://raw.gitcode.com/norucus/ArkOS-R3XS-Updater/raw/main"
 fi
 
-sudo msgbox "MAKE SURE YOU SWITCHED TO MAIN SD FOR ROMS BEFORE YOU RUN THIS UPDATE. ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
-my_var=`osk "Enter OK here to proceed." | tail -n 1`
+#sudo msgbox "MAKE SURE YOU SWITCHED TO MAIN SD FOR ROMS BEFORE YOU RUN THIS UPDATE. ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
+#my_var=`osk "Enter OK here to proceed." | tail -n 1`
 
-#sudo msgbox "UPDATER IS CURRENTLY UNAVAILABLE. IT WILL BE BACK AGAIN, SOON."
-#my_var=`osk "TRY AGAIN LATER" | tail -n 1`
+sudo msgbox "UPDATER IS CURRENTLY UNAVAILABLE. IT WILL BE BACK AGAIN, SOON."
+my_var=`osk "TRY AGAIN LATER" | tail -n 1`
 
 echo "$my_var" | tee -a "$LOG_FILE"
 
-#if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
-if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
+if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
+#if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
 
   sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
   printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"	
@@ -2411,13 +2411,13 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 
 
 
-	# printf "\nLet's update NetworkManager to 1.52.0\n" | tee -a "$LOG_FILE"
-	# cd /home/ark/netman
-	# sudo dpkg -i --force-all *.deb | tee -a "$LOG_FILE"
-	# cd /home/ark
-	# sudo rm -rfv /home/ark/netman | tee -a "$LOG_FILE"
-	# sudo sed -i "/Depends: libaudit1 (>\= 1:2.2.1), libbluetooth3 (>\= 4.91), libc6 (>\= 2.28), libcurl3-gnutls (>\= 7.16.3), libglib2.0-0 (>\= 2.57.2), libgnutls30 (>\= 3.6.5), libjansson4 (>\= 2.0.1), libmm-glib0 (>\= 1.10.0), libndp0 (>\= 1.2), libnewt0.52 (>\= 0.52.20), libnm0 (= 1.52.0-1ubuntu1), libpsl5 (>\= 0.13.0), libreadline7 (>\= 6.0), libselinux1 (>\= 2.0.65), libsystemd0 (>\= 209), libteamdctl0 (>\= 1.9), libudev1 (>\= 183), netplan.io (>\= 1.0~), default-dbus-system-bus | dbus-system-bus, adduser/c\Depends: libaudit1 (>\= 1:2.2.1), libbluetooth3 (>\= 4.91), libc6 (>\= 2.28), libcurl3-gnutls (>\= 7.16.3), libglib2.0-0 (>\= 2.57.2), libgnutls30 (>\= 3.6.5), libjansson4 (>\= 2.0.1), libmm-glib0 (>\= 1.10.0), libndp0 (>\= 1.2), libnewt0.52 (>\= 0.52.20), libnm0 (= 1.52.0-1ubuntu1), libpsl5 (>\= 0.13.0), libselinux1 (>\= 2.0.65), libsystemd0 (>\= 209), libteamdctl0 (>\= 1.9), libudev1 (>\= 183), default-dbus-system-bus | dbus-system-bus, adduser" /var/lib/dpkg/status
-	# sudo sed -i "/Recommends: ppp, dnsmasq-base, modemmanager, network-manager-pptp, wireless-regdb, wpasupplicant, libpam-systemd, polkitd, udev/c\Recommends: ppp, dnsmasq-base, modemmanager, network-manager-pptp, wireless-regdb, wpasupplicant, libpam-systemd, udev"  /var/lib/dpkg/status
+	printf "\nLet's update NetworkManager to 1.52.0\n" | tee -a "$LOG_FILE"
+	cd /home/ark/netman
+	sudo dpkg -i --force-all *.deb | tee -a "$LOG_FILE"
+	cd /home/ark
+	sudo rm -rfv /home/ark/netman | tee -a "$LOG_FILE"
+	sudo sed -i "/Depends: libaudit1 (>\= 1:2.2.1), libbluetooth3 (>\= 4.91), libc6 (>\= 2.28), libcurl3-gnutls (>\= 7.16.3), libglib2.0-0 (>\= 2.57.2), libgnutls30 (>\= 3.6.5), libjansson4 (>\= 2.0.1), libmm-glib0 (>\= 1.10.0), libndp0 (>\= 1.2), libnewt0.52 (>\= 0.52.20), libnm0 (= 1.52.0-1ubuntu1), libpsl5 (>\= 0.13.0), libreadline7 (>\= 6.0), libselinux1 (>\= 2.0.65), libsystemd0 (>\= 209), libteamdctl0 (>\= 1.9), libudev1 (>\= 183), netplan.io (>\= 1.0~), default-dbus-system-bus | dbus-system-bus, adduser/c\Depends: libaudit1 (>\= 1:2.2.1), libbluetooth3 (>\= 4.91), libc6 (>\= 2.28), libcurl3-gnutls (>\= 7.16.3), libglib2.0-0 (>\= 2.57.2), libgnutls30 (>\= 3.6.5), libjansson4 (>\= 2.0.1), libmm-glib0 (>\= 1.10.0), libndp0 (>\= 1.2), libnewt0.52 (>\= 0.52.20), libnm0 (= 1.52.0-1ubuntu1), libpsl5 (>\= 0.13.0), libselinux1 (>\= 2.0.65), libsystemd0 (>\= 209), libteamdctl0 (>\= 1.9), libudev1 (>\= 183), default-dbus-system-bus | dbus-system-bus, adduser" /var/lib/dpkg/status
+	sudo sed -i "/Recommends: ppp, dnsmasq-base, modemmanager, network-manager-pptp, wireless-regdb, wpasupplicant, libpam-systemd, polkitd, udev/c\Recommends: ppp, dnsmasq-base, modemmanager, network-manager-pptp, wireless-regdb, wpasupplicant, libpam-systemd, udev"  /var/lib/dpkg/status
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
