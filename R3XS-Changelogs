@@ -363,10 +363,11 @@ v2.0 (03/29/2025)
 - Added Dragon64 emulation (Thanks to alektronic)
 - Added navy1978's modified retrorun and retrorun32 as additional emulators for Atomiswave, Dreamcast, Noami and Saturn (Thanks to navy1978 for the work and accommodations)
 - Added Flycast Standalone as additional emulator for Atomiswave, Dreamcast and Naomi (Thanks to KitFox618 for the inquiry)
+- Fix R36H Device Type to correct Retroarch32 mappings.
 
 v2.0 (03/30/2025)
 - Fixed analog stick for retrorun and retrorun32 (Thanks to KitFox618 for reporting the issue)
 - Added Gamma Adjustment Tool on the full image.
 - Added Plymouth Theme Changer by Sucharek233( https://www.reddit.com/r/R36S/comments/1gnri3v/plymouth_theme_selector/)
 - Added ES Logo Changer by Jason3x (https://github.com/Jason3x/ES-screen-changer-script)
-- Made sure the Missing Pythong 'inputs' package is installed. (Thanks to cowbutt for reporting)
+- Made sure the Missing Python 'inputs' package is installed. (Thanks to cowbutt for reporting)
