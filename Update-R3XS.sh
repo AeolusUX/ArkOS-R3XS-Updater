@@ -2302,63 +2302,63 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 	  else
 	    sudo unzip -X -o /dev/shm/arkosupdate03292025.zip -x usr/local/bin/Kodi.sh -d / | tee -a "$LOG_FILE"
 	  fi
-	  cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update03292025.bak | tee -a "$LOG_FILE"
-	  printf "\nAdd dragon32 libretro emulator\n" | tee -a "$LOG_FILE"
-	  if test -z "$(cat /etc/emulationstation/es_systems.cfg | grep 'dragon32' | tr -d '\0')"
-	  then
-	    sed -i -e '/<theme>thomson<\/theme>/{r /home/ark/add_dragon.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
-	  fi
-	  if [ ! -d "/roms/dragon32" ]; then
-	    mkdir -pv /roms/dragon32/controls | tee -a "$LOG_FILE"
-	    if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
-	    then
-		  if [ ! -d "/roms2/dragon32" ]; then
-		    mkdir -pv /roms2/dragon32/controls | tee -a "$LOG_FILE"
-		    sed -i '/<path>\/roms\/dragon32/s//<path>\/roms2\/dragon32/g' /etc/emulationstation/es_systems.cfg
-		  fi
-	    fi
-	  fi
-	  if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
-	    if test -z "$(cat /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | grep dragon32 | tr -d '\0')"
-	    then
-		  sudo chown -v ark:ark /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | tee -a "$LOG_FILE"
-		  sed -i '/sudo pkill filebrowser/s//if [ \! -d "\/roms2\/dragon32\/" ]\; then\n      sudo mkdir \/roms2\/dragon32\n  fi\n  sudo pkill filebrowser/' /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh
-	    else
-		  printf "\ndragon32 is already being accounted for in the switch to sd2 script\n" | tee -a "$LOG_FILE"
-	    fi
-	  fi
-	  if [ -f "/usr/local/bin/Switch to SD2 for Roms.sh" ]; then
-	    if test -z "$(cat /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh | grep dragon32 | tr -d '\0')"
-	    then
-		  sudo sed -i '/sudo pkill filebrowser/s//if [ \! -d "\/roms2\/dragon32\/" ]\; then\n      sudo mkdir \/roms2\/dragon32\n  fi\n  sudo pkill filebrowser/' /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh
-	    else
-		  printf "\ndragon32 is already being accounted for in the switch to sd2 script\n" | tee -a "$LOG_FILE"
-	    fi
-	  fi
-	  sed -i '/<name>dreamcast<\/name>/,/<platform>dreamcast<\/platform>/{//!d}' /etc/emulationstation/es_systems.cfg
-	  sed -i -e '/<name>dreamcast<\/name>/{r /home/ark/update_dreamcast_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
-	  if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
-	  then
-		sed -i '/<path>\/roms\/dreamcast/s//<path>\/roms2\/dreamcast/g' /etc/emulationstation/es_systems.cfg
-	  fi
-	  sed -i '/<name>Sega Atomiswave<\/name>/,/<theme>atomiswave<\/theme>/{//!d}' /etc/emulationstation/es_systems.cfg
-	  sed -i -e '/<name>Sega Atomiswave<\/name>/{r /home/ark/update_atomiswave_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
-	  if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
-	  then
-		sed -i '/<path>\/roms\/atomiswave/s//<path>\/roms2\/atomiswave/g' /etc/emulationstation/es_systems.cfg
-	  fi
-	  sed -i '/<name>Sega Naomi<\/name>/,/<theme>naomi<\/theme>/{//!d}' /etc/emulationstation/es_systems.cfg
-	  sed -i -e '/<name>Sega Naomi<\/name>/{r /home/ark/update_naomi_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
-	  if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
-	  then
-		sed -i '/<path>\/roms\/naomi/s//<path>\/roms2\/naomi/g' /etc/emulationstation/es_systems.cfg
-	  fi
-	  sed -i '/<name>Sega Saturn<\/name>/,/<platform>saturn<\/platform>/{//!d}' /etc/emulationstation/es_systems.cfg
-	  sed -i -e '/<name>Sega Saturn<\/name>/{r /home/ark/update_saturn_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
-	  if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
-	  then
-		sed -i '/<path>\/roms\/saturn/s//<path>\/roms2\/saturn/g' /etc/emulationstation/es_systems.cfg
-	  fi
+	  # cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update03292025.bak | tee -a "$LOG_FILE"
+	  # printf "\nAdd dragon32 libretro emulator\n" | tee -a "$LOG_FILE"
+	  # if test -z "$(cat /etc/emulationstation/es_systems.cfg | grep 'dragon32' | tr -d '\0')"
+	  # then
+	    # sed -i -e '/<theme>thomson<\/theme>/{r /home/ark/add_dragon.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	  # fi
+	  # if [ ! -d "/roms/dragon32" ]; then
+	    # mkdir -pv /roms/dragon32/controls | tee -a "$LOG_FILE"
+	    # if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	    # then
+		  # if [ ! -d "/roms2/dragon32" ]; then
+		    # mkdir -pv /roms2/dragon32/controls | tee -a "$LOG_FILE"
+		    # sed -i '/<path>\/roms\/dragon32/s//<path>\/roms2\/dragon32/g' /etc/emulationstation/es_systems.cfg
+		  # fi
+	    # fi
+	  # fi
+	  # if [ -f "/opt/system/Advanced/Switch to SD2 for Roms.sh" ]; then
+	    # if test -z "$(cat /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | grep dragon32 | tr -d '\0')"
+	    # then
+		  # sudo chown -v ark:ark /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh | tee -a "$LOG_FILE"
+		  # sed -i '/sudo pkill filebrowser/s//if [ \! -d "\/roms2\/dragon32\/" ]\; then\n      sudo mkdir \/roms2\/dragon32\n  fi\n  sudo pkill filebrowser/' /opt/system/Advanced/Switch\ to\ SD2\ for\ Roms.sh
+	    # else
+		  # printf "\ndragon32 is already being accounted for in the switch to sd2 script\n" | tee -a "$LOG_FILE"
+	    # fi
+	  # fi
+	  # if [ -f "/usr/local/bin/Switch to SD2 for Roms.sh" ]; then
+	    # if test -z "$(cat /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh | grep dragon32 | tr -d '\0')"
+	    # then
+		  # sudo sed -i '/sudo pkill filebrowser/s//if [ \! -d "\/roms2\/dragon32\/" ]\; then\n      sudo mkdir \/roms2\/dragon32\n  fi\n  sudo pkill filebrowser/' /usr/local/bin/Switch\ to\ SD2\ for\ Roms.sh
+	    # else
+		  # printf "\ndragon32 is already being accounted for in the switch to sd2 script\n" | tee -a "$LOG_FILE"
+	    # fi
+	  # fi
+	  # sed -i '/<name>dreamcast<\/name>/,/<platform>dreamcast<\/platform>/{//!d}' /etc/emulationstation/es_systems.cfg
+	  # sed -i -e '/<name>dreamcast<\/name>/{r /home/ark/update_dreamcast_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	  # if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	  # then
+		# sed -i '/<path>\/roms\/dreamcast/s//<path>\/roms2\/dreamcast/g' /etc/emulationstation/es_systems.cfg
+	  # fi
+	  # sed -i '/<name>Sega Atomiswave<\/name>/,/<theme>atomiswave<\/theme>/{//!d}' /etc/emulationstation/es_systems.cfg
+	  # sed -i -e '/<name>Sega Atomiswave<\/name>/{r /home/ark/update_atomiswave_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	  # if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	  # then
+		# sed -i '/<path>\/roms\/atomiswave/s//<path>\/roms2\/atomiswave/g' /etc/emulationstation/es_systems.cfg
+	  # fi
+	  # sed -i '/<name>Sega Naomi<\/name>/,/<theme>naomi<\/theme>/{//!d}' /etc/emulationstation/es_systems.cfg
+	  # sed -i -e '/<name>Sega Naomi<\/name>/{r /home/ark/update_naomi_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	  # if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	  # then
+		# sed -i '/<path>\/roms\/naomi/s//<path>\/roms2\/naomi/g' /etc/emulationstation/es_systems.cfg
+	  # fi
+	  # sed -i '/<name>Sega Saturn<\/name>/,/<platform>saturn<\/platform>/{//!d}' /etc/emulationstation/es_systems.cfg
+	  # sed -i -e '/<name>Sega Saturn<\/name>/{r /home/ark/update_saturn_retrorun.txt' -e 'd}' /etc/emulationstation/es_systems.cfg
+	  # if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
+	  # then
+		# sed -i '/<path>\/roms\/saturn/s//<path>\/roms2\/saturn/g' /etc/emulationstation/es_systems.cfg
+	  # fi
 	  sudo rm -fv /dev/shm/arkosupdate03292025.zip | tee -a "$LOG_FILE"
 	  sudo rm -fv /home/ark/add_dragon.txt | tee -a "$LOG_FILE"
 	  sudo rm -fv /home/ark/update_atomiswave_retrorun.txt | tee -a "$LOG_FILE"
