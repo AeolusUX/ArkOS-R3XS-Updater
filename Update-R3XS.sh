@@ -2297,7 +2297,7 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 		if [ ! -z "$(grep "RGB30" /home/ark/.config/.DEVICE | tr -d '\0')" ]; then
 		  sudo unzip -X -o /dev/shm/arkosupdate03292025.zip -x roms/themes/es-theme-nes-box/* -d / | tee -a "$LOG_FILE"
 		else
-		  sudo unzip -X -o /dev/shm/arkosupdate03292025.zip -x roms/themes/es-theme-sagabox/* -d / | tee -a "$LOG_FILE"
+		  sudo unzip -X -o /dev/shm/arkosupdate03292025.zip -x roms/themes/es-theme-sagabox/* opt/system/Update.sh -d / | tee -a "$LOG_FILE"
 		fi
 	  else
 	    sudo unzip -X -o /dev/shm/arkosupdate03292025.zip -x usr/local/bin/Kodi.sh -d / | tee -a "$LOG_FILE"
@@ -2396,8 +2396,8 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 	  cp -fv /opt/gzdoom/gzdoom.rk3326 /opt/gzdoom/gzdoom | tee -a "$LOG_FILE"
 	  sudo rm -fv /opt/gzdoom/gzdoom.* | tee -a "$LOG_FILE"
 	  
-	printf "\nUpdate the Update.sh\n" | tee -a "$LOG_FILE"
-	sudo chmod -v 0755 /opt/system/Update.sh | tee -a "$LOG_FILE"
+	# printf "\nUpdate the Update.sh\n" | tee -a "$LOG_FILE"
+	# sudo chmod -v 0755 /opt/system/Update.sh | tee -a "$LOG_FILE"
 	
 	printf "\nCopy correct Retroarches depending on device\n" | tee -a "$LOG_FILE"
 
