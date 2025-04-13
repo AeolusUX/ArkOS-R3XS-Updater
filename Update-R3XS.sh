@@ -2396,8 +2396,8 @@ if [ ! -f "/home/ark/.config/.update02092025" ]; then
 	  cp -fv /opt/gzdoom/gzdoom.rk3326 /opt/gzdoom/gzdoom | tee -a "$LOG_FILE"
 	  sudo rm -fv /opt/gzdoom/gzdoom.* | tee -a "$LOG_FILE"
 	  
-	# printf "\nUpdate the Update.sh\n" | tee -a "$LOG_FILE"
-	# sudo chmod -v 0755 /opt/system/Update.sh | tee -a "$LOG_FILE"
+	printf "\nUpdate the Update.sh\n" | tee -a "$LOG_FILE"
+	sudo chmod -R 777 /opt/system/ | tee -a "$LOG_FILE"
 	
 	printf "\nCopy correct Retroarches depending on device\n" | tee -a "$LOG_FILE"
 
