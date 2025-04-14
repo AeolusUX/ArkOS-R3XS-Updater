@@ -61,6 +61,11 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  exit 1
 	fi
 	
+	printf "\nCopy correct emulationstation depending on device\n" | tee -a "$LOG_FILE"
+	  sudo mv -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
+	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
+	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
+	
 	printf "\nInstall inputs python3 module via pip3\n" | tee -a "$LOG_FILE"
 	sudo apt update -y | tee -a "$LOG_FILE"
 	sudo apt -y install python3-pip | tee -a "$LOG_FILE"
