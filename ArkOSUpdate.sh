@@ -77,6 +77,8 @@ if [ ! -f "/home/ark/.config/.update03302025" ]; then
 	fi
 	sudo systemctl daemon-reload
 
+	sudo chmod -v 777 /opt/system/DeviceType/R36H.sh | tee -a "$LOG_FILE"
+  
 	printf "\nUpdate retrorun.cfg to default swapped triggers to true for rk3326 devices and false for rk3566 devices\n" | tee -a "$LOG_FILE"
 	if [ ! -f "/boot/rk3566.dtb" ] && [ ! -f "/boot/rk3566-OC.dtb" ]; then
 	  sed -i "/retrorun_swap_l1r1_with_l2r2 \=/c\retrorun_swap_l1r1_with_l2r2 \= true" /home/ark/.config/retrorun.cfg
