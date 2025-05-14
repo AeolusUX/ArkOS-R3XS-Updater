@@ -194,21 +194,22 @@ if [ ! -f "/home/ark/.config/.update04302025" ]; then
 	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
 	
 	touch "/home/ark/.config/.update04302025"
-	fi
+
+fi
 
 if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nUpdate Retroarch and Retroarch32 to 1.21.0\nUpdate Wifi.sh and importwifi.sh to support wpa3\nUpdate wifi_importer service\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
-	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/04302025/arkosupdate04302025.zip -O /dev/shm/arkosupdate04302025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate04302025.zip | tee -a "$LOG_FILE"
-	if [ -f "/dev/shm/arkosupdate04302025.zip" ]; then
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/05152025/arkosupdate04302025.zip -O /dev/shm/arkosupdate05152025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate05152025.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate05152025.zip" ]; then
 	  cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update04302025.bak
-	  sudo unzip -X -o /dev/shm/arkosupdate04302025.zip -d / | tee -a "$LOG_FILE"
+	  sudo unzip -X -o /dev/shm/arkosupdate05152025.zip -d / | tee -a "$LOG_FILE"
 	  sudo systemctl daemon-reload
-	  sudo rm -fv /dev/shm/arkosupdate04302025.zip | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate05152025.zip | tee -a "$LOG_FILE"
 	else
 	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate04302025.z* | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate05152025.z* | tee -a "$LOG_FILE"
 	  sleep 3
 	  echo $c_brightness > /sys/class/backlight/backlight/brightness
 	  exit 1
