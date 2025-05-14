@@ -90,10 +90,10 @@ if [ ! -f "/home/ark/.config/.update03302025" ]; then
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
 	
-	touch "/home/ark/.config/.update03302025"
+	touch "/home/ark/.config/.update04302025"
 
 fi
-if [ ! -f "/home/ark/.config/.update04302025" ]; then
+if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nUpdate Retroarch and Retroarch32 to 1.21.0\nUpdate Wifi.sh and importwifi.sh to support wpa3\nUpdate wifi_importer service\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
@@ -180,22 +180,12 @@ if [ ! -f "/home/ark/.config/.update04302025" ]; then
 	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
 	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
 	fi
-	if [ -f "/boot/logo.png" ] then
-		sudo rm /opt/system/DeviceType/R36H.sh | tee -a "$LOG_FILE"
-		sudo chmod -v -R 777 /opt/drastic/TF* | tee -a "$LOG_FILE"
-		sudo chown -v -R ark:ark /opt/drastic/TF* | tee -a "$LOG_FILE"
-	else
-		sudo chmod -v 777 /opt/system/DeviceType/R36H.sh | tee -a "$LOG_FILE"
-		sudo chmod -v -R 777 /opt/drastic/TF* | tee -a "$LOG_FILE"
-		sudo chown -v -R ark:ark /opt/drastic/TF* | tee -a "$LOG_FILE"
-	fi
-	
-	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
-	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
-	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
-	
-	touch "/home/ark/.config/.update04302025"
 
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
+	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
+
+	touch "/home/ark/.config/.update04302025"
 fi
 
 if [ ! -f "$UPDATE_DONE" ]; then
@@ -225,7 +215,11 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	fi
 		sudo rm -rf /home/ark/drastic/
 	
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
+	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
 	
+
 	touch "$UPDATE_DONE"
 	rm -v -- "$0" | tee -a "$LOG_FILE"
 	printf "\033c" >> /dev/tty1
