@@ -190,11 +190,11 @@ fi
 
 if [ ! -f "$UPDATE_DONE" ]; then
 
-	printf "\nUpdate Retroarch and Retroarch32 to 1.21.0\nUpdate Wifi.sh and importwifi.sh to support wpa3\nUpdate wifi_importer service\n" | tee -a "$LOG_FILE"
+	printf "\nUpdate Drastic for R36Plus" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
-	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/05152025/arkosupdate04302025.zip -O /dev/shm/arkosupdate05152025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate05152025.zip | tee -a "$LOG_FILE"
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/05152025/arkosupdate05152025.zip -O /dev/shm/arkosupdate05152025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate05152025.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate05152025.zip" ]; then
-	  cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update04302025.bak
+	  cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update05152025.bak
 	  sudo unzip -X -o /dev/shm/arkosupdate05152025.zip -d / | tee -a "$LOG_FILE"
 	  sudo systemctl daemon-reload
 	  sudo rm -fv /dev/shm/arkosupdate05152025.zip | tee -a "$LOG_FILE"
