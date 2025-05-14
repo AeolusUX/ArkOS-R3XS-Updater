@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-UPDATE_DATE="04302025"
+UPDATE_DATE="05152025"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
 
@@ -93,7 +93,7 @@ if [ ! -f "/home/ark/.config/.update03302025" ]; then
 	touch "/home/ark/.config/.update03302025"
 
 fi
-if [ ! -f "$UPDATE_DONE" ]; then
+if [ ! -f "/home/ark/.config/.update04302025" ]; then
 
 	printf "\nUpdate Retroarch and Retroarch32 to 1.21.0\nUpdate Wifi.sh and importwifi.sh to support wpa3\nUpdate wifi_importer service\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
@@ -180,15 +180,50 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
 	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
 	fi
-	
-	sudo chmod -v 777 /opt/system/DeviceType/R36H.sh | tee -a "$LOG_FILE"
-	sudo chmod -v -R 777 /opt/drastic/TF*
-	sudo chown -v -R ark:ark /opt/drastic/TF* | tee -a "$LOG_FILE"
+	if [ -f "/boot/logo.png" ] then
+		sudo rm /opt/system/DeviceType/R36H.sh | tee -a "$LOG_FILE"
+		sudo chmod -v -R 777 /opt/drastic/TF* | tee -a "$LOG_FILE"
+		sudo chown -v -R ark:ark /opt/drastic/TF* | tee -a "$LOG_FILE"
+	else
+		sudo chmod -v 777 /opt/system/DeviceType/R36H.sh | tee -a "$LOG_FILE"
+		sudo chmod -v -R 777 /opt/drastic/TF* | tee -a "$LOG_FILE"
+		sudo chown -v -R ark:ark /opt/drastic/TF* | tee -a "$LOG_FILE"
 	
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
+	
+	touch "/home/ark/.config/.update04302025"
+	fi
 
+if [ ! -f "$UPDATE_DONE" ]; then
+
+	printf "\nUpdate Retroarch and Retroarch32 to 1.21.0\nUpdate Wifi.sh and importwifi.sh to support wpa3\nUpdate wifi_importer service\n" | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/04302025/arkosupdate04302025.zip -O /dev/shm/arkosupdate04302025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate04302025.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate04302025.zip" ]; then
+	  cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update04302025.bak
+	  sudo unzip -X -o /dev/shm/arkosupdate04302025.zip -d / | tee -a "$LOG_FILE"
+	  sudo systemctl daemon-reload
+	  sudo rm -fv /dev/shm/arkosupdate04302025.zip | tee -a "$LOG_FILE"
+	else
+	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate04302025.z* | tee -a "$LOG_FILE"
+	  sleep 3
+	  echo $c_brightness > /sys/class/backlight/backlight/brightness
+	  exit 1
+	fi
+	
+	if [ -f "/boot/logo.png" ]; then
+		sudo cp -rfv /home/ark/drastic/R36Plus/* /opt/drastic/TF1/
+		sudo cp -rfv /home/ark/drastic/R36Plus/* /opt/drastic/TF2/
+	else
+		sudo cp -rfv /home/ark/drastic/R36S/* /opt/drastic/TF1/
+		sudo cp -rfv /home/ark/drastic/R36S/* /opt/drastic/TF2/
+	fi
+		sudo rm -rf /home/ark/drastic/
+	
+	
 	touch "$UPDATE_DONE"
 	rm -v -- "$0" | tee -a "$LOG_FILE"
 	printf "\033c" >> /dev/tty1
