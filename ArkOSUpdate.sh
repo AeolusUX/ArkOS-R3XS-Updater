@@ -207,11 +207,9 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	fi
 	
 	if [ -f "/boot/logo.png" ]; then
-		sudo cp -rfv /home/ark/drastic/R36Plus/* /opt/drastic/TF1/
-		sudo cp -rfv /home/ark/drastic/R36Plus/* /opt/drastic/TF2/
+		sudo cp -rfv /home/ark/drastic/R36Plus/* /opt/drastic/
 	else
-		sudo cp -rfv /home/ark/drastic/R36S/* /opt/drastic/TF1/
-		sudo cp -rfv /home/ark/drastic/R36S/* /opt/drastic/TF2/
+		sudo cp -rfv /home/ark/drastic/R36S/* /opt/drastic/
 	fi
 		sudo rm -rf /home/ark/drastic/
 		sudo chmod -v 777 /opt/system/DeviceType/R36H.sh | tee -a "$LOG_FILE"
