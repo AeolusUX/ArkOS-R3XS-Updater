@@ -363,7 +363,7 @@ v2.0 (03/29/2025)
 - Added Dragon64 emulation (Thanks to alektronic)
 - Added navy1978's modified retrorun and retrorun32 as additional emulators for Atomiswave, Dreamcast, Noami and Saturn (Thanks to navy1978 for the work and accommodations)
 - Added Flycast Standalone as additional emulator for Atomiswave, Dreamcast and Naomi (Thanks to KitFox618 for the inquiry)
-- Fix R36H Device Type to correct Retroarch32 mappings.
+- Fixed R36H Device Type to correct Retroarch32 mappings.
 
 v2.0 (03/30/2025)
 - Fixed analog stick for retrorun and retrorun32 (Thanks to KitFox618 for reporting the issue)
@@ -371,3 +371,22 @@ v2.0 (03/30/2025)
 - Added Plymouth Theme Changer by Sucharek233( https://www.reddit.com/r/R36S/comments/1gnri3v/plymouth_theme_selector/)
 - Added ES Logo Changer by Jason3x (https://github.com/Jason3x/ES-screen-changer-script)
 - Made sure the Missing Python 'inputs' package is installed. (Thanks to cowbutt for reporting)
+
+v2.0 (04/30/2025)
+- Updated Retroarch and Retroarch32 to 1.21.0
+- Updated Sharp-Shimmerless shaders (Thanks to Woohyun) (Thanks to lauren7ino for the mention of the update)
+- Massive update to es_systems.cfg to allow for sorting of systems.  (Thanks to lauren7ino for the work)
+- Updated Retrorun and Retrorun32 to version 2.7.5 (Thanks to navy1978)
+ - Adds savestate load (Select+L1 and save (Select+R1) hotkeys.
+ - Other cleanup and minor fixes
+- Updated Wifi tool to support connecting to WPA3 networks
+- Updated Wifi tool to not ask for a password when connecting to open networks
+- Updated importwifi tool to support connecting to WPA3 networks
+- Updated wifi_importer systemd service to load before plymouth
+- Fixed R36H Device Type Selection permissions
+- Fixed R36Plus Drastic Black Screen Issue
+
+v2.0 (05/15/2025)
+- Fixed R3XS Drastic Black Screen Issue
+- Fixed Wifi.sh permissions
+- Fixed Exit Shortcut for Drastic and PPSSPP
