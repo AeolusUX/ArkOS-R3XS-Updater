@@ -90,10 +90,10 @@ if [ ! -f "/home/ark/.config/.update03302025" ]; then
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
 	
-	touch "/home/ark/.config/.update04302025"
+	touch "/home/ark/.config/.update03302025"
 
 fi
-if [ ! -f "$UPDATE_DONE" ]; then
+if [ ! -f "/home/ark/.config/.update04302025" ]; then
 
 	printf "\nUpdate Retroarch and Retroarch32 to 1.21.0\nUpdate Wifi.sh and importwifi.sh to support wpa3\nUpdate wifi_importer service\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
