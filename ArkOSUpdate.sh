@@ -272,11 +272,12 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	
 	
 	printf "\nMiscellaneous Fixes for Various Scripts and Binaries\n" | tee -a "$LOG_FILE"
-	[ -d "/Old Screen" ] && sudo rm -rf "/Old Screen" | tee -a "$LOG_FILE"
-	[ -d "/New Screens" ] && sudo rm -rf "/New Screens" | tee -a "$LOG_FILE"
+	[ -d "/boot/Old Screen" ] && sudo rm -rf "/boot/Old Screen" 2>&1 | tee -a "$LOG_FILE"
+	[ -d "/boot/New Screens" ] && sudo rm -rf "/boot/New Screens" 2>&1 | tee -a "$LOG_FILE"
 	sudo chmod 777 /etc/emulationstation/es_systems.cfg* | tee -a "$LOG_FILE"
 	sudo chmod 777 "/opt/system/Advanced/Switch to SD2 for Roms.sh" | tee -a "$LOG_FILE"
 	sudo chmod 777 /opt/system/Wifi-Toggle.sh | tee -a "$LOG_FILE"
+	sudo chmod 777 /usr/local/bin/ogage* | tee -a "$LOG_FILE"
 	sudo chmod +x /usr/local/bin/batt_life_warning.py  | tee -a "$LOG_FILE"
 	
 	
