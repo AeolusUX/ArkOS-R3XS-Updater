@@ -400,6 +400,7 @@ v2.0 (05/31/2025)
 - Updated ScummVM to version 2.9.1
 - Updated Hypseus-Singe 2.11.5
 - Updated Retrorun to version 2.7.7
+- Updated Switch to SD2 script
 - Added Wifi Toggle Script by Jason3x for units with built-in wifi. (https://github.com/Jason3x/Wifi-toogle)
 - Fixed Battery Warning Script (Thanks to VolodymyrDA)
 - Fixed missing es_systems.cfg file used for dual sd card mode (Thanks to AtumRa5 for the report)
