@@ -269,6 +269,17 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  sudo rm -fv /usr/local/bin/retrorun-rk3326 | tee -a "$LOG_FILE"
 	  sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
 	fi
+	
+	
+	printf "\nMiscellaneous Fixes for Various Scripts and Binaries\n" | tee -a "$LOG_FILE"
+	[ -d "/Old Screen" ] && sudo rm -rf "/Old Screen" | tee -a "$LOG_FILE"
+	[ -d "/New Screens" ] && sudo rm -rf "/New Screens" | tee -a "$LOG_FILE"
+	sudo chmod 777 /etc/emulationstation/es_systems.cfg* | tee -a "$LOG_FILE"
+	sudo chmod 777 "/opt/system/Advanced/Switch to SD2 for Roms.sh" | tee -a "$LOG_FILE"
+	sudo chmod 777 /opt/system/Wifi-Toggle.sh | tee -a "$LOG_FILE"
+	sudo chmod +x /usr/local/bin/batt_life_warning.py  | tee -a "$LOG_FILE"
+	
+	
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
