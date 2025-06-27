@@ -231,29 +231,23 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/05312025/arkosupdate05312025.zip -O /dev/shm/arkosupdate05312025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate05312025.zip | tee -a "$LOG_FILE"
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/05312025/arkosupdate05312025.z01 -O /dev/shm/arkosupdate05312025.z01 -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate05312025.z01 | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate05312025.zip" ] && [ -f "/dev/shm/arkosupdate05312025.z01" ]; then
-  zip -FF /dev/shm/arkosupdate05312025.zip --out /dev/shm/arkosupdate.zip -fz | tee -a "$LOG_FILE"
-
-  # --- MODIFICATION STARTS HERE ---
-  # The folder to exclude within the zip file.
-  # "boot/" will exclude the folder itself and all its contents.
-  EXCLUDE_FOLDER="boot/"
-	if [ -f "rk3326-r36plus-linux.dtb" ]; then
-		printf "\nFile rk3326-r36plus-linux.dtb found. Excluding folder: %s and its contents.\n" "$EXCLUDE_FOLDER" | tee -a "$LOG_FILE"
-		sudo unzip -X -o /dev/shm/arkosupdate.zip -x "${EXCLUDE_FOLDER}*" -d / | tee -a "$LOG_FILE"
+	  zip -FF /dev/shm/arkosupdate05312025.zip --out /dev/shm/arkosupdate.zip -fz | tee -a "$LOG_FILE"
+	  sudo unzip -X -o /dev/shm/arkosupdate.zip -d / | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate05312025.z* | tee -a "$LOG_FILE"
 	else
-		printf "\nFile rk3326-r36plus-linux.dtb not found. Extracting all contents (including /boot).\n" | tee -a "$LOG_FILE"
-		sudo unzip -X -o /dev/shm/arkosupdate.zip -d / | tee -a "$LOG_FILE"
+	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate05312025.z* | tee -a "$LOG_FILE"
+	  sleep 3
+	  echo $c_brightness > /sys/class/backlight/backlight/brightness
+	  exit 1
 	fi
-  # --- MODIFICATION ENDS HERE ---
 
-  sudo rm -fv /dev/shm/arkosupdate05312025.z* | tee -a "$LOG_FILE"
-else
-  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
-  sudo rm -fv /dev/shm/arkosupdate05312025.z* | tee -a "$LOG_FILE"
-  sleep 3
-  echo $c_brightness > /sys/class/backlight/backlight/brightness
-  exit 1
-fi
+	printf "\nCopy correct scummvm for device\n" | tee -a "$LOG_FILE"
+	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
+      rm -fv /opt/scummvm/scummvm.rk3326 | tee -a "$LOG_FILE"
+    else
+      mv -fv /opt/scummvm/scummvm.rk3326 /opt/scummvm/scummvm | tee -a "$LOG_FILE"
+	fi
 
 	printf "\nCopy correct Hypseus-Singe for device and mv hypinput.ini to hypinput_gamepad.ini\n" | tee -a "$LOG_FILE"
 	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
