@@ -321,9 +321,30 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	  printf "\nAdd vbam and bsnes cores for Game Boy and Game boy color\n"
 	  sed -i '/<core>tgbdual<\/core>/c\\t\t\t\t\t<core>tgbdual<\/core>\n\t\t\t\t\t<core>vbam<\/core>\n\t\t\t\t\t<core>bsnes<\/core>' /etc/emulationstation/es_systems.cfg
 	fi
-
+	
+	printf "\nFix Permissions for Various Emulators and Scripts\n" | tee -a "$LOG_FILE"
+	sudo chmod 755 /opt/scummvm/scummvm | tee -a "$LOG_FILE"
+	sudo chmod 755 /opt/hypseus-singe/hypseus-singe | tee -a "$LOG_FILE"
+	sudo chmod 755 /opt/fake08/fake08 | tee -a "$LOG_FILE"
+	sudo chmod 755 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
+	sudo chmod 755 /usr/local/bin/importwifi.sh | tee -a "$LOG_FILE"
+	sudo chmod 755 /usr/local/bin/ppsspp.sh | tee -a "$LOG_FILE"
+	sudo chmod 755 /usr/local/bin/panelcheck.sh | tee -a "$LOG_FILE"
+	sudo chmod 755 /usr/local/bin/es_systems.cfg* | tee -a "$LOG_FILE"
+	sudo chmod 755 /usr/local/bin/Switch to SD2 for Roms.sh | tee -a "$LOG_FILE"
+	sudo systemctl daemon-reload
+	sudo systemctl enable ddtbcheck.service
+	sudo systemctl start ddtbcheck.service
+	
+	printf "\nCopy correct boot.ini for device\n" | tee -a "$LOG_FILE"
+	if [ -f "/boot/rk3326-r36plus-linux.dtb" ] || [ -f "/boot/gameconsole.dtb" ]; then
+      rm -fv boot.ini.r36s | tee -a "$LOG_FILE"
+    else
+      mv -fv /boot/boot.ini.r36s /boot/boot.ini | tee -a "$LOG_FILE"
+	fi
+	
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
-	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
 
 	touch "$UPDATE_DONE"
