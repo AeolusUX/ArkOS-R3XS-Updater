@@ -332,9 +332,11 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	sudo chmod 755 /usr/local/bin/panelcheck.sh | tee -a "$LOG_FILE"
 	sudo chmod 755 /usr/local/bin/es_systems.cfg* | tee -a "$LOG_FILE"
 	sudo chmod 755 /usr/local/bin/Switch to SD2 for Roms.sh | tee -a "$LOG_FILE"
-	sudo systemctl daemon-reload
-	sudo systemctl enable ddtbcheck.service
-	sudo systemctl start ddtbcheck.service
+	sudo chmod 755 /home/ark/.config/retroarch32/cores/uae4arm_libretro.so | tee -a "$LOG_FILE"
+	sudo chown -R ark:ark /home/ark/.config/retroarch32/cores/ | tee -a "$LOG_FILE"
+	sudo systemctl daemon-reload | tee -a "$LOG_FILE"
+	sudo systemctl enable ddtbcheck.service | tee -a "$LOG_FILE"
+	sudo systemctl start ddtbcheck.service | tee -a "$LOG_FILE"
 
 	
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
