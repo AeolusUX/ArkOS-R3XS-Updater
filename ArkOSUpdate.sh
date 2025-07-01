@@ -335,20 +335,6 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	sudo systemctl daemon-reload
 	sudo systemctl enable ddtbcheck.service
 	sudo systemctl start ddtbcheck.service
-	
-printf "\nCopy correct boot.ini for device\n" | tee -a "$LOG_FILE"
-
-if [ -f "/boot/rk3326-r36plus-linux.dtb" ] || [ -f "/boot/gameconsole.dtb" ]; then
-    echo "Device is R36SPlus, removing boot.ini.r36s if it exists..." | tee -a "$LOG_FILE"
-    rm -fv /boot/boot.ini.r36s | tee -a "$LOG_FILE"
-else
-    if [ -f "/boot/boot.ini.r36s" ]; then
-        echo "R36S device detected, renaming boot.ini.r36s to boot.ini..." | tee -a "$LOG_FILE"
-        mv -fv /boot/boot.ini.r36s /boot/boot.ini | tee -a "$LOG_FILE"
-    else
-        echo "boot.ini.r36s not found, skipping rename." | tee -a "$LOG_FILE"
-    fi
-fi
 
 	
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
