@@ -416,8 +416,10 @@ v2.0 (05/31/2025)
 		R1 + A  → Panel 0 (Original Panel / Stock)
 
 v2.0 (06/30/2025)
-- Updated PPSSPP to 1.19.2
 - Added libretro vbam and libretro bsnes as selectable cores for Game Boy and Game Boy Color emulation via Retroarch
 - Refined Panel Picker Logic and added a checker to make sure device use the correct dtb. (Thanks to EatPrilosec)
 - Fixed Permissions issues from various emulators and scripts (ScummVM, Hypeseus-Singe, Fake-08, etc)
 - Replace uae4arm 0.5 slower core with 0.3 faster and fixed audio. (Thanks to metallic77)
+[R36S Plus]
+- Added ability to add a boot logo like R36S builds (Reflash with the new image)
+- Remove unecessary scripts for R36S Plus
