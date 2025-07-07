@@ -423,3 +423,8 @@ v2.0 (06/30/2025)
 [R36S Plus]
 - Added ability to add a boot logo like R36S builds (Reflash with the new image)
 - Remove unecessary scripts for R36S Plus
+
+v2.0 (06/30/2025-1)
+- Revert to PPSSPP Standalone to 1.18.1
+- Apply fix for Switch to SD2 Script
+- Apply fix for Switch to Main SD Script (Thanks to Careful-Ad3182)
