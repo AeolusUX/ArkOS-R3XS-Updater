@@ -365,9 +365,11 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	sudo chmod 755 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
 	sudo chmod 755 /usr/local/bin/ppsspp.sh | tee -a "$LOG_FILE"
 	sudo chmod 777 "/opt/system/Advanced/Switch to SD2 for Roms.sh" | tee -a "$LOG_FILE"
+	sudo chmod +x /usr/local/bin/batt_life_warning.py  | tee -a "$LOG_FILE"
+	
 	
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
-	sudo sed -i "/title\=/c\title\=ArkOS 2.0($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "06302025" > /home/ark/.config/.VERSION
 
 	touch "$UPDATE_DONE"
