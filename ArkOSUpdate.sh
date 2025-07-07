@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-UPDATE_DATE="06302025"
+UPDATE_DATE="06302025-1"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
 
@@ -292,7 +292,7 @@ if [ ! -f "/home/ark/.config/.update05312025" ]; then
 fi
 
 
-if [ ! -f "$UPDATE_DONE" ]; then
+if [ ! -f "/home/ark/.config/.update06302025" ]; then
 
 	printf "\nUpdate EasyRPG to 0.8.1.1\nUpdate liblcf to 0.8 for EasyRPG 0.8\nUpdate PPSSPP to 1.19.2\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
@@ -342,6 +342,33 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
+
+	touch "/home/ark/.config/.update06302025"
+	fi
+	
+	if [ ! -f "$UPDATE_DONE" ]; then
+
+	printf "\nFix PPSSPP 1.19.2\nRevert EasyRPG back to 0.8\n" | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/06302025-1/arkosupdate06302025-1.zip -O /dev/shm/arkosupdate06302025-1.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate06302025-1.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate06302025-1.zip" ]; then
+	  sudo unzip -X -o /dev/shm/arkosupdate06302025-1.zip -d / | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate06302025-1.zip | tee -a "$LOG_FILE"
+	else
+	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+	  sudo rm -fv /dev/shm/arkosupdate06302025-1.z* | tee -a "$LOG_FILE"
+	  sleep 3
+	  echo $c_brightness > /sys/class/backlight/backlight/brightness
+	  exit 1
+	fi
+	
+	sudo chmod 755 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
+	sudo chmod 755 /usr/local/bin/ppsspp.sh | tee -a "$LOG_FILE"
+	sudo chmod 777 "/opt/system/Advanced/Switch to SD2 for Roms.sh" | tee -a "$LOG_FILE"
+	
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 (06302025)-1" /usr/share/plymouth/themes/text.plymouth
+	echo "06302025" > /home/ark/.config/.VERSION
 
 	touch "$UPDATE_DONE"
 	
