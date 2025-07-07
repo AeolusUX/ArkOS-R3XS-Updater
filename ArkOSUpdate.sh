@@ -348,7 +348,7 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	
 	if [ ! -f "$UPDATE_DONE" ]; then
 
-	printf "\nRevert PPSSPP back to 1.18.1\n" | tee -a "$LOG_FILE"
+	printf "\nRevert PPSSPP back to 1.18.1\nApply SD Switch Scripts Fix\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/06302025-1/arkosupdate06302025-1.zip -O /dev/shm/arkosupdate06302025-1.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate06302025-1.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate06302025-1.zip" ]; then
