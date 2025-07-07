@@ -348,7 +348,7 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	
 	if [ ! -f "$UPDATE_DONE" ]; then
 
-	printf "\nFix PPSSPP 1.19.2\nRevert EasyRPG back to 0.8\n" | tee -a "$LOG_FILE"
+	printf "\nRevert PPSSPP back to 1.18.1\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/06302025-1/arkosupdate06302025-1.zip -O /dev/shm/arkosupdate06302025-1.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate06302025-1.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate06302025-1.zip" ]; then
@@ -367,7 +367,7 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	sudo chmod 777 "/opt/system/Advanced/Switch to SD2 for Roms.sh" | tee -a "$LOG_FILE"
 	
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
-	sudo sed -i "/title\=/c\title\=ArkOS 2.0 (06302025)-1" /usr/share/plymouth/themes/text.plymouth
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "06302025" > /home/ark/.config/.VERSION
 
 	touch "$UPDATE_DONE"
