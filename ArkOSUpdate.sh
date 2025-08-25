@@ -405,7 +405,8 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	  sed -i '/<core>genesis_plus_gx<\/core>/c\\t\t\t\t\t<core>genesis_plus_gx<\/core>\n\t\t\t\t\t<core>genesis_plus_gx_EX<\/core>' /etc/emulationstation/es_systems.cfg
 	fi
 	
-	printf "\nInstall inputs python3 module via pip3\n" | tee -a "$LOG_FILE"
+	printf "\nRemove .git folders and install rfkill\n" | tee -a "$LOG_FILE"
+	find /tempthemes -type d -name ".git" -exec rm -rf {} \;
 	sudo apt update -y | tee -a "$LOG_FILE"
 	sudo apt -y install rfkill | tee -a "$LOG_FILE"
 	sudo chmod 777 /opt/system/Wifi-Toggle.sh | tee -a "$LOG_FILE"
