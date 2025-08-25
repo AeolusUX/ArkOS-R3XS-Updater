@@ -373,6 +373,7 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	echo "06302025" > /home/ark/.config/.VERSION
 
 	touch "/home/ark/.config/.update06302025-1"
+	fi
 	
 	
 	if [ ! -f "$UPDATE_DONE" ]; then
