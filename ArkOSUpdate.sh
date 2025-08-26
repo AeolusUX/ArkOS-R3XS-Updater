@@ -410,6 +410,7 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	sudo apt update -y | tee -a "$LOG_FILE"
 	sudo apt -y install rfkill | tee -a "$LOG_FILE"
 	sudo chmod 777 /opt/system/Wifi-Toggle.sh | tee -a "$LOG_FILE"
+ 	sudo chmod 755 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
