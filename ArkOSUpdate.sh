@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-UPDATE_DATE="07312025"
+UPDATE_DATE="07312025-1"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
 
@@ -376,7 +376,7 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	fi
 	
 	
-	if [ ! -f "$UPDATE_DONE" ]; then
+	if [ ! -f "/home/ark/.config/.update07312025" ]; then
 
 	printf "\nAdd genesis_plus_gx_ex core for retroarch\nUpdate PPSSPP to 1.19.3\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
@@ -416,7 +416,19 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "07312025" > /home/ark/.config/.VERSION
 
-	touch "$UPDATE_DONE"
+	touch "/home/ark/.config/.update07312025"
+	fi
+	
+	if [ ! -f "$UPDATE_DONE" ]; then
+
+	printf "\nFix PPSSPPSDL Permissions\n" | tee -a "$LOG_FILE"
+ 	sudo chmod 755 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
+
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
+	echo "07312025-1" > /home/ark/.config/.VERSION
+
+	touch "$UPDATE_DONE"	
 	
 	rm -v -- "$0" | tee -a "$LOG_FILE"
 	printf "\033c" >> /dev/tty1
