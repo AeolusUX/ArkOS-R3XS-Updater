@@ -439,3 +439,9 @@ v2.0 (11/07/2025)
 - Fix Permission issues with Battery Life Warning Led
 - Replace Drastic with Steward Fu-NDS (Thanks to lcdyk0517)
 - Fixed swapped C-Buttons Up/Down and remapped Z-Trigger from L2 to R2 for Mupen64plus.
+- Added a few scripts from Jason3x ( GhostLoader, Session Recall, System Info ).
+	- GhostLoader: Auto-manager for EmulationStation (ArkOS). Monitors/backups theme settings, restores profiles on changes, ensures smooth theme transitions. Interactive menu for install/manage/uninstall.
+	- Session Recall: Save state manager for R36S. Auto-detects recent saves, identifies ROM/core, relaunches games instantly via RetroArch.
+	- System Info: Displays R36S panel type, memory/SD card usage, and ArkOS version.
+- Added ArkManager from lcdyk0517
+	-Tweak CPU cores, governor & max speed, GPU frequency, ZRAM swap size, USB modem to WiFi switch with auto-rules, and full Bluetooth control (power, scan, pair).
