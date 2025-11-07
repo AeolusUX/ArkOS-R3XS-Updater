@@ -1,6 +1,6 @@
 #!/bin/bash
 clear
-UPDATE_DATE="07312025-1"
+UPDATE_DATE="11072025"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
 
@@ -19,24 +19,23 @@ LOCATION="https://raw.githubusercontent.com/AeolusUX/ArkOS-R3XS-Updater/main"
 ISITCHINA="$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | grep -Po '"country":.*?[^\\]"')"
 
 if [ "$ISITCHINA" = "\"country\":\"China\"" ]; then
-  printf "\n\nSwitching to China server for updates.\n\n" | tee -a "$LOG_FILE"
-  LOCATION="https://raw.gitcode.com/norucus/ArkOS-R3XS-Updater/raw/main"
+	printf "\n\nSwitching to China server for updates.\n\n" | tee -a "$LOG_FILE"
+	LOCATION="https://raw.gitcode.com/norucus/ArkOS-R3XS-Updater/raw/main"
 fi
 
-sudo msgbox "MAKE SURE YOU SWITCHED TO MAIN SD FOR ROMS BEFORE YOU RUN THIS UPDATE. ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
-my_var=`osk "Enter OK here to proceed." | tail -n 1`
+# sudo msgbox "MAKE SURE YOU SWITCHED TO MAIN SD FOR ROMS BEFORE YOU RUN THIS UPDATE. ONCE YOU PROCEED WITH THIS UPDATE SCRIPT, DO NOT STOP THIS SCRIPT UNTIL IT IS COMPLETED OR THIS DISTRIBUTION MAY BE LEFT IN A STATE OF UNUSABILITY.  Make sure you've created a backup of this sd card as a precaution in case something goes very wrong with this process.  You've been warned!  Type OK in the next screen to proceed."
+# my_var=`osk "Enter OK here to proceed." | tail -n 1`
 
-# sudo msgbox "UPDATER IS CURRENTLY UNAVAILABLE. IT WILL BE BACK AGAIN, SOON."
-# my_var=`osk "TRY AGAIN LATER" | tail -n 1`
+sudo msgbox "UPDATER IS CURRENTLY UNAVAILABLE. IT WILL BE BACK AGAIN, SOON."
+my_var=`osk "TRY AGAIN LATER" | tail -n 1`
 
 echo "$my_var" | tee -a "$LOG_FILE"
 
-# if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
-if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
-
-  sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
-  printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"	
-  exit 187
+if [ "$my_var" != "test" ] && [ "$my_var" != "TEST" ]; then
+# if [ "$my_var" != "ok" ] && [ "$my_var" != "OK" ]; then
+	sudo msgbox "You didn't type OK.  This script will exit now and no changes have been made from this process."
+	printf "You didn't type OK.  This script will exit now and no changes have been made from this process." | tee -a "$LOG_FILE"	
+	exit 187
 fi
 
 c_brightness="$(cat /sys/class/backlight/backlight/brightness)"
@@ -46,44 +45,43 @@ touch $LOG_FILE
 tail -f $LOG_FILE >> /dev/tty1 &
 
 if [ ! -f "/home/ark/.config/.update03302025" ]; then
-
 	printf "\nUpdate retrorun.cfg to fix analog stick\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/03302025/arkosupdate03302025.zip -O /dev/shm/arkosupdate03302025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate03302025.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate03302025.zip" ]; then
-	  sudo unzip -X -o /dev/shm/arkosupdate03302025.zip -d / | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate03302025.zip | tee -a "$LOG_FILE"
+		sudo unzip -X -o /dev/shm/arkosupdate03302025.zip -d / | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate03302025.zip | tee -a "$LOG_FILE"
 	else
-	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate03302025.z* | tee -a "$LOG_FILE"
-	  sleep 3
-	  echo $c_brightness > /sys/class/backlight/backlight/brightness
-	  exit 1
+		printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate03302025.z* | tee -a "$LOG_FILE"
+		sleep 3
+		echo $c_brightness > /sys/class/backlight/backlight/brightness
+		exit 1
 	fi
 	
 	printf "\nCopy correct emulationstation depending on device\n" | tee -a "$LOG_FILE"
-	  sudo mv -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
-	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
-	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
+	sudo mv -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
+	sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
+	sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
 	
 	printf "\nInstall inputs python3 module via pip3\n" | tee -a "$LOG_FILE"
 	sudo apt update -y | tee -a "$LOG_FILE"
 	sudo apt -y install python3-pip | tee -a "$LOG_FILE"
 	pip3 --retries 10 -v install inputs | tee -a "$LOG_FILE"
 	if [ $? != 0 ]; then
-	  printf "\nThe update couldn't complete because the inputs python package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
-	  sleep 3
-	  exit 1
+		printf "\nThe update couldn't complete because the inputs python package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+		sleep 3
+		exit 1
 	fi
 	sudo systemctl daemon-reload
 
 	sudo chmod -v 777 /opt/system/DeviceType/R36H.sh | tee -a "$LOG_FILE"
-  
+	
 	printf "\nUpdate retrorun.cfg to default swapped triggers to true for rk3326 devices and false for rk3566 devices\n" | tee -a "$LOG_FILE"
 	if [ ! -f "/boot/rk3566.dtb" ] && [ ! -f "/boot/rk3566-OC.dtb" ]; then
-	  sed -i "/retrorun_swap_l1r1_with_l2r2 \=/c\retrorun_swap_l1r1_with_l2r2 \= true" /home/ark/.config/retrorun.cfg
+		sed -i "/retrorun_swap_l1r1_with_l2r2 \=/c\retrorun_swap_l1r1_with_l2r2 \= true" /home/ark/.config/retrorun.cfg
 	else
-	  sed -i "/retrorun_swap_l1r1_with_l2r2 \=/c\retrorun_swap_l1r1_with_l2r2 \= false" /home/ark/.config/retrorun.cfg
+		sed -i "/retrorun_swap_l1r1_with_l2r2 \=/c\retrorun_swap_l1r1_with_l2r2 \= false" /home/ark/.config/retrorun.cfg
 	fi
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
@@ -91,95 +89,92 @@ if [ ! -f "/home/ark/.config/.update03302025" ]; then
 	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
 	
 	touch "/home/ark/.config/.update03302025"
-
 fi
 
 if [ ! -f "/home/ark/.config/.update04302025" ]; then
-
 	printf "\nUpdate Retroarch and Retroarch32 to 1.21.0\nUpdate Wifi.sh and importwifi.sh to support wpa3\nUpdate wifi_importer service\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/04302025/arkosupdate04302025.zip -O /dev/shm/arkosupdate04302025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate04302025.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate04302025.zip" ]; then
-	  cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update04302025.bak
-	  sudo unzip -X -o /dev/shm/arkosupdate04302025.zip -d / | tee -a "$LOG_FILE"
-	  sudo systemctl daemon-reload
-	  sudo rm -fv /dev/shm/arkosupdate04302025.zip | tee -a "$LOG_FILE"
+		cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update04302025.bak
+		sudo unzip -X -o /dev/shm/arkosupdate04302025.zip -d / | tee -a "$LOG_FILE"
+		sudo systemctl daemon-reload
+		sudo rm -fv /dev/shm/arkosupdate04302025.zip | tee -a "$LOG_FILE"
 	else
-	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate04302025.z* | tee -a "$LOG_FILE"
-	  sleep 3
-	  echo $c_brightness > /sys/class/backlight/backlight/brightness
-	  exit 1
+		printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate04302025.z* | tee -a "$LOG_FILE"
+		sleep 3
+		echo $c_brightness > /sys/class/backlight/backlight/brightness
+		exit 1
 	fi
 
 	printf "\nMake sure the correct version of retrorun and retrorun32 are copied on the device\n" | tee -a "$LOG_FILE"
 	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
-	  sudo rm -fv /usr/local/bin/retrorun-rk3326 | tee -a "$LOG_FILE"
-	  sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
+		sudo rm -fv /usr/local/bin/retrorun-rk3326 | tee -a "$LOG_FILE"
+		sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
 	else
-	  sudo cp -fv /usr/local/bin/retrorun-rk3326 /usr/local/bin/retrorun | tee -a "$LOG_FILE"
-	  sudo cp -fv /usr/local/bin/retrorun32-rk3326 /usr/local/bin/retrorun32 | tee -a "$LOG_FILE"
-	  sudo chmod 777 /usr/local/bin/retrorun*
-	  sudo rm -fv /usr/local/bin/retrorun-rk3326 | tee -a "$LOG_FILE"
-	  sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
+		sudo cp -fv /usr/local/bin/retrorun-rk3326 /usr/local/bin/retrorun | tee -a "$LOG_FILE"
+		sudo cp -fv /usr/local/bin/retrorun32-rk3326 /usr/local/bin/retrorun32 | tee -a "$LOG_FILE"
+		sudo chmod 777 /usr/local/bin/retrorun*
+		sudo rm -fv /usr/local/bin/retrorun-rk3326 | tee -a "$LOG_FILE"
+		sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
 	fi
 
 	printf "\nCopy correct es_systems.cfg depending on chipset\n" | tee -a "$LOG_FILE"
 	if [ ! -f "/boot/rk3566.dtb" ] && [ ! -f "/boot/rk3566-OC.dtb" ]; then
-	  cp -fv /etc/emulationstation/es_systems.cfg.rk3326 /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
+		cp -fv /etc/emulationstation/es_systems.cfg.rk3326 /etc/emulationstation/es_systems.cfg | tee -a "$LOG_FILE"
 	else
-	  rm -fv /etc/emulationstation/es_systems.cfg.rk3326 | tee -a "$LOG_FILE"
+		rm -fv /etc/emulationstation/es_systems.cfg.rk3326 | tee -a "$LOG_FILE"
 	fi
 
-	if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"
-	then
- 	  printf "\nAccomodate for roms2 with new es_systems.cfg file...\n" | tee -a "$LOG_FILE"
-	  sed -i '/<path>\/roms\//s//<path>\/roms2\//g' /etc/emulationstation/es_systems.cfg
+	if test ! -z "$(cat /etc/fstab | grep roms2 | tr -d '\0')"; then
+		printf "\nAccomodate for roms2 with new es_systems.cfg file...\n" | tee -a "$LOG_FILE"
+		sed -i '/<path>\/roms\//s//<path>\/roms2\//g' /etc/emulationstation/es_systems.cfg
 	fi
 
 	printf "\nCopy correct Retroarches depending on device\n" | tee -a "$LOG_FILE"
 	if [ -f "/boot/rk3326-r33s-linux.dtb" ] || [ -f "/boot/rk3326-r35s-linux.dtb" ] || [ -f "/boot/rk3326-r36s-linux.dtb" ] || [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ -f "/boot/rk3326-rg351mp-linux.dtb" ] || [ -f "/boot/rk3326-gameforce-linux.dtb" ]; then
-	  cp -fv /opt/retroarch/bin/retroarch32.rk3326.unrot /opt/retroarch/bin/retroarch32 | tee -a "$LOG_FILE"
-	  cp -fv /opt/retroarch/bin/retroarch.rk3326.unrot /opt/retroarch/bin/retroarch | tee -a "$LOG_FILE"
-	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
-	  rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
+		cp -fv /opt/retroarch/bin/retroarch32.rk3326.unrot /opt/retroarch/bin/retroarch32 | tee -a "$LOG_FILE"
+		cp -fv /opt/retroarch/bin/retroarch.rk3326.unrot /opt/retroarch/bin/retroarch | tee -a "$LOG_FILE"
+		rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
+		rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
 	elif [ -f "/boot/rk3326-odroidgo2-linux.dtb" ] || [ -f "/boot/rk3326-odroidgo2-linux-v11.dtb" ] || [ -f "/boot/rk3326-odroidgo3-linux.dtb" ]; then
-	  cp -fv /opt/retroarch/bin/retroarch32.rk3326.rot /opt/retroarch/bin/retroarch32 | tee -a "$LOG_FILE"
-	  cp -fv /opt/retroarch/bin/retroarch.rk3326.rot /opt/retroarch/bin/retroarch | tee -a "$LOG_FILE"
-	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
-	  rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
+		cp -fv /opt/retroarch/bin/retroarch32.rk3326.rot /opt/retroarch/bin/retroarch32 | tee -a "$LOG_FILE"
+		cp -fv /opt/retroarch/bin/retroarch.rk3326.rot /opt/retroarch/bin/retroarch | tee -a "$LOG_FILE"
+		rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
+		rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
 	else
-	  rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
-	  rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
+		rm -fv /opt/retroarch/bin/retroarch.* | tee -a "$LOG_FILE"
+		rm -fv /opt/retroarch/bin/retroarch32.* | tee -a "$LOG_FILE"
 	fi
 	chmod 777 /opt/retroarch/bin/*
 
 	printf "\nCopy correct emulationstation depending on device\n" | tee -a "$LOG_FILE"
 	if [ -f "/boot/rk3326-r33s-linux.dtb" ] || [ -f "/boot/rk3326-r35s-linux.dtb" ] || [ -f "/boot/rk3326-r36s-linux.dtb" ] || [ -f "/boot/rk3326-rg351v-linux.dtb" ] || [ -f "/boot/rk3326-rg351mp-linux.dtb" ] || [ -f "/boot/rk3326-gameforce-linux.dtb" ] || [ -f "/boot/rk3326-batlexp-linux.dtb" ]; then
-	  sudo mv -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
-	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
-	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
+		sudo mv -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
+		sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
+		sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
 	elif [ -f "/boot/rk3326-odroidgo2-linux.dtb" ] || [ -f "/boot/rk3326-odroidgo2-linux-v11.dtb" ] || [ -f "/boot/rk3326-odroidgo3-linux.dtb" ]; then
-	  test=$(stat -c %s "/usr/bin/emulationstation/emulationstation")
-	  if [ "$test" = "3416928" ]; then
-	    sudo cp -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
-	  elif [ -f "/home/ark/.config/.DEVICE" ]; then
-		sudo cp -fv /home/ark/emulationstation.rgb10max /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
-	  else
-	    sudo cp -fv /home/ark/emulationstation.header /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
-	  fi
-	  if [ -f "/home/ark/.config/.DEVICE" ]; then
-	    sudo cp -fv /home/ark/emulationstation.rgb10max /usr/bin/emulationstation/emulationstation.header | tee -a "$LOG_FILE"
-	  else
-	    sudo cp -fv /home/ark/emulationstation.header /usr/bin/emulationstation/emulationstation.header | tee -a "$LOG_FILE"
-	  fi
-	  sudo cp -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation.fullscreen | tee -a "$LOG_FILE"
-	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
-	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
+		test=$(stat -c %s "/usr/bin/emulationstation/emulationstation")
+		if [ "$test" = "3416928" ]; then
+			sudo cp -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
+		elif [ -f "/home/ark/.config/.DEVICE" ]; then
+			sudo cp -fv /home/ark/emulationstation.rgb10max /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
+		else
+			sudo cp -fv /home/ark/emulationstation.header /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
+		fi
+		if [ -f "/home/ark/.config/.DEVICE" ]; then
+			sudo cp -fv /home/ark/emulationstation.rgb10max /usr/bin/emulationstation/emulationstation.header | tee -a "$LOG_FILE"
+		else
+			sudo cp -fv /home/ark/emulationstation.header /usr/bin/emulationstation/emulationstation.header | tee -a "$LOG_FILE"
+		fi
+		sudo cp -fv /home/ark/emulationstation.351v /usr/bin/emulationstation/emulationstation.fullscreen | tee -a "$LOG_FILE"
+		sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
+		sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
 	elif [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
-	  sudo mv -fv /home/ark/emulationstation.503 /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
-	  sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
-	  sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
+		sudo mv -fv /home/ark/emulationstation.503 /usr/bin/emulationstation/emulationstation | tee -a "$LOG_FILE"
+		sudo rm -fv /home/ark/emulationstation.* | tee -a "$LOG_FILE"
+		sudo chmod -v 777 /usr/bin/emulationstation/emulationstation* | tee -a "$LOG_FILE"
 	fi
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
@@ -190,21 +185,20 @@ if [ ! -f "/home/ark/.config/.update04302025" ]; then
 fi
 
 if [ ! -f "/home/ark/.config/.update05152025" ]; then
-
 	printf "\nUpdate Drastic for R36Plus" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/05152025/arkosupdate05152025.zip -O /dev/shm/arkosupdate05152025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate05152025.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate05152025.zip" ]; then
-	  cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update05152025.bak
-	  sudo unzip -X -o /dev/shm/arkosupdate05152025.zip -d / | tee -a "$LOG_FILE"
-	  sudo systemctl daemon-reload
-	  sudo rm -fv /dev/shm/arkosupdate05152025.zip | tee -a "$LOG_FILE"
+		cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update05152025.bak
+		sudo unzip -X -o /dev/shm/arkosupdate05152025.zip -d / | tee -a "$LOG_FILE"
+		sudo systemctl daemon-reload
+		sudo rm -fv /dev/shm/arkosupdate05152025.zip | tee -a "$LOG_FILE"
 	else
-	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate05152025.z* | tee -a "$LOG_FILE"
-	  sleep 3
-	  echo $c_brightness > /sys/class/backlight/backlight/brightness
-	  exit 1
+		printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate05152025.z* | tee -a "$LOG_FILE"
+		sleep 3
+		echo $c_brightness > /sys/class/backlight/backlight/brightness
+		exit 1
 	fi
 	
 	if [ -f "/boot/logo.png" ]; then
@@ -212,11 +206,11 @@ if [ ! -f "/home/ark/.config/.update05152025" ]; then
 	else
 		sudo cp -rfv /home/ark/drastic/R36S/* /opt/drastic/
 	fi
-		sudo rm -rf /home/ark/drastic/
-		sudo chmod -v 777 /opt/system/DeviceType/R36H.sh | tee -a "$LOG_FILE"
-		sudo chmod -v 777 /opt/system/Wifi.sh | tee -a "$LOG_FILE"
-		sudo chmod +x /usr/local/bin/drastickeydemon.py | tee -a "$LOG_FILE"
-		sudo chmod +x /usr/local/bin/ppssppkeydemon.py  | tee -a "$LOG_FILE"
+	sudo rm -rf /home/ark/drastic/
+	sudo chmod -v 777 /opt/system/DeviceType/R36H.sh | tee -a "$LOG_FILE"
+	sudo chmod -v 777 /opt/system/Wifi.sh | tee -a "$LOG_FILE"
+	sudo chmod +x /usr/local/bin/drastickeydemon.py | tee -a "$LOG_FILE"
+	sudo chmod +x /usr/local/bin/ppssppkeydemon.py  | tee -a "$LOG_FILE"
 	
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
@@ -225,52 +219,50 @@ if [ ! -f "/home/ark/.config/.update05152025" ]; then
 fi
 
 if [ ! -f "/home/ark/.config/.update05312025" ]; then
-
 	printf "\nUpdated ScummVM to version 2.9.1\nUpdated Hypseus-Singe 2.11.5\nUpdated Retrorun to version 2.7.7\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/05312025/arkosupdate05312025.zip -O /dev/shm/arkosupdate05312025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate05312025.zip | tee -a "$LOG_FILE"
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/05312025/arkosupdate05312025.z01 -O /dev/shm/arkosupdate05312025.z01 -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate05312025.z01 | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate05312025.zip" ] && [ -f "/dev/shm/arkosupdate05312025.z01" ]; then
-	  zip -FF /dev/shm/arkosupdate05312025.zip --out /dev/shm/arkosupdate.zip -fz | tee -a "$LOG_FILE"
-	  sudo unzip -X -o /dev/shm/arkosupdate.zip -d / | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate05312025.z* | tee -a "$LOG_FILE"
+		zip -FF /dev/shm/arkosupdate05312025.zip --out /dev/shm/arkosupdate.zip -fz | tee -a "$LOG_FILE"
+		sudo unzip -X -o /dev/shm/arkosupdate.zip -d / | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate05312025.z* | tee -a "$LOG_FILE"
 	else
-	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate05312025.z* | tee -a "$LOG_FILE"
-	  sleep 3
-	  echo $c_brightness > /sys/class/backlight/backlight/brightness
-	  exit 1
+		printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate05312025.z* | tee -a "$LOG_FILE"
+		sleep 3
+		echo $c_brightness > /sys/class/backlight/backlight/brightness
+		exit 1
 	fi
 
 	printf "\nCopy correct scummvm for device\n" | tee -a "$LOG_FILE"
 	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
-      rm -fv /opt/scummvm/scummvm.rk3326 | tee -a "$LOG_FILE"
-    else
-      mv -fv /opt/scummvm/scummvm.rk3326 /opt/scummvm/scummvm | tee -a "$LOG_FILE"
+		rm -fv /opt/scummvm/scummvm.rk3326 | tee -a "$LOG_FILE"
+	else
+		mv -fv /opt/scummvm/scummvm.rk3326 /opt/scummvm/scummvm | tee -a "$LOG_FILE"
 	fi
 
 	printf "\nCopy correct Hypseus-Singe for device and mv hypinput.ini to hypinput_gamepad.ini\n" | tee -a "$LOG_FILE"
 	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
-      rm -fv /opt/hypseus-singe/hypseus-singe.rk3326 | tee -a "$LOG_FILE"
-    else
-      mv -fv /opt/hypseus-singe/hypseus-singe.rk3326 /opt/hypseus-singe/hypseus-singe | tee -a "$LOG_FILE"
+		rm -fv /opt/hypseus-singe/hypseus-singe.rk3326 | tee -a "$LOG_FILE"
+	else
+		mv -fv /opt/hypseus-singe/hypseus-singe.rk3326 /opt/hypseus-singe/hypseus-singe | tee -a "$LOG_FILE"
 	fi
 	if [ -f "/opt/hypseus-singe/hypinput.ini" ]; then
-	  mv -fv /opt/hypseus-singe/hypinput.ini /opt/hypseus-singe/hypinput_gamepad.ini | tee -a "$LOG_FILE"
+		mv -fv /opt/hypseus-singe/hypinput.ini /opt/hypseus-singe/hypinput_gamepad.ini | tee -a "$LOG_FILE"
 	fi
 
 	printf "\nMake sure the correct version of retrorun and retrorun32 are copied on the device\n" | tee -a "$LOG_FILE"
 	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
-	  sudo rm -fv /usr/local/bin/retrorun-rk3326 | tee -a "$LOG_FILE"
-	  sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
+		sudo rm -fv /usr/local/bin/retrorun-rk3326 | tee -a "$LOG_FILE"
+		sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
 	else
-	  sudo cp -fv /usr/local/bin/retrorun-rk3326 /usr/local/bin/retrorun | tee -a "$LOG_FILE"
-	  sudo cp -fv /usr/local/bin/retrorun32-rk3326 /usr/local/bin/retrorun32 | tee -a "$LOG_FILE"
-	  sudo chmod 777 /usr/local/bin/retrorun*
-	  sudo rm -fv /usr/local/bin/retrorun-rk3326 | tee -a "$LOG_FILE"
-	  sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
+		sudo cp -fv /usr/local/bin/retrorun-rk3326 /usr/local/bin/retrorun | tee -a "$LOG_FILE"
+		sudo cp -fv /usr/local/bin/retrorun32-rk3326 /usr/local/bin/retrorun32 | tee -a "$LOG_FILE"
+		sudo chmod 777 /usr/local/bin/retrorun*
+		sudo rm -fv /usr/local/bin/retrorun-rk3326 | tee -a "$LOG_FILE"
+		sudo rm -fv /usr/local/bin/retrorun32-rk3326 | tee -a "$LOG_FILE"
 	fi
-	
 	
 	printf "\nMiscellaneous Fixes for Various Scripts and Binaries\n" | tee -a "$LOG_FILE"
 	[ -d "/boot/Old Screen" ] && sudo rm -rf "/boot/Old Screen" 2>&1 | tee -a "$LOG_FILE"
@@ -280,46 +272,40 @@ if [ ! -f "/home/ark/.config/.update05312025" ]; then
 	sudo chmod 777 /opt/system/Wifi-Toggle.sh | tee -a "$LOG_FILE"
 	sudo chmod 777 /usr/local/bin/ogage* | tee -a "$LOG_FILE"
 	sudo chmod +x /usr/local/bin/batt_life_warning.py  | tee -a "$LOG_FILE"
-	
-	
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
 
 	touch "/home/ark/.config/.update05312025"
-	
 fi
 
-
 if [ ! -f "/home/ark/.config/.update06302025" ]; then
-
 	printf "\nUpdate EasyRPG to 0.8.1.1\nUpdate liblcf to 0.8 for EasyRPG 0.8\nUpdate PPSSPP to 1.19.2\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/06302025/arkosupdate06302025.zip -O /dev/shm/arkosupdate06302025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate06302025.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate06302025.zip" ]; then
-	  cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update06302025.bak
-	  sudo unzip -X -o /dev/shm/arkosupdate06302025.zip -d / | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate06302025.zip | tee -a "$LOG_FILE"
+		cp -v /etc/emulationstation/es_systems.cfg /etc/emulationstation/es_systems.cfg.update06302025.bak
+		sudo unzip -X -o /dev/shm/arkosupdate06302025.zip -d / | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate06302025.zip | tee -a "$LOG_FILE"
 	else
-	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate06302025.z* | tee -a "$LOG_FILE"
-	  sleep 3
-	  echo $c_brightness > /sys/class/backlight/backlight/brightness
-	  exit 1
+		printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate06302025.z* | tee -a "$LOG_FILE"
+		sleep 3
+		echo $c_brightness > /sys/class/backlight/backlight/brightness
+		exit 1
 	fi
 
 	printf "\nCopy correct PPSSPPSDL for device\n" | tee -a "$LOG_FILE"
 	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
-      rm -fv /opt/ppsspp/PPSSPPSDL.rk3326 | tee -a "$LOG_FILE"
-    else
-      mv -fv /opt/ppsspp/PPSSPPSDL.rk3326 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
+		rm -fv /opt/ppsspp/PPSSPPSDL.rk3326 | tee -a "$LOG_FILE"
+	else
+		mv -fv /opt/ppsspp/PPSSPPSDL.rk3326 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
 	fi
 
-	if test -z "$(cat /etc/emulationstation/es_systems.cfg | grep 'bsnes' | tr -d '\0')"
-	then
-	  printf "\nAdd vbam and bsnes cores for Game Boy and Game boy color\n"
-	  sed -i '/<core>tgbdual<\/core>/c\\t\t\t\t\t<core>tgbdual<\/core>\n\t\t\t\t\t<core>vbam<\/core>\n\t\t\t\t\t<core>bsnes<\/core>' /etc/emulationstation/es_systems.cfg
+	if test -z "$(cat /etc/emulationstation/es_systems.cfg | grep 'bsnes' | tr -d '\0')"; then
+		printf "\nAdd vbam and bsnes cores for Game Boy and Game boy color\n"
+		sed -i '/<core>tgbdual<\/core>/c\\t\t\t\t\t<core>tgbdual<\/core>\n\t\t\t\t\t<core>vbam<\/core>\n\t\t\t\t\t<core>bsnes<\/core>' /etc/emulationstation/es_systems.cfg
 	fi
 	
 	printf "\nFix Permissions for Various Emulators and Scripts\n" | tee -a "$LOG_FILE"
@@ -338,71 +324,65 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	sudo systemctl enable ddtbcheck.service | tee -a "$LOG_FILE"
 	sudo systemctl start ddtbcheck.service | tee -a "$LOG_FILE"
 
-	
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
 
 	touch "/home/ark/.config/.update06302025"
-	fi
-	
-	if [ ! -f "/home/ark/.config/.update06302025-1" ]; then
+fi
 
+if [ ! -f "/home/ark/.config/.update06302025-1" ]; then
 	printf "\nRevert PPSSPP back to 1.18.1\nApply SD Switch Scripts Fix\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/06302025-1/arkosupdate06302025-1.zip -O /dev/shm/arkosupdate06302025-1.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate06302025-1.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate06302025-1.zip" ]; then
-	  sudo unzip -X -o /dev/shm/arkosupdate06302025-1.zip -d / | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate06302025-1.zip | tee -a "$LOG_FILE"
+		sudo unzip -X -o /dev/shm/arkosupdate06302025-1.zip -d / | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate06302025-1.zip | tee -a "$LOG_FILE"
 	else
-	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate06302025-1.z* | tee -a "$LOG_FILE"
-	  sleep 3
-	  echo $c_brightness > /sys/class/backlight/backlight/brightness
-	  exit 1
+		printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate06302025-1.z* | tee -a "$LOG_FILE"
+		sleep 3
+		echo $c_brightness > /sys/class/backlight/backlight/brightness
+		exit 1
 	fi
 	
 	sudo chmod 755 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
 	sudo chmod 755 /usr/local/bin/ppsspp.sh | tee -a "$LOG_FILE"
 	sudo chmod 777 "/opt/system/Advanced/Switch to SD2 for Roms.sh" | tee -a "$LOG_FILE"
 	sudo chmod +x /usr/local/bin/batt_life_warning.py  | tee -a "$LOG_FILE"
-	
-	
+
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "06302025" > /home/ark/.config/.VERSION
 
 	touch "/home/ark/.config/.update06302025-1"
-	fi
-	
-	
-	if [ ! -f "/home/ark/.config/.update07312025" ]; then
+fi
 
+if [ ! -f "/home/ark/.config/.update07312025" ]; then
 	printf "\nAdd genesis_plus_gx_ex core for retroarch\nUpdate PPSSPP to 1.19.3\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/07312025/arkosupdate07312025.zip -O /dev/shm/arkosupdate07312025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate07312025.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate07312025.zip" ]; then
-	  sudo unzip -X -o /dev/shm/arkosupdate07312025.zip -d / | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate07312025.zip | tee -a "$LOG_FILE"
+		sudo unzip -X -o /dev/shm/arkosupdate07312025.zip -d / | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate07312025.zip | tee -a "$LOG_FILE"
 	else
-	  printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
-	  sudo rm -fv /dev/shm/arkosupdate07312025.z* | tee -a "$LOG_FILE"
-	  sleep 3
-	  echo $c_brightness > /sys/class/backlight/backlight/brightness
-	  exit 1
+		printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate07312025.z* | tee -a "$LOG_FILE"
+		sleep 3
+		echo $c_brightness > /sys/class/backlight/backlight/brightness
+		exit 1
 	fi
 
 	printf "\nCopy correct PPSSPPSDL for device\n" | tee -a "$LOG_FILE"
 	if [ -f "/boot/rk3566.dtb" ] || [ -f "/boot/rk3566-OC.dtb" ]; then
-      rm -fv /opt/ppsspp/PPSSPPSDL.rk3326 | tee -a "$LOG_FILE"
-    else
-      mv -fv /opt/ppsspp/PPSSPPSDL.rk3326 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
+		rm -fv /opt/ppsspp/PPSSPPSDL.rk3326 | tee -a "$LOG_FILE"
+	else
+		mv -fv /opt/ppsspp/PPSSPPSDL.rk3326 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
 	fi
 
-	if test -z "$(cat /etc/emulationstation/es_systems.cfg | grep 'genesis_plus_gx_EX' | tr -d '\0')"
-	then
-	  printf "\nAdd genesis_plus_gx_EX retroarch core for Sega Genesis, Megadrive, Master System, GameGear and Sega CD\n"
-	  sed -i '/<core>genesis_plus_gx<\/core>/c\\t\t\t\t\t<core>genesis_plus_gx<\/core>\n\t\t\t\t\t<core>genesis_plus_gx_EX<\/core>' /etc/emulationstation/es_systems.cfg
+	if test -z "$(cat /etc/emulationstation/es_systems.cfg | grep 'genesis_plus_gx_EX' | tr -d '\0')"; then
+		printf "\nAdd genesis_plus_gx_EX retroarch core for Sega Genesis, Megadrive, Master System, GameGear and Sega CD\n"
+		sed -i '/<core>genesis_plus_gx<\/core>/c\\t\t\t\t\t<core>genesis_plus_gx<\/core>\n\t\t\t\t\t<core>genesis_plus_gx_EX<\/core>' /etc/emulationstation/es_systems.cfg
 	fi
 	
 	printf "\nRemove .git folders and install rfkill\n" | tee -a "$LOG_FILE"
@@ -410,23 +390,57 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	sudo apt update -y | tee -a "$LOG_FILE"
 	sudo apt -y install rfkill | tee -a "$LOG_FILE"
 	sudo chmod 777 /opt/system/Wifi-Toggle.sh | tee -a "$LOG_FILE"
- 	sudo chmod 755 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
+	sudo chmod 755 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "07312025" > /home/ark/.config/.VERSION
 
 	touch "/home/ark/.config/.update07312025"
-	fi
-	
-	if [ ! -f "$UPDATE_DONE" ]; then
+fi
 
+if [ ! -f "/home/ark/.config/.update07312025-1" ]; then
 	printf "\nFix PPSSPPSDL Permissions\n" | tee -a "$LOG_FILE"
- 	sudo chmod 755 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
+	sudo chmod 755 /opt/ppsspp/PPSSPPSDL | tee -a "$LOG_FILE"
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
 	echo "07312025-1" > /home/ark/.config/.VERSION
+
+	touch "/home/ark/.config/.update07312025-1"	
+fi
+
+if [ ! -f "$UPDATE_DONE" ]; then
+
+	printf "\nFix Scripts and Other bug fixes.\n" | tee -a "$LOG_FILE"
+	sudo rm -rf /dev/shm/*
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/11072025/arkosupdate11072025.zip -O /dev/shm/arkosupdate07312025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate07312025.zip | tee -a "$LOG_FILE"
+	if [ -f "/dev/shm/arkosupdate11072025.zip" ]; then
+		sudo unzip -X -o /dev/shm/arkosupdate11072025.zip -d / | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate11072025.zip | tee -a "$LOG_FILE"
+	else
+		printf "\nThe update couldn't complete because the package did not download correctly.\nPlease retry the update again." | tee -a "$LOG_FILE"
+		sudo rm -fv /dev/shm/arkosupdate11072025.z* | tee -a "$LOG_FILE"
+		sleep 3
+		echo $c_brightness > /sys/class/backlight/backlight/brightness
+		exit 1
+	fi
+	
+	printf "\nFix Battery Life Warning Permissions\n" | tee -a "$LOG_FILE"
+	sudo chmod 755 /usr/local/bin/batt_life_warning.py | tee -a "$LOG_FILE"
+	
+	printf "\nFix MPV H.265 stuttering/high CPU on ArkOS\n" | tee -a "$LOG_FILE"
+	sudo /usr/bin/mpv --fullscreen --geometry=640x480 --hwdec=auto --vo=drm --input-ipc-server=/tmp/mpvsocket --config-dir=~/.config/mpv "${1}" | tee -a "$LOG_FILE"
+	
+	printf "\nReplace Drastic with Steward Fu-NDS\n" | tee -a "$LOG_FILE"
+	sudo chown -R 1002:1002 /opt/drastic/*
+	sudo chmod 777 /opt/drastic/*
+	sudo chmod 777 /usr/local/bin/drastic.sh
+	
+
+	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
+	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
+	echo "11072025" > /home/ark/.config/.VERSION
 
 	touch "$UPDATE_DONE"	
 	
@@ -436,5 +450,4 @@ if [ ! -f "/home/ark/.config/.update06302025" ]; then
 	echo $c_brightness > /sys/class/backlight/backlight/brightness
 	sudo reboot
 	exit 187
-
 fi
