@@ -412,7 +412,7 @@ fi
 
 if [ ! -f "$UPDATE_DONE" ]; then
 
-	printf "\nFix Scripts and Other bug fixes.\n" | tee -a "$LOG_FILE"
+	printf "\nFix Scripts and Replace Drastic.\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
 	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/11072025/arkosupdate11072025.zip -O /dev/shm/arkosupdate11072025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate11072025.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate11072025.zip" ]; then
@@ -428,9 +428,6 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	
 	printf "\nFix Battery Life Warning Permissions\n" | tee -a "$LOG_FILE"
 	sudo chmod 755 /usr/local/bin/batt_life_warning.py | tee -a "$LOG_FILE"
-	
-	printf "\nFix MPV H.265 stuttering/high CPU on ArkOS\n" | tee -a "$LOG_FILE"
-	sudo /usr/bin/mpv --fullscreen --geometry=640x480 --hwdec=auto --vo=drm --input-ipc-server=/tmp/mpvsocket --config-dir=~/.config/mpv "${1}" | tee -a "$LOG_FILE"
 	
 	printf "\nReplace Drastic with Steward Fu-NDS\n" | tee -a "$LOG_FILE"
 	sudo chown -R 1002:1002 /opt/drastic/*
