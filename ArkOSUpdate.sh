@@ -414,7 +414,7 @@ if [ ! -f "$UPDATE_DONE" ]; then
 
 	printf "\nFix Scripts and Other bug fixes.\n" | tee -a "$LOG_FILE"
 	sudo rm -rf /dev/shm/*
-	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/11072025/arkosupdate11072025.zip -O /dev/shm/arkosupdate07312025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate07312025.zip | tee -a "$LOG_FILE"
+	sudo wget -t 3 -T 60 --no-check-certificate "$LOCATION"/11072025/arkosupdate11072025.zip -O /dev/shm/arkosupdate11072025.zip -a "$LOG_FILE" || sudo rm -f /dev/shm/arkosupdate11072025.zip | tee -a "$LOG_FILE"
 	if [ -f "/dev/shm/arkosupdate11072025.zip" ]; then
 		sudo unzip -X -o /dev/shm/arkosupdate11072025.zip -d / | tee -a "$LOG_FILE"
 		sudo rm -fv /dev/shm/arkosupdate11072025.zip | tee -a "$LOG_FILE"
