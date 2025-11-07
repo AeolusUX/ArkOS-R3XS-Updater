@@ -433,3 +433,9 @@ v2.0 (07/31/2025)
 - Updated PPSSPP to 1.19.3
 - Added genesis_plus_gx_ex as additional retroarch core for Sega Genesis, Megadrive, Master System, GameGear and Sega CD
 - Updated Wifi-Toggle Script to V3.0 (Thanks to Jason3x) (https://github.com/Jason3x/wifi-toggle)
+
+v2.0 (11/07/2025)
+- Updated Wifi-Toggle Script to V3.4 (Thanks to Jason3x) (https://github.com/Jason3x/wifi-toggle)
+- Fix Permission issues with Battery Life Warning Led
+- Replace Drastic with Steward Fu-NDS (Thanks to lcdyk0517)
+- Fixed swapped C-Buttons Up/Down and remapped Z-Trigger from L2 to R2 for Mupen64plus.
