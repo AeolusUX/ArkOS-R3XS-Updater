@@ -434,6 +434,17 @@ if [ ! -f "$UPDATE_DONE" ]; then
 	sudo chmod 777 /opt/drastic/*
 	sudo chmod 777 /usr/local/bin/drastic.sh
 	
+	printf "\nDraStic symlinks\n" | tee -a "$LOG_FILE"
+	sudo rm -rf /opt/drastic/{backup,cheats,savestates,slot2}
+	sudo ln -sf /roms/nds/backup     /opt/drastic/backup
+	sudo ln -sf /roms/nds/cheats     /opt/drastic/cheats
+	sudo ln -sf /roms/nds/savestates /opt/drastic/savestates
+	sudo ln -sf /roms/nds/slot2      /opt/drastic/slot2
+	sudo ls -la /opt/drastic/{backup,cheats,savestates,slot2}
+
+	printf "\nMake everything in /opt/system executable\n" | tee -a "$LOG_FILE"
+	sudo chmod -R +x /opt/system
+	
 
 	printf "\nUpdate boot text to reflect current version of ArkOS\n" | tee -a "$LOG_FILE"
 	sudo sed -i "/title\=/c\title\=ArkOS 2.0 ($UPDATE_DATE)(AeUX)" /usr/share/plymouth/themes/text.plymouth
