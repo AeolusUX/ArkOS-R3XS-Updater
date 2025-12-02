@@ -437,7 +437,7 @@ v2.0 (07/31/2025)
 v2.0 (11/07/2025)
 - Updated Wifi-Toggle Script to V3.4 (Thanks to Jason3x) (https://github.com/Jason3x/wifi-toggle)
 - Fix Permission issues with Battery Life Warning Led
-- Replace Drastic with Steward Fu-NDS (Thanks to lcdyk0517)
+- Replace Drastic with Advanced Drastic (Thanks to lcdyk0517 & trngaje)
 - Fixed swapped C-Buttons Up/Down and remapped Z-Trigger from L2 to R2 for Mupen64plus.
 - Added a few scripts from Jason3x ( GhostLoader, Session Recall, System Info ).
 	- GhostLoader: Auto-manager for EmulationStation (ArkOS). Monitors/backups theme settings, restores profiles on changes, ensures smooth theme transitions. Interactive menu for install/manage/uninstall.
